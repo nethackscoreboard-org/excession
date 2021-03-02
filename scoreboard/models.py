@@ -31,8 +31,8 @@ class Game(models.Model):
     version     = models.ForeignKey(nh.Version, on_delete=models.CASCADE)
     role        = models.ForeignKey(nh.Role, on_delete=models.CASCADE)
     race        = models.ForeignKey(nh.Race, on_delete=models.CASCADE)
-    align0      = models.ForeignKey(nh.Gender, on_delete=models.CASCADE)
-    gender0     = models.ForeignKey(nh.Gender, on_delete=models.CASCADE)
+    align0      = models.ForeignKey(nh.Alignment, on_delete=models.CASCADE, related_name='games_started')
+    gender0     = models.ForeignKey(nh.Gender, on_delete=models.CASCADE, related_name='games_started')
     starttime   = models.DateTimeField('game start')
     birthdate   = models.DateField('birthday')
 
@@ -46,8 +46,8 @@ class Game(models.Model):
     turns       = models.IntegerField(default=0)
     realtime    = models.IntegerField(default=0)
     deathlev    = models.IntegerField(default=0)
-    align       = models.ForeignKey(nh.Alignment, on_delete=models.CASCADE)
-    gender      = models.ForeignKey(nh.Gender, on_delete=models.CASCADE)
+    align       = models.ForeignKey(nh.Alignment, on_delete=models.CASCADE, related_name='games_ended')
+    gender      = models.ForeignKey(nh.Gender, on_delete=models.CASCADE, related_name='games_ended')
     endtime     = models.DateTimeField('game start')
     deathdate   = models.DateField('deathday')
 
