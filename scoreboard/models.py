@@ -1,5 +1,5 @@
 from django.db import models
-from . import nh, score
+from . import nh
 
 """
 These sources are where the scoreboard will look for xlogfile data.
@@ -28,11 +28,11 @@ The name field will be stored as a foreign key for a Player.
 """
 class Game(models.Model):
     # birth info
-    version     = models.ForeignKey(nh.Version, on_delete=CASCADE)
-    role        = models.ForeignKey(nh.Role, on_delete=CASCADE)
-    race        = models.ForeignKey(nh.Race, on_delete=CASCADE)
-    align0      = models.ForeignKey(nh.Gender, on_delete=CASCADE)
-    gender0     = models.CharField(nh.Gender, on_delete=CASCADE)
+    version     = models.ForeignKey(nh.Version, on_delete=models.CASCADE)
+    role        = models.ForeignKey(nh.Role, on_delete=models.CASCADE)
+    race        = models.ForeignKey(nh.Race, on_delete=models.CASCADE)
+    align0      = models.ForeignKey(nh.Gender, on_delete=models.CASCADE)
+    gender0     = models.ForeignKey(nh.Gender, on_delete=models.CASCADE)
     starttime   = models.DateTimeField('game start')
     birthdate   = models.DateField('birthday')
 
@@ -46,8 +46,8 @@ class Game(models.Model):
     turns       = models.IntegerField(default=0)
     realtime    = models.IntegerField(default=0)
     deathlev    = models.IntegerField(default=0)
-    align       = models.ForeignKey(nh.Alignment, on_delete=CASCADE)
-    gender      = models.ForeignKey(nh.Gender, on_delete=CASCADE)
+    align       = models.ForeignKey(nh.Alignment, on_delete=models.CASCADE)
+    gender      = models.ForeignKey(nh.Gender, on_delete=models.CASCADE)
     endtime     = models.DateTimeField('game start')
     deathdate   = models.DateField('deathday')
 
@@ -59,17 +59,17 @@ class Game(models.Model):
     #setseed      = models.BooleanField(default=False)
     #ascended     = models.BooleanField(default=False)
     #scummed      = models.BooleanField(default=False)
-    #mode         = models.ForeignKey(nh.GameMode, on_delete=CASCADE)
+    #mode         = models.ForeignKey(nh.GameMode, on_delete=models.CASCADE)
 
     # player is determined by xlog name field
     #player = models.ForeignKey(Player, on_delete=CASCADE)
 
     # log source
-    source = models.ForeignKey(LogSource, on_delete=CASCADE)
+    source = models.ForeignKey(LogSource, on_delete=models.CASCADE)
 
     # what points did the given game score,
     # is it tied to any particular trophies?
-    #score_entry = models.ForeignKey(score.Game, on_delete=CASCADE)
+    #score_entry = models.ForeignKey(score.Game, on_delete=models.CASCADE)
     #trophies = models.ManyToManyField(score.Trophy)
 
 
