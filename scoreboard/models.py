@@ -1,4 +1,5 @@
 from django.db import models
+from . import nh, score
 
 """
 These sources are where the scoreboard will look for xlogfile data.
@@ -27,16 +28,16 @@ The name field will be stored as a foreign key for a Player.
 """
 class Game(models.Model):
     # birth info
-    version     = models.CharField(max_length=100)
-    role        = models.CharField(max_length=10) # 3 should be fine really
-    race        = models.CharField(max_length=10)
-    align0      = models.CharField(max_length=10)
-    gender0     = models.CharField(max_length=10)
+    version     = models.ForeignKey(nh.Version, on_delete=CASCADE)
+    role        = models.ForeignKey(nh.Role, on_delete=CASCADE)
+    race        = models.ForeignKey(nh.Race, on_delete=CASCADE)
+    align0      = models.ForeignKey(nh.Gender, on_delete=CASCADE)
+    gender0     = models.CharField(nh.Gender, on_delete=CASCADE)
     starttime   = models.DateTimeField('game start')
     birthdate   = models.DateField('birthday')
 
     # death info
-    points      = models.IntegerField(default=0) # does this need to be a big int or something?
+    points      = models.BigIntegerField(default=0)
     deathlev    = models.IntegerField(default=0)
     maxlvl      = models.IntegerField(default=0)
     hp          = models.IntegerField(default=0)
@@ -45,30 +46,32 @@ class Game(models.Model):
     turns       = models.IntegerField(default=0)
     realtime    = models.IntegerField(default=0)
     deathlev    = models.IntegerField(default=0)
-    align0      = models.CharField(max_length=10)
-    gender0     = models.CharField(max_length=10)
+    align       = models.ForeignKey(nh.Alignment, on_delete=CASCADE)
+    gender      = models.ForeignKey(nh.Gender, on_delete=CASCADE)
     endtime     = models.DateTimeField('game start')
     deathdate   = models.DateField('deathday')
 
     # achievements and conducts
-    achievements = models.ManyToManyField(Achievement)
-    conducts     = models.ManyToManyField(Conduct)
-    tnnt_achieve = models.ManyToManyField(TnntAchievement)
+    #achievements = models.ManyToManyField(nh.Achievement)
+    #conducts     = models.ManyToManyField(nh.Conduct)
+    #tnnt_achieve = models.ManyToManyField(nh.TnntAchievement)
+    #bones        = models.BooleanField(default=False)
+    #setseed      = models.BooleanField(default=False)
+    #ascended     = models.BooleanField(default=False)
+    #scummed      = models.BooleanField(default=False)
+    #mode         = models.ForeignKey(nh.GameMode, on_delete=CASCADE)
 
     # player is determined by xlog name field
-    player = models.ForeignKey(Player, on_delete=CASCADE)
+    #player = models.ForeignKey(Player, on_delete=CASCADE)
 
     # log source
     source = models.ForeignKey(LogSource, on_delete=CASCADE)
 
-# stub
-class Achievement(models.Model):
+    # what points did the given game score,
+    # is it tied to any particular trophies?
+    #score_entry = models.ForeignKey(score.Game, on_delete=CASCADE)
+    #trophies = models.ManyToManyField(score.Trophy)
 
-# stub
-class Conduct(models.Model):
 
-# stub
-class TnntAchieve(models.Model):
-
-# stub
-class Player(models.Model):
+## stub
+#class Player(models.Model):
