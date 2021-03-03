@@ -1,4 +1,6 @@
+import os
 from django.db import models
+from django.conf import settings
 from . import nh
 
 """
@@ -7,7 +9,13 @@ These sources are where the scoreboard will look for xlogfile data.
 class LogSource(models.Model):
     url = models.CharField(max_length=500)
     src_name = models.CharField(max_length=50)
+    name_detail = models.CharField(max_length=200, default='xlog source description')
     last_check = models.DateTimeField('last accessed')
+    file_cursor = models.BigIntegerField(default=0)
+    local_path = models.FilePathField(default=os.path.join(settings.BASE_DIR, "xlogs", str(src_name)))
+    records_imported = models.IntegerField(default=0)
+    def __str__(self):
+        return self.name_detail
 
 """
 A Game record corresponds to an xlogfile record and contains all the important information about that game,
@@ -39,6 +47,7 @@ class Game(models.Model):
     # death info
     points      = models.BigIntegerField(default=0)
     deathlev    = models.IntegerField(default=0)
+    deathdnum   = models.IntegerField(default=0)
     maxlvl      = models.IntegerField(default=0)
     hp          = models.IntegerField(default=0)
     maxhp       = models.IntegerField(default=0)
@@ -50,13 +59,14 @@ class Game(models.Model):
     gender      = models.ForeignKey(nh.Gender, on_delete=models.CASCADE, related_name='games_ended')
     endtime     = models.DateTimeField('game start')
     deathdate   = models.DateField('deathday')
+    death       = models.CharField(max_length=500)
 
     # achievements and conducts
     #achievements = models.ManyToManyField(nh.Achievement)
     #conducts     = models.ManyToManyField(nh.Conduct)
     #tnnt_achieve = models.ManyToManyField(nh.TnntAchievement)
     #bones        = models.BooleanField(default=False)
-    #setseed      = models.BooleanField(default=False)
+    #user_seed    = models.BooleanField(default=False)
     #ascended     = models.BooleanField(default=False)
     #scummed      = models.BooleanField(default=False)
     #mode         = models.ForeignKey(nh.GameMode, on_delete=models.CASCADE)

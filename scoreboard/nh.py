@@ -23,16 +23,20 @@ class Version(models.Model):
     minor = models.IntegerField(default=0)
     patch = models.IntegerField(default=0)
     #mod =  models.ForeignKey(Mod, on_delete=models.CASCADE)
+    def __str__(self):
+        return self.name
 
 class Gender(models.Model):
     name    = models.CharField(max_length=100)
     abbrev  = models.CharField(max_length=10)
-    version = models.ForeignKey(Version, on_delete=models.CASCADE)
+    def __str__(self):
+        return self.name
 
 class Alignment(models.Model):
     name    = models.CharField(max_length=100)
     abbrev  = models.CharField(max_length=10)
-    version = models.ForeignKey(Version, on_delete=models.CASCADE)
+    def __str__(self):
+        return self.name
 
 class Race(models.Model):
     name    = models.CharField(max_length=100)
@@ -40,6 +44,8 @@ class Race(models.Model):
     version = models.ForeignKey(Version, on_delete=models.CASCADE)
     #allowed_roles =  models.ManyToManyField(Role)
     allowed_aligns = models.ManyToManyField(Alignment)
+    def __str__(self):
+        return self.name
 
 class Role(models.Model):
     name    = models.CharField(max_length=100)
@@ -47,9 +53,26 @@ class Role(models.Model):
     version = models.ForeignKey(Version, on_delete=models.CASCADE)
     allowed_races =  models.ManyToManyField(Race)
     allowed_aligns = models.ManyToManyField(Alignment)
+    # could also include allowed_genders here but this only
+    # applies to valkyrie and I don't really care about gender
+    def __str__(self):
+        return self.name
 
 #class Achievement(VersionProp):
 
 #class Conduct(VersionProp):
 
 #class TnntAchieve(VersionProp):
+
+# lookup linked fields
+def lookup(key, value):
+    if key == "version":
+        return Version.objects.get(**dict(zip(["major", "minor", "patch"], value.split('.'))))
+    elif key == "role":
+        return Role.objects.get(abbrev=value)
+    elif key == "race":
+        return Race.objects.get(abbrev=value)
+    elif key in ["align", "align0"]:
+        return Alignment.objects.get(abbrev=value)
+    elif key in ["gender", "gender0"]:
+        return Gender.objects.get(abbrev=value)
