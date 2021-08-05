@@ -1,5 +1,5 @@
 from django.db.models import fields
-from .models import GameRecord, Conduct
+from .models import Achievement, Conduct, GameRecord
 from datetime import date, datetime, timedelta, timezone
 import re
 import itertools
@@ -7,6 +7,7 @@ import itertools
 WIZMODE_BITFLAG = 0x1
 EXPLORE_BITFLAG = 0x2
 BONESLESS_BITFLAG = 0x4
+ASCENDED_ACHIEVE_BITFLAG = 0x100
 
 class XlogParser():
     required_fields = GameRecord.__required_fields__
@@ -34,6 +35,14 @@ class XlogParser():
         for key in self.fields_by_type:
             for field in self.fields_by_type[key]:
                 self.types_by_field[field] = key
+    
+    def __ascended__(self, record):
+        if 'achieve' in record and record['achieve'] & ASCENDED_ACHIEVE_BITFLAG:
+            return True
+        elif 'death' in record and record['death'] == 'ascended':
+            return True
+        else:
+            return False
     
     def __squash__(self, record):
         return {f: record[f] for f in itertools.filterfalse(lambda k: k not in record, self.all_fields)}
@@ -71,6 +80,13 @@ class XlogParser():
         if 'achieve' in record and ach_conduct_specs:
             ach_conducts = itertools.filterfalse(lambda c: not 1 << c.bit_index & record['achieve'], ach_conduct_specs)
         return conducts, ach_conducts
+    
+    def __parse_achievements__(self, record):
+        achievements = []
+        for spec in Achievement.objects.filter(variant=record['variant'], version=record['version']):
+            if spec.xlog_field in record and record[spec.xlog_field] & 1 << spec.bit_index:
+                achievements.append(spec)
+        return achievements
 
     def createGameRecord(self, xlog_line):
         if re.search('[\0\r\n]', xlog_line):
@@ -84,6 +100,7 @@ class XlogParser():
         self.__convert__(record)
         self.__check_flags__(record)
         conducts, ach_conducts = self.__parse_conducts__(record)
+        achievements = self.__parse_achievements__(record)
 
         if record['starttime'] > datetime.now(tz=timezone.utc) or record['endtime'] > datetime.now(tz=timezone.utc):
             raise ValueError
@@ -98,5 +115,9 @@ class XlogParser():
             parsed_record.conducts.add(conduct)
         for ach_conduct in ach_conducts:
             parsed_record.conducts.add(ach_conduct)
+        for achievement in achievements:
+            parsed_record.achievements.add(achievement)
+        if self.__ascended__(record):
+            parsed_record.won = True
         parsed_record.save()
         return parsed_record

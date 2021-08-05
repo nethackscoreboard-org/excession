@@ -1,6 +1,7 @@
 from django.test import TestCase
 from scoreboard.parsers import XlogParser
-from scoreboard.models import Conduct, GameRecord
+from scoreboard.models import Achievement, Conduct, GameRecord
+from scripts.achievements import load_achievements
 from datetime import datetime, timedelta, timezone
 
 sample_xlog = {
@@ -11,6 +12,7 @@ sample_xlog = {
     'starttime': '1604188860',
     'endtime': '1604188935',
     'turns': '165',
+    'achieve': '0x0',
 }
 sample_xlog_line = "version=3.6.6	points=87	deathdnum=0	deathlev=1	maxlvl=2	\
     hp=0	maxhp=12	deaths=1	deathdate=20201101	birthdate=20201101	uid=5	role=Hea	race=Gno	\
@@ -47,6 +49,7 @@ class XlogParserTest(TestCase):
             Conduct.objects.create(variant='tnnt', version='3.6.6', short_name=conduct[0], long_name=conduct[1], bit_index=i)
         for i, achieve in enumerate(sample_ach_conducts):
             Conduct.objects.create(variant='tnnt', version='3.6.6', short_name=achieve[0], long_name=achieve[1], bit_index=i, achieve_field=True)
+        load_achievements()
 
     def setUp(self):
         self.parser = XlogParser(sample_server)
@@ -69,7 +72,7 @@ class XlogParserTest(TestCase):
 
     def test_valid_xlog_record(self):
         game_record = self.parser.createGameRecord(gen_xlog({}))
-        self.assertEqual(game_record.win, False)
+        self.assertEqual(game_record.won, False)
         self.assertEqual(game_record.name, sample_xlog['name'])
         game_record = self.parser.createGameRecord(sample_xlog_line)
         self.assertEqual(game_record.align, 'Neu')
@@ -146,6 +149,31 @@ class XlogParserTest(TestCase):
         game_record = self.parser.createGameRecord(gen_xlog(params))
         self.assertEqual(GameRecord.objects.filter(conducts__short_name='nude').count(), 1)
         pass
+
+    def test_achievements(self):
+        params = {'achieve': '0x2', 'tnntachieve0': '0x80', 'tnntachieve1': '0x9c', 'tnntachieve2': '0x40', 'tnntachieve3': '0x6'}
+        game_record = self.parser.createGameRecord(gen_xlog(params))
+        self.assertEqual(game_record.achievements.all().count(), 9)
+        self.assertIsNotNone(game_record.achievements.filter(title='Feel the Burn'))
+        self.assertIsNotNone(game_record.achievements.filter(title='More Light'))
+        self.assertIsNotNone(game_record.achievements.filter(title='Captain Ahab'))
+        self.assertIsNotNone(game_record.achievements.filter(title='Indulgences'))
+        self.assertIsNotNone(game_record.achievements.filter(title='The Archetypal Hero'))
+        self.assertIsNotNone(game_record.achievements.filter(title='Musical Mastermind'))
+        self.assertIsNotNone(game_record.achievements.filter(title='Tainted'))
+        self.assertIsNotNone(game_record.achievements.filter(title='The Deathly Hallows'))
+        self.assertIsNotNone(game_record.achievements.filter(title='Indiana Jones'))
+    
+    def test_won(self):
+        params =  {'achieve': '0x100'}
+        game_record = self.parser.createGameRecord(gen_xlog(params))
+        self.assertEqual(game_record.won, True)
+        params =  {'death': 'ascended'}
+        game_record = self.parser.createGameRecord(gen_xlog(params))
+        self.assertEqual(game_record.won, True)
+        params =  {'death': 'foobar', 'achieve': '0x00'}
+        game_record = self.parser.createGameRecord(gen_xlog(params))
+        self.assertEqual(game_record.won, False)
 
 #    def test_invalid_utf8_in_input(self):
 #        self.assertRaises(ValueError, self.parser.createGameRecord, gen_xlog("\xc3\x28"))
