@@ -1,0 +1,2250 @@
+- model: scoreboard.achievement
+  pk: 1
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Ringing in My Ears
+    description: Get the Bell of Opening
+    xlog_field: achieve
+    bit_index: 0
+- model: scoreboard.achievement
+  pk: 2
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Feel the Burn
+    description: Enter Gehennom
+    xlog_field: achieve
+    bit_index: 1
+- model: scoreboard.achievement
+  pk: 3
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Emerging into the Light
+    description: Get the Candelabrum of Invocation
+    xlog_field: achieve
+    bit_index: 2
+- model: scoreboard.achievement
+  pk: 4
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Weighing of the Heart
+    description: Get the Book of the Dead
+    xlog_field: achieve
+    bit_index: 3
+- model: scoreboard.achievement
+  pk: 5
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Bell, Book and Candle
+    description: Perform the Invocation Ritual
+    xlog_field: achieve
+    bit_index: 4
+- model: scoreboard.achievement
+  pk: 6
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: My Preciousss
+    description: Get the Amulet of Yendor
+    xlog_field: achieve
+    bit_index: 5
+- model: scoreboard.achievement
+  pk: 7
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: From the Dungeon They Came
+    description: Enter the Elemental Planes
+    xlog_field: achieve
+    bit_index: 6
+- model: scoreboard.achievement
+  pk: 8
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: The Halls of the Gods
+    description: Enter the Astral Plane
+    xlog_field: achieve
+    bit_index: 7
+- model: scoreboard.achievement
+  pk: 9
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Are You Feeling Lucky
+    description: Get the luckstone from Mines' End
+    xlog_field: achieve
+    bit_index: 9
+- model: scoreboard.achievement
+  pk: 10
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Boulder Pusher
+    description: Finish Sokoban
+    xlog_field: achieve
+    bit_index: 10
+- model: scoreboard.achievement
+  pk: 11
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Anti-Stoner
+    description: Kill Medusa
+    xlog_field: achieve
+    bit_index: 11
+- model: scoreboard.achievement
+  pk: 12
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Back to Civilisation
+    description: Step onto the Minetown altar
+    xlog_field: tnntachieve0
+    bit_index: 0
+- model: scoreboard.achievement
+  pk: 13
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Sage Advice
+    description: Consult the Oracle
+    xlog_field: tnntachieve0
+    bit_index: 1
+- model: scoreboard.achievement
+  pk: 14
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: The Archetypal Hero
+    description: Get admitted to the Quest
+    xlog_field: tnntachieve0
+    bit_index: 2
+- model: scoreboard.achievement
+  pk: 15
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Musical Mastermind
+    description: Learn the passtune
+    xlog_field: tnntachieve0
+    bit_index: 3
+- model: scoreboard.achievement
+  pk: 16
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Indulgences
+    description: Buy protection from a priest
+    xlog_field: tnntachieve0
+    bit_index: 4
+- model: scoreboard.achievement
+  pk: 17
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Part-time Statue
+    description: Survive stoning
+    xlog_field: tnntachieve0
+    bit_index: 5
+- model: scoreboard.achievement
+  pk: 18
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: The Blob
+    description: Survive sliming
+    xlog_field: tnntachieve0
+    bit_index: 6
+- model: scoreboard.achievement
+  pk: 19
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Captain Ahab
+    description: Survive being grabbed by a sea monster
+    xlog_field: tnntachieve0
+    bit_index: 7
+- model: scoreboard.achievement
+  pk: 20
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Furry Little Problem
+    description: Cure lycanthropy
+    xlog_field: tnntachieve0
+    bit_index: 8
+- model: scoreboard.achievement
+  pk: 21
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: New Lease on Life
+    description: Cure deathly illness
+    xlog_field: tnntachieve0
+    bit_index: 9
+- model: scoreboard.achievement
+  pk: 22
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: The Royal Treatment
+    description: Sit on a throne
+    xlog_field: tnntachieve0
+    bit_index: 10
+- model: scoreboard.achievement
+  pk: 23
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: It'll Turn Up Later
+    description: Drop a ring in a sink
+    xlog_field: tnntachieve0
+    bit_index: 11
+- model: scoreboard.achievement
+  pk: 24
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Nine for Mortal Men Doomed to Die ... Again
+    description: Kill all nine Nazgûl
+    xlog_field: tnntachieve0
+    bit_index: 12
+- model: scoreboard.achievement
+  pk: 25
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Furious
+    description: Kill all three erinyes
+    xlog_field: tnntachieve0
+    bit_index: 13
+- model: scoreboard.achievement
+  pk: 26
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Orthodoxy
+    description: Convert an altar
+    xlog_field: tnntachieve0
+    bit_index: 14
+- model: scoreboard.achievement
+  pk: 27
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Always Talk to the Wise Old Man
+    description: Chat with Izchak
+    xlog_field: tnntachieve0
+    bit_index: 15
+- model: scoreboard.achievement
+  pk: 28
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Isaac Newton
+    description: Get fruit by kicking a tree
+    xlog_field: tnntachieve0
+    bit_index: 16
+- model: scoreboard.achievement
+  pk: 29
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Dungeon Economics
+    description: Buy or sell something at a shop
+    xlog_field: tnntachieve0
+    bit_index: 17
+- model: scoreboard.achievement
+  pk: 30
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Stop, Thief!
+    description: Be chased by the Keystone Kops
+    xlog_field: tnntachieve0
+    bit_index: 18
+- model: scoreboard.achievement
+  pk: 31
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Wash it Clean
+    description: Uncurse an item in a fountain
+    xlog_field: tnntachieve0
+    bit_index: 19
+- model: scoreboard.achievement
+  pk: 32
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Well-Read
+    description: Learn a level 5+ spell
+    xlog_field: tnntachieve0
+    bit_index: 20
+- model: scoreboard.achievement
+  pk: 33
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Pet Whisperer
+    description: Tame a monster by feeding it
+    xlog_field: tnntachieve0
+    bit_index: 21
+- model: scoreboard.achievement
+  pk: 34
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Beast Master
+    description: Tame a monster without using food
+    xlog_field: tnntachieve0
+    bit_index: 22
+- model: scoreboard.achievement
+  pk: 35
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: The Chosen One
+    description: Get crowned
+    xlog_field: tnntachieve0
+    bit_index: 23
+- model: scoreboard.achievement
+  pk: 36
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Go Forth and Smite
+    description: Receive an artifact gift from your deity
+    xlog_field: tnntachieve0
+    bit_index: 24
+- model: scoreboard.achievement
+  pk: 37
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Some Watery Tart
+    description: Be gifted Excalibur
+    xlog_field: tnntachieve0
+    bit_index: 25
+- model: scoreboard.achievement
+  pk: 38
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Hand Crafted
+    description: Make a dragon scale mail
+    xlog_field: tnntachieve0
+    bit_index: 26
+- model: scoreboard.achievement
+  pk: 39
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: A Little Light Larceny
+    description: Get robbed by a nymph
+    xlog_field: tnntachieve0
+    bit_index: 27
+- model: scoreboard.achievement
+  pk: 40
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Pot of Greed
+    description: Have your purse lightened by a leprechaun
+    xlog_field: tnntachieve0
+    bit_index: 28
+- model: scoreboard.achievement
+  pk: 41
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: The Birds and the Bees
+    description: Dally with a foocubus
+    xlog_field: tnntachieve0
+    bit_index: 29
+- model: scoreboard.achievement
+  pk: 42
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: The Most Dangerous Game
+    description: Catch a monster in a trap set by you
+    xlog_field: tnntachieve0
+    bit_index: 30
+- model: scoreboard.achievement
+  pk: 43
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Minetown Avenger
+    description: Kill every orc in Orctown
+    xlog_field: tnntachieve0
+    bit_index: 31
+- model: scoreboard.achievement
+  pk: 44
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: All Clear
+    description: Kill all hostiles in the Big Room
+    xlog_field: tnntachieve0
+    bit_index: 32
+- model: scoreboard.achievement
+  pk: 45
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Liberated
+    description: Get yourself unpunished
+    xlog_field: tnntachieve0
+    bit_index: 33
+- model: scoreboard.achievement
+  pk: 46
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: It's Called That For a Reason
+    description: Come to earth by levitating over a sink
+    xlog_field: tnntachieve0
+    bit_index: 34
+- model: scoreboard.achievement
+  pk: 47
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Diamond in the Rough
+    description: Identify a gem with a touchstone
+    xlog_field: tnntachieve0
+    bit_index: 35
+- model: scoreboard.achievement
+  pk: 48
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Scribe
+    description: Write a scroll with a magic marker
+    xlog_field: tnntachieve0
+    bit_index: 36
+- model: scoreboard.achievement
+  pk: 49
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: First Edition
+    description: Write a book
+    xlog_field: tnntachieve0
+    bit_index: 37
+- model: scoreboard.achievement
+  pk: 50
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Dragon Rider
+    description: Ride a dragon
+    xlog_field: tnntachieve0
+    bit_index: 38
+- model: scoreboard.achievement
+  pk: 51
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Motherhood
+    description: Lay an egg
+    xlog_field: tnntachieve0
+    bit_index: 39
+- model: scoreboard.achievement
+  pk: 52
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Shimmer
+    description: Fireproof an item
+    xlog_field: tnntachieve0
+    bit_index: 40
+- model: scoreboard.achievement
+  pk: 53
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: They Like Shiny Things
+    description: Throw a gem at a unicorn
+    xlog_field: tnntachieve0
+    bit_index: 41
+- model: scoreboard.achievement
+  pk: 54
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Reincarnation Cancelled
+    description: Tin a troll
+    xlog_field: tnntachieve0
+    bit_index: 42
+- model: scoreboard.achievement
+  pk: 55
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Kill it Twice
+    description: Destroy a ghost
+    xlog_field: tnntachieve0
+    bit_index: 43
+- model: scoreboard.achievement
+  pk: 56
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Only Mostly Dead
+    description: Revive a corpse
+    xlog_field: tnntachieve0
+    bit_index: 44
+- model: scoreboard.achievement
+  pk: 57
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Buffy
+    description: Destroy an undead with #turn
+    xlog_field: tnntachieve0
+    bit_index: 45
+- model: scoreboard.achievement
+  pk: 58
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Wasn't a Meal, Wasn't Ready, And You Shouldn't Have Eaten It
+    description: Eat a military ration
+    xlog_field: tnntachieve0
+    bit_index: 46
+- model: scoreboard.achievement
+  pk: 59
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Have Fun Storming the Castle
+    description: Blow up the Castle drawbridge
+    xlog_field: tnntachieve0
+    bit_index: 47
+- model: scoreboard.achievement
+  pk: 60
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Insert Quarter to Continue
+    description: Get life-saved
+    xlog_field: tnntachieve0
+    bit_index: 48
+- model: scoreboard.achievement
+  pk: 61
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: What It Was Made For
+    description: Kill a appropriate monster with a Bane weapon
+    xlog_field: tnntachieve0
+    bit_index: 49
+- model: scoreboard.achievement
+  pk: 62
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Buried Treasure
+    description: Dig up a grave not in a graveyard
+    xlog_field: tnntachieve0
+    bit_index: 50
+- model: scoreboard.achievement
+  pk: 63
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Holy War
+    description: Kill a priest of Moloch
+    xlog_field: tnntachieve0
+    bit_index: 51
+- model: scoreboard.achievement
+  pk: 64
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Movers and Shakers
+    description: Cause an earthquake
+    xlog_field: tnntachieve0
+    bit_index: 52
+- model: scoreboard.achievement
+  pk: 65
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Snake Charmer
+    description: Pacify a snake with a flute
+    xlog_field: tnntachieve0
+    bit_index: 53
+- model: scoreboard.achievement
+  pk: 66
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Dragonslayer
+    description: Kill a dragon
+    xlog_field: tnntachieve0
+    bit_index: 54
+- model: scoreboard.achievement
+  pk: 67
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Tin Foil Hat
+    description: Dodge a brainsucking attack
+    xlog_field: tnntachieve0
+    bit_index: 55
+- model: scoreboard.achievement
+  pk: 68
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Right Back at Ya
+    description: Hit an enemy with a thrown boomerang
+    xlog_field: tnntachieve0
+    bit_index: 56
+- model: scoreboard.achievement
+  pk: 69
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: It Burnsss
+    description: Deal silver damage to a silver-hating monster
+    xlog_field: tnntachieve0
+    bit_index: 57
+- model: scoreboard.achievement
+  pk: 70
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Arrakis
+    description: Make a crysknife
+    xlog_field: tnntachieve0
+    bit_index: 58
+- model: scoreboard.achievement
+  pk: 71
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Kop Training Program
+    description: Kill a monster with a rubber hose
+    xlog_field: tnntachieve0
+    bit_index: 59
+- model: scoreboard.achievement
+  pk: 72
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Obligatory Pointy Hat
+    description: Put on a cornuthaum as a wizard
+    xlog_field: tnntachieve0
+    bit_index: 60
+- model: scoreboard.achievement
+  pk: 73
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Hobbit Skin
+    description: Wear a mithril coat
+    xlog_field: tnntachieve0
+    bit_index: 61
+- model: scoreboard.achievement
+  pk: 74
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: The Words of the Prophets
+    description: Read 3 random graffiti
+    xlog_field: tnntachieve0
+    bit_index: 62
+- model: scoreboard.achievement
+  pk: 75
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Are You Still Pudding Farming
+    description: Split a pudding
+    xlog_field: tnntachieve0
+    bit_index: 63
+- model: scoreboard.achievement
+  pk: 76
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Wearable Snack
+    description: Wear a meat ring
+    xlog_field: tnntachieve1
+    bit_index: 0
+- model: scoreboard.achievement
+  pk: 77
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Frozen Treats
+    description: Loot an ice box
+    xlog_field: tnntachieve1
+    bit_index: 1
+- model: scoreboard.achievement
+  pk: 78
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Pygmalion
+    description: Create a monster from a figurine
+    xlog_field: tnntachieve1
+    bit_index: 2
+- model: scoreboard.achievement
+  pk: 79
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Nerd
+    description: Read a spellbook while wearing lenses and a T-shirt
+    xlog_field: tnntachieve1
+    bit_index: 3
+- model: scoreboard.achievement
+  pk: 80
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Recharged
+    description: Charge an object
+    xlog_field: tnntachieve1
+    bit_index: 4
+- model: scoreboard.achievement
+  pk: 81
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Get Your Kicks
+    description: Kick an item embedded in a wall or rock
+    xlog_field: tnntachieve1
+    bit_index: 5
+- model: scoreboard.achievement
+  pk: 82
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Spiderman
+    description: Grab an item with a grappling hook
+    xlog_field: tnntachieve1
+    bit_index: 6
+- model: scoreboard.achievement
+  pk: 83
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: More Light
+    description: Refill the Candelabrum after it burns out after the Invocation
+    xlog_field: tnntachieve1
+    bit_index: 7
+- model: scoreboard.achievement
+  pk: 84
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Balanced Diet
+    description: Eat one of each type of produce in one game
+    xlog_field: tnntachieve1
+    bit_index: 8
+- model: scoreboard.achievement
+  pk: 85
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Smorgasbord
+    description: Eat every type of food in the game
+    xlog_field: tnntachieve1
+    bit_index: 9
+- model: scoreboard.achievement
+  pk: 86
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Fill 'Er Up
+    description: Fill an oil lamp with a potion of oil
+    xlog_field: tnntachieve1
+    bit_index: 10
+- model: scoreboard.achievement
+  pk: 87
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Curse the Darkness
+    description: Identify a potion of oil by applying it
+    xlog_field: tnntachieve1
+    bit_index: 11
+- model: scoreboard.achievement
+  pk: 88
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Bright Light, Bright Light
+    description: Kill gremlin with any light source
+    xlog_field: tnntachieve1
+    bit_index: 12
+- model: scoreboard.achievement
+  pk: 89
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Chemistry 101
+    description: Alchemize two potions in an established recipe
+    xlog_field: tnntachieve1
+    bit_index: 13
+- model: scoreboard.achievement
+  pk: 90
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Get Your Gas Mask
+    description: Kill a monster with a stinking cloud
+    xlog_field: tnntachieve1
+    bit_index: 14
+- model: scoreboard.achievement
+  pk: 91
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Escape to Discworld
+    description: Read a Terry Pratchett novel
+    xlog_field: tnntachieve1
+    bit_index: 15
+- model: scoreboard.achievement
+  pk: 92
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Near Death Experience
+    description: #chat to Death while carrying a Terry Pratchett novel
+    xlog_field: tnntachieve1
+    bit_index: 16
+- model: scoreboard.achievement
+  pk: 93
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Mineralogist
+    description: Identify every type of valuable gemstone
+    xlog_field: tnntachieve1
+    bit_index: 17
+- model: scoreboard.achievement
+  pk: 94
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Prize Inside!
+    description: Get a spellbook by breaking a randomly-generated statue
+    xlog_field: tnntachieve1
+    bit_index: 18
+- model: scoreboard.achievement
+  pk: 95
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Ding-a-Ling
+    description: Summon a nymph by ringing a cursed bell
+    xlog_field: tnntachieve1
+    bit_index: 19
+- model: scoreboard.achievement
+  pk: 96
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Best Friends Forever
+    description: Take your starting pet to full adulthood
+    xlog_field: tnntachieve1
+    bit_index: 20
+- model: scoreboard.achievement
+  pk: 97
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Diver
+    description: Dive into a moat or pool and retrieve an item from the bottom
+    xlog_field: tnntachieve1
+    bit_index: 21
+- model: scoreboard.achievement
+  pk: 98
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Ceiling Clinging Commute
+    description: Ride a wumpus over water
+    xlog_field: tnntachieve1
+    bit_index: 22
+- model: scoreboard.achievement
+  pk: 99
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: How Much Wood?
+    description: Kill or tame a woodchuck
+    xlog_field: tnntachieve1
+    bit_index: 23
+- model: scoreboard.achievement
+  pk: 100
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Storm the Gates of Heaven
+    description: Kill an Archon
+    xlog_field: tnntachieve1
+    bit_index: 24
+- model: scoreboard.achievement
+  pk: 101
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Shifty
+    description: Tame a shapeshifter in any way
+    xlog_field: tnntachieve1
+    bit_index: 25
+- model: scoreboard.achievement
+  pk: 102
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Cat Lady
+    description: Tame seven “f” in the course of one game
+    xlog_field: tnntachieve1
+    bit_index: 26
+- model: scoreboard.achievement
+  pk: 103
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Collapse the Wavefunction
+    description: Open the box containing Schroedinger's Cat
+    xlog_field: tnntachieve1
+    bit_index: 27
+- model: scoreboard.achievement
+  pk: 104
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: I'm Free! I'm Free!
+    description: Free a prisoner
+    xlog_field: tnntachieve1
+    bit_index: 28
+- model: scoreboard.achievement
+  pk: 105
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Pet Rescue
+    description: Free a pet from a trap that you didn't create yourself
+    xlog_field: tnntachieve1
+    bit_index: 29
+- model: scoreboard.achievement
+  pk: 106
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Spam, Spam, Spam
+    description: Read a scroll of mail
+    xlog_field: tnntachieve1
+    bit_index: 30
+- model: scoreboard.achievement
+  pk: 107
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Superfood
+    description: Gain strength by eating royal jelly
+    xlog_field: tnntachieve1
+    bit_index: 31
+- model: scoreboard.achievement
+  pk: 108
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: You Are What You Eat
+    description: Gain an intrinsic by eating a corpse (or tin or glob)
+    xlog_field: tnntachieve1
+    bit_index: 32
+- model: scoreboard.achievement
+  pk: 109
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: The Art of the Deal
+    description: Bankrupt a shopkeeper by getting all their money
+    xlog_field: tnntachieve1
+    bit_index: 33
+- model: scoreboard.achievement
+  pk: 110
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Distinction Without Difference
+    description: Polymorph a pet using a polytrap
+    xlog_field: tnntachieve1
+    bit_index: 34
+- model: scoreboard.achievement
+  pk: 111
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Transgender
+    description: Put on an amulet of change
+    xlog_field: tnntachieve1
+    bit_index: 35
+- model: scoreboard.achievement
+  pk: 112
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Father Figure
+    description: Hatch an egg not laid by you and have it come out tame
+    xlog_field: tnntachieve1
+    bit_index: 36
+- model: scoreboard.achievement
+  pk: 113
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Hello, Nurse!
+    description: Get a nurse to heal you or raise your max HP
+    xlog_field: tnntachieve1
+    bit_index: 37
+- model: scoreboard.achievement
+  pk: 114
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: It's The Pits
+    description: Kill something while you are stuck in a pit
+    xlog_field: tnntachieve1
+    bit_index: 38
+- model: scoreboard.achievement
+  pk: 115
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Never Saw It Coming
+    description: Kill invisible monster without see invisible
+    xlog_field: tnntachieve1
+    bit_index: 39
+- model: scoreboard.achievement
+  pk: 116
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Shafted
+    description: Fall down a shaft
+    xlog_field: tnntachieve1
+    bit_index: 40
+- model: scoreboard.achievement
+  pk: 117
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Potions of Booze Cost More Than That
+    description: Get two bits for an ale from a priest
+    xlog_field: tnntachieve1
+    bit_index: 41
+- model: scoreboard.achievement
+  pk: 118
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Horatius at the Bridge
+    description: Extinct soldiers or Keystone Kops
+    xlog_field: tnntachieve1
+    bit_index: 42
+- model: scoreboard.achievement
+  pk: 119
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Who's That Pretty Girl in the Mirror, There?
+    description: Deflect a nymph with a mirror
+    xlog_field: tnntachieve1
+    bit_index: 43
+- model: scoreboard.achievement
+  pk: 120
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Money Talks
+    description: Bribe a demon lord with at least 25000 gold
+    xlog_field: tnntachieve1
+    bit_index: 44
+- model: scoreboard.achievement
+  pk: 121
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Breaking and Entering
+    description: Enter a vault
+    xlog_field: tnntachieve1
+    bit_index: 45
+- model: scoreboard.achievement
+  pk: 122
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Who Was That David Person Anyway?
+    description: Enter a treasure zoo
+    xlog_field: tnntachieve1
+    bit_index: 46
+- model: scoreboard.achievement
+  pk: 123
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Absolute Monarchy
+    description: Enter a throne room
+    xlog_field: tnntachieve1
+    bit_index: 47
+- model: scoreboard.achievement
+  pk: 124
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: They're After Me Lucky Charms
+    description: Enter a leprechaun hall
+    xlog_field: tnntachieve1
+    bit_index: 48
+- model: scoreboard.achievement
+  pk: 125
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Hive Mind
+    description: Enter a beehive
+    xlog_field: tnntachieve1
+    bit_index: 49
+- model: scoreboard.achievement
+  pk: 126
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Day of the Dead
+    description: Enter a graveyard
+    xlog_field: tnntachieve1
+    bit_index: 50
+- model: scoreboard.achievement
+  pk: 127
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Team a Headquarters
+    description: Enter an anthole
+    xlog_field: tnntachieve1
+    bit_index: 51
+- model: scoreboard.achievement
+  pk: 128
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Halt, Who Goes There?
+    description: Enter a barracks
+    xlog_field: tnntachieve1
+    bit_index: 52
+- model: scoreboard.achievement
+  pk: 129
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Dungeon Ecology
+    description: Enter a swamp
+    xlog_field: tnntachieve1
+    bit_index: 53
+- model: scoreboard.achievement
+  pk: 130
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Statue Showcase
+    description: Enter a cockatrice nest
+    xlog_field: tnntachieve1
+    bit_index: 54
+- model: scoreboard.achievement
+  pk: 131
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Asmodead
+    description: Kill Asmodeus
+    xlog_field: tnntachieve1
+    bit_index: 55
+- model: scoreboard.achievement
+  pk: 132
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Fly Swatter
+    description: Kill Baalzebub
+    xlog_field: tnntachieve1
+    bit_index: 56
+- model: scoreboard.achievement
+  pk: 133
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: That Wand is Mine
+    description: Kill Orcus
+    xlog_field: tnntachieve1
+    bit_index: 57
+- model: scoreboard.achievement
+  pk: 134
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Squish Squish
+    description: Kill Juiblex
+    xlog_field: tnntachieve1
+    bit_index: 58
+- model: scoreboard.achievement
+  pk: 135
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Demogorgone
+    description: Kill Demogorgon
+    xlog_field: tnntachieve1
+    bit_index: 59
+- model: scoreboard.achievement
+  pk: 136
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Yee-No-Go
+    description: Kill Yeenoghu
+    xlog_field: tnntachieve1
+    bit_index: 60
+- model: scoreboard.achievement
+  pk: 137
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Geryon-Slayer
+    description: Kill Geryon
+    xlog_field: tnntachieve1
+    bit_index: 61
+- model: scoreboard.achievement
+  pk: 138
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Dispater-Dispatcher
+    description: Kill Dispater
+    xlog_field: tnntachieve1
+    bit_index: 62
+- model: scoreboard.achievement
+  pk: 139
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Conqueror of Death
+    description: Kill Death
+    xlog_field: tnntachieve1
+    bit_index: 63
+- model: scoreboard.achievement
+  pk: 140
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Curer of Pestilence
+    description: Kill Pestilence
+    xlog_field: tnntachieve2
+    bit_index: 0
+- model: scoreboard.achievement
+  pk: 141
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Feeder of Famine
+    description: Kill Famine
+    xlog_field: tnntachieve2
+    bit_index: 1
+- model: scoreboard.achievement
+  pk: 142
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Under New Management
+    description: Change your alignment by any means
+    xlog_field: tnntachieve2
+    bit_index: 2
+- model: scoreboard.achievement
+  pk: 143
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Heisenberg
+    description: Become uncertain about your position or velocity
+    xlog_field: tnntachieve2
+    bit_index: 3
+- model: scoreboard.achievement
+  pk: 144
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Who You Gonna Call?
+    description: Get scared by a ghost
+    xlog_field: tnntachieve2
+    bit_index: 4
+- model: scoreboard.achievement
+  pk: 145
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Groundhog Day
+    description: Return to a forgotten level
+    xlog_field: tnntachieve2
+    bit_index: 5
+- model: scoreboard.achievement
+  pk: 146
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Tainted
+    description: Dip an item in unholy water
+    xlog_field: tnntachieve2
+    bit_index: 6
+- model: scoreboard.achievement
+  pk: 147
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Hydrochloric
+    description: Dissolve iron bars with acid
+    xlog_field: tnntachieve2
+    bit_index: 7
+- model: scoreboard.achievement
+  pk: 148
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Predictably, Nothing Happens
+    description: Break an identified wand of nothing
+    xlog_field: tnntachieve2
+    bit_index: 8
+- model: scoreboard.achievement
+  pk: 149
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Neutralized
+    description: Cancel a monster
+    xlog_field: tnntachieve2
+    bit_index: 9
+- model: scoreboard.achievement
+  pk: 150
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Magivore
+    description: Gain a magical intrinsic by eating a piece of jewelry
+    xlog_field: tnntachieve2
+    bit_index: 10
+- model: scoreboard.achievement
+  pk: 151
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Rope-a-Dope
+    description: Kill a monster with a thrown aklys
+    xlog_field: tnntachieve2
+    bit_index: 11
+- model: scoreboard.achievement
+  pk: 152
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Panacea
+    description: Neutralize a harmful potion with a unicorn horn
+    xlog_field: tnntachieve2
+    bit_index: 12
+- model: scoreboard.achievement
+  pk: 153
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Hulk Smash
+    description: Kill a monster with a heavy iron ball
+    xlog_field: tnntachieve2
+    bit_index: 13
+- model: scoreboard.achievement
+  pk: 154
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Croesus Competitor
+    description: Finish a game carrying at least 50000 gold
+    xlog_field: tnntachieve2
+    bit_index: 14
+- model: scoreboard.achievement
+  pk: 155
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Croesus Buyout
+    description: Finish a game carrying at least 100000 gold
+    xlog_field: tnntachieve2
+    bit_index: 15
+- model: scoreboard.achievement
+  pk: 156
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Palantir
+    description: Successfully apply a crystal ball
+    xlog_field: tnntachieve2
+    bit_index: 16
+- model: scoreboard.achievement
+  pk: 157
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Peak Condition
+    description: Raise all attributes to at least 18
+    xlog_field: tnntachieve2
+    bit_index: 17
+- model: scoreboard.achievement
+  pk: 158
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Those Who Came Before
+    description: Sight another player's bones pile
+    xlog_field: tnntachieve2
+    bit_index: 18
+- model: scoreboard.achievement
+  pk: 159
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Imitation Bones
+    description: Step onto the Rogue level fake bones pile
+    xlog_field: tnntachieve2
+    bit_index: 19
+- model: scoreboard.achievement
+  pk: 160
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Replacement Goldfish
+    description: Cast create familiar
+    xlog_field: tnntachieve2
+    bit_index: 20
+- model: scoreboard.achievement
+  pk: 161
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Pop the Question
+    description: Give a ring of adornment to a succubus
+    xlog_field: tnntachieve2
+    bit_index: 21
+- model: scoreboard.achievement
+  pk: 162
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: No Soup For You!
+    description: Get expelled from the Quest
+    xlog_field: tnntachieve2
+    bit_index: 22
+- model: scoreboard.achievement
+  pk: 163
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Discerning Palate
+    description: Gain intrinsic food appraisal
+    xlog_field: tnntachieve2
+    bit_index: 23
+- model: scoreboard.achievement
+  pk: 164
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Playerbanebane
+    description: Kill a soldier ant
+    xlog_field: tnntachieve2
+    bit_index: 24
+- model: scoreboard.achievement
+  pk: 165
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Banishing Spells Not Included
+    description: Summon a demon lord
+    xlog_field: tnntachieve2
+    bit_index: 25
+- model: scoreboard.achievement
+  pk: 166
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Tastes Like Chicken
+    description: Eat chickatrice or cockatrice meat
+    xlog_field: tnntachieve2
+    bit_index: 26
+- model: scoreboard.achievement
+  pk: 167
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Dust to Dust
+    description: Wrest one last charge from a wand of wishing
+    xlog_field: tnntachieve2
+    bit_index: 27
+- model: scoreboard.achievement
+  pk: 168
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Teetotaler
+    description: Neutralize a potion of booze with an amethyst
+    xlog_field: tnntachieve2
+    bit_index: 28
+- model: scoreboard.achievement
+  pk: 169
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Spooky Scary Skeletons
+    description: Get scared by the rattling of a skeleton
+    xlog_field: tnntachieve2
+    bit_index: 29
+- model: scoreboard.achievement
+  pk: 170
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Ocean's Eleven
+    description: Enter Fort Ludios
+    xlog_field: tnntachieve2
+    bit_index: 30
+- model: scoreboard.achievement
+  pk: 171
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: I Did It For The Money
+    description: Kill Croesus
+    xlog_field: tnntachieve2
+    bit_index: 31
+- model: scoreboard.achievement
+  pk: 172
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Gullible
+    description: Lie to a vault guard about your name
+    xlog_field: tnntachieve2
+    bit_index: 32
+- model: scoreboard.achievement
+  pk: 173
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Luck of the Grasshopper
+    description: Reach +13 Luck
+    xlog_field: tnntachieve2
+    bit_index: 33
+- model: scoreboard.achievement
+  pk: 174
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Murphy's Law
+    description: Reach -13 Luck
+    xlog_field: tnntachieve2
+    bit_index: 34
+- model: scoreboard.achievement
+  pk: 175
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Looking Slick
+    description: Grease a piece of armor
+    xlog_field: tnntachieve2
+    bit_index: 35
+- model: scoreboard.achievement
+  pk: 176
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Watch Your Footing
+    description: Step onto the vibrating square
+    xlog_field: tnntachieve2
+    bit_index: 36
+- model: scoreboard.achievement
+  pk: 177
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: The Grand Tour
+    description: Visit each high altar on the Astral Plane
+    xlog_field: tnntachieve2
+    bit_index: 37
+- model: scoreboard.achievement
+  pk: 178
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Friends Not Food
+    description: Receive the Quest with vegetarian conduct intact
+    xlog_field: tnntachieve2
+    bit_index: 38
+- model: scoreboard.achievement
+  pk: 179
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Animal Rights Activist
+    description: Receive the Quest with vegan conduct intact
+    xlog_field: tnntachieve2
+    bit_index: 39
+- model: scoreboard.achievement
+  pk: 180
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Anti Gulp
+    description: Receive the Quest with foodless conduct intact
+    xlog_field: tnntachieve2
+    bit_index: 40
+- model: scoreboard.achievement
+  pk: 181
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: No Help from Above
+    description: Receive the Quest with atheist conduct intact
+    xlog_field: tnntachieve2
+    bit_index: 41
+- model: scoreboard.achievement
+  pk: 182
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Wax On Wax Off
+    description: Receive the Quest with weaponless conduct intact
+    xlog_field: tnntachieve2
+    bit_index: 42
+- model: scoreboard.achievement
+  pk: 183
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Thou Shalt Not Kill
+    description: Receive the Quest with pacifist conduct intact
+    xlog_field: tnntachieve2
+    bit_index: 43
+- model: scoreboard.achievement
+  pk: 184
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Me No Do Words Good
+    description: Receive the Quest with illiterate conduct intact
+    xlog_field: tnntachieve2
+    bit_index: 44
+- model: scoreboard.achievement
+  pk: 185
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Lost My Transmutation License
+    description: Receive the Quest with polypileless conduct intact
+    xlog_field: tnntachieve2
+    bit_index: 45
+- model: scoreboard.achievement
+  pk: 186
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: True to Form
+    description: Receive the Quest with polyselfless conduct intact
+    xlog_field: tnntachieve2
+    bit_index: 46
+- model: scoreboard.achievement
+  pk: 187
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Self Sufficient
+    description: Receive the Quest with wishless conduct intact
+    xlog_field: tnntachieve2
+    bit_index: 47
+- model: scoreboard.achievement
+  pk: 188
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Leave the Artifacts to the Gods
+    description: Receive the Quest with artifact wishless conduct intact
+    xlog_field: tnntachieve2
+    bit_index: 48
+- model: scoreboard.achievement
+  pk: 189
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Feeling Your Way
+    description: Receive the Quest with zen (permablind) conduct intact
+    xlog_field: tnntachieve2
+    bit_index: 49
+- model: scoreboard.achievement
+  pk: 190
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Going Commando
+    description: Receive the Quest with nudist conduct intact
+    xlog_field: tnntachieve2
+    bit_index: 50
+- model: scoreboard.achievement
+  pk: 191
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Make Love, Not War
+    description: Receive the Quest with genocideless conduct intact
+    xlog_field: tnntachieve2
+    bit_index: 51
+- model: scoreboard.achievement
+  pk: 192
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: No Help From The Floor
+    description: Receive the Quest with Elberethless conduct intact
+    xlog_field: tnntachieve2
+    bit_index: 52
+- model: scoreboard.achievement
+  pk: 193
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: It's A Wonderful Trip
+    description: Receive the Quest with permahallu conduct intact
+    xlog_field: tnntachieve2
+    bit_index: 53
+- model: scoreboard.achievement
+  pk: 194
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Silent World
+    description: Receive the Quest with permadeaf conduct intact
+    xlog_field: tnntachieve2
+    bit_index: 54
+- model: scoreboard.achievement
+  pk: 195
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Keep Your Fancy Toys
+    description: Receive the Quest with artifactless conduct intact
+    xlog_field: tnntachieve2
+    bit_index: 55
+- model: scoreboard.achievement
+  pk: 196
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: New Dungeon, Never Occupied
+    description: Receive the Quest with bonesless conduct intact
+    xlog_field: tnntachieve2
+    bit_index: 56
+- model: scoreboard.achievement
+  pk: 197
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Extradimensionally Challenged
+    description: Receive the Quest with swapchestless conduct intact
+    xlog_field: tnntachieve2
+    bit_index: 57
+- model: scoreboard.achievement
+  pk: 198
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Fur Allergy
+    description: Receive the Quest with petless conduct intact
+    xlog_field: tnntachieve2
+    bit_index: 58
+- model: scoreboard.achievement
+  pk: 199
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Death Isn't So Cheap
+    description: Receive the Quest with survivor conduct intact
+    xlog_field: tnntachieve2
+    bit_index: 59
+- model: scoreboard.achievement
+  pk: 200
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: It's Dangerous To Go Alone! Take This
+    description: Put an item into a swap chest
+    xlog_field: tnntachieve2
+    bit_index: 60
+- model: scoreboard.achievement
+  pk: 201
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: The True Dungeon Masters
+    description: Chat with an active devteam member
+    xlog_field: tnntachieve2
+    bit_index: 61
+- model: scoreboard.achievement
+  pk: 202
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: There Is No Spoon
+    description: Finish the task the devteam requires of you
+    xlog_field: tnntachieve2
+    bit_index: 62
+- model: scoreboard.achievement
+  pk: 203
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: DIRGE
+    description: Instakill an enemy with poison
+    xlog_field: tnntachieve2
+    bit_index: 63
+- model: scoreboard.achievement
+  pk: 204
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Gender Bender
+    description: Change gender two or more times
+    xlog_field: tnntachieve3
+    bit_index: 0
+- model: scoreboard.achievement
+  pk: 205
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: The Deathly Hallows
+    description: Wield a wand of death while wearing an invisibility cloak and amulet of life saving
+    xlog_field: tnntachieve3
+    bit_index: 1
+- model: scoreboard.achievement
+  pk: 206
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Indiana Jones
+    description: Disarm a monster with a bullwhip
+    xlog_field: tnntachieve3
+    bit_index: 2
+- model: scoreboard.achievement
+  pk: 207
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Pilgrim
+    description: Visit every type of aligned altar
+    xlog_field: tnntachieve3
+    bit_index: 3
+- model: scoreboard.achievement
+  pk: 208
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Wanton Waste
+    description: Break an identified, charged wand of wishing
+    xlog_field: tnntachieve3
+    bit_index: 4
+- model: scoreboard.achievement
+  pk: 209
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Poseidon
+    description: Kill a sea monster with a trident
+    xlog_field: tnntachieve3
+    bit_index: 5
+- model: scoreboard.achievement
+  pk: 210
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: It's 4:20 Somewhere
+    description: Stone a monster
+    xlog_field: tnntachieve3
+    bit_index: 6
+- model: scoreboard.achievement
+  pk: 211
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Orpheus
+    description: Activate a drawbridge with the passtune
+    xlog_field: tnntachieve3
+    bit_index: 7
+- model: scoreboard.achievement
+  pk: 212
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Michelin Guide
+    description: Identify both sources of food detection
+    xlog_field: tnntachieve3
+    bit_index: 8
+- model: scoreboard.achievement
+  pk: 213
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: All You Ever Wanted
+    description: Get a wish from every wish source
+    xlog_field: tnntachieve3
+    bit_index: 9
+- model: scoreboard.achievement
+  pk: 214
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Touch It With A 10 Foot Pole
+    description: Kill a floating eye with a polearm
+    xlog_field: tnntachieve3
+    bit_index: 10
+- model: scoreboard.achievement
+  pk: 215
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Jeweler
+    description: Identify all rings
+    xlog_field: tnntachieve3
+    bit_index: 11
+- model: scoreboard.achievement
+  pk: 216
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Mikado
+    description: Identify all wands
+    xlog_field: tnntachieve3
+    bit_index: 12
+- model: scoreboard.achievement
+  pk: 217
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: King of Bling
+    description: Identify all amulets
+    xlog_field: tnntachieve3
+    bit_index: 13
+- model: scoreboard.achievement
+  pk: 218
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Bookworm
+    description: Identify all spellbooks
+    xlog_field: tnntachieve3
+    bit_index: 14
+- model: scoreboard.achievement
+  pk: 219
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Scholar
+    description: Identify all scrolls
+    xlog_field: tnntachieve3
+    bit_index: 15
+- model: scoreboard.achievement
+  pk: 220
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Alchemist
+    description: Identify all potions
+    xlog_field: tnntachieve3
+    bit_index: 16
+- model: scoreboard.achievement
+  pk: 221
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Fashionista
+    description: Identify all non-obvious cloaks, helms, boots, and gloves
+    xlog_field: tnntachieve3
+    bit_index: 17
+- model: scoreboard.achievement
+  pk: 222
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Minesweeper
+    description: Disarm all land mines in Fort Ludios without blowing any up
+    xlog_field: tnntachieve3
+    bit_index: 18
+- model: scoreboard.achievement
+  pk: 223
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Hyperliterate
+    description: Read every readable item in the game
+    xlog_field: tnntachieve3
+    bit_index: 19
+- model: scoreboard.achievement
+  pk: 224
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Civilized Cooking
+    description: Open a tin with a tin opener
+    xlog_field: tnntachieve3
+    bit_index: 20
+- model: scoreboard.achievement
+  pk: 225
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: 007
+    description: Unlock something with a credit card
+    xlog_field: tnntachieve3
+    bit_index: 21
+- model: scoreboard.achievement
+  pk: 226
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Bob Ross
+    description: Release a picture-painting demon from a camera
+    xlog_field: tnntachieve3
+    bit_index: 22
+- model: scoreboard.achievement
+  pk: 227
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Got No Talent
+    description: Scare something by playing music
+    xlog_field: tnntachieve3
+    bit_index: 23
+- model: scoreboard.achievement
+  pk: 228
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Cookie Monster
+    description: Read a fortune without eating its cookie
+    xlog_field: tnntachieve3
+    bit_index: 24
+- model: scoreboard.achievement
+  pk: 229
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Say Hello To My Evil Friend
+    description: Have a non-guaranteed demon lord gated in or summoned
+    xlog_field: tnntachieve3
+    bit_index: 25
+- model: scoreboard.achievement
+  pk: 230
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Death onna Stick
+    description: Kill a member of 25 different monster species
+    xlog_field: tnntachieve3
+    bit_index: 26
+- model: scoreboard.achievement
+  pk: 231
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Bring out your Dead
+    description: Kill a member of 50 different monster species
+    xlog_field: tnntachieve3
+    bit_index: 27
+- model: scoreboard.achievement
+  pk: 232
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Diverse Death-Dealer
+    description: Kill a member of 100 different monster species
+    xlog_field: tnntachieve3
+    bit_index: 28
+- model: scoreboard.achievement
+  pk: 233
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Grim Reaper
+    description: Kill a member of 200 different monster species
+    xlog_field: tnntachieve3
+    bit_index: 29
+- model: scoreboard.achievement
+  pk: 234
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Gotta Kill 'em All
+    description: Kill a member of all eligible monster species
+    xlog_field: tnntachieve3
+    bit_index: 30
+- model: scoreboard.achievement
+  pk: 235
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Learn the Alphabet
+    description: Kill a member of each species from a to z
+    xlog_field: tnntachieve3
+    bit_index: 31
+- model: scoreboard.achievement
+  pk: 236
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Make your Mark
+    description: Engrave with an athame
+    xlog_field: tnntachieve3
+    bit_index: 32
+- model: scoreboard.achievement
+  pk: 237
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: One Hit KO
+    description: Deal a monster its maximum HP or more of damage (minimum 20)
+    xlog_field: tnntachieve3
+    bit_index: 33
+- model: scoreboard.achievement
+  pk: 238
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Drink It To The Next Level
+    description: Level up by drinking from a sink
+    xlog_field: tnntachieve3
+    bit_index: 34
+- model: scoreboard.achievement
+  pk: 239
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Why Won't You DIE Already
+    description: Kill the Wizard of Yendor 20 or more times
+    xlog_field: tnntachieve3
+    bit_index: 35
+- model: scoreboard.achievement
+  pk: 240
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: You're About To Die, You Scrub
+    description: Get a special message saying you're about to die, you scrub
+    xlog_field: tnntachieve3
+    bit_index: 36
+- model: scoreboard.achievement
+  pk: 241
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Six Pack
+    description: Stock an ice box with 6 or more potions of booze
+    xlog_field: tnntachieve3
+    bit_index: 37
+- model: scoreboard.achievement
+  pk: 242
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Bar Brawler
+    description: Kill a monster with HP damage by smashing a bottle on it
+    xlog_field: tnntachieve3
+    bit_index: 38
+- model: scoreboard.achievement
+  pk: 243
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Extreme Omnivore
+    description: Eat an object from every common, edible object class
+    xlog_field: tnntachieve3
+    bit_index: 39
+- model: scoreboard.achievement
+  pk: 244
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Extinctionist Lite
+    description: Genocide 20 or more monster species
+    xlog_field: tnntachieve3
+    bit_index: 40
+- model: scoreboard.achievement
+  pk: 245
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Dudley's Hero
+    description: Extinct newts
+    xlog_field: tnntachieve3
+    bit_index: 41
+- model: scoreboard.achievement
+  pk: 246
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Ice Jesus
+    description: Walk on top of lava unharmed
+    xlog_field: tnntachieve3
+    bit_index: 42
+- model: scoreboard.achievement
+  pk: 247
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Rare Loot
+    description: Acquire an athame that was generated in the inventory of a lich
+    xlog_field: tnntachieve3
+    bit_index: 43
+- model: scoreboard.achievement
+  pk: 248
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Boy Scout
+    description: Complete Sokoban without incurring any penalties for rule-breaking
+    xlog_field: tnntachieve3
+    bit_index: 44
+- model: scoreboard.achievement
+  pk: 249
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: Sounds Hollow
+    description: Reveal a secret door with a stethoscope
+    xlog_field: tnntachieve3
+    bit_index: 45
+- model: scoreboard.achievement
+  pk: 250
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    title: DO YOU WANT TO DO THIS BRO? BECAUSE IT'S THUNDERDOME TIME!
+    description: Defeat the NPC from the NPC Deathmatch quest
+    xlog_field: tnntachieve3
+    bit_index: 46
