@@ -60,7 +60,7 @@
     variant: tnnt
     version: 3.6.6
     short_name: pile
-    long_name: polypileless
+    long_name: polyless
     bit_index: 7
 - model: scoreboard.conduct
   pk: 9
@@ -164,7 +164,7 @@
     variant: tnnt
     version: 3.6.6
     short_name: arts
-    long_name: never touched an artifact
+    long_name: never_touched_an_artifact
     bit_index: 20
 - model: scoreboard.conduct
   pk: 22

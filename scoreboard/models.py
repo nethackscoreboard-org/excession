@@ -1,3 +1,4 @@
+from django.core.validators import MaxLengthValidator
 from django.db import models
 
 REQUIRED_GAME_RECORD_FIELDS = [
@@ -25,6 +26,10 @@ OPTIONAL_GAME_RECORD_FIELDS = [
     'wizmode',
     'explore',
     'bonesless',
+    'deathlev',
+    'maxlvl',
+    'hp',
+    'maxhp',
 ]
 
 class Achievement(models.Model):
@@ -53,19 +58,23 @@ class GameRecord(models.Model):
     server  = models.CharField(max_length=128)
     variant = models.CharField(max_length=128)
 
-    version     = models.CharField(max_length=128)
-    starttime   = models.DateTimeField()
-    endtime     = models.DateTimeField()
-    turns       = models.BigIntegerField()
-    name        = models.CharField(max_length=128)
-    death       = models.CharField(max_length=1024)
-    role        = models.CharField(max_length=16)
-    race        = models.CharField(max_length=16, null=True)
-    align       = models.CharField(max_length=16, null=True)
-    gender      = models.CharField(max_length=16, null=True)
-    align0      = models.CharField(max_length=16, null=True)
-    gender0     = models.CharField(max_length=16, null=True)
-    points      = models.BigIntegerField(null=True)
+    version      = models.CharField(max_length=128)
+    starttime    = models.DateTimeField()
+    endtime      = models.DateTimeField()
+    turns        = models.BigIntegerField()
+    name         = models.CharField(max_length=128)
+    death        = models.CharField(max_length=1024)
+    role         = models.CharField(max_length=16)
+    race         = models.CharField(max_length=16, null=True)
+    align        = models.CharField(max_length=16, null=True)
+    gender       = models.CharField(max_length=16, null=True)
+    align0       = models.CharField(max_length=16, null=True)
+    gender0      = models.CharField(max_length=16, null=True)
+    points       = models.BigIntegerField(null=True)
+    deathlev     = models.IntegerField(null=True)
+    maxlvl       = models.IntegerField(null=True)
+    hp           = models.BigIntegerField(null=True)
+    maxhp        = models.BigIntegerField(null=True)
 
     achievements = models.ManyToManyField(Achievement)
     conducts     = models.ManyToManyField(Conduct)

@@ -1,25 +1,27 @@
+from scoreboard.serializers import AscensionSerializer, GameRecordSerializer
 from django.test import TestCase
 from scoreboard.parsers import XlogParser
-from scoreboard.models import Achievement, Conduct, GameRecord
+from scoreboard.models import Conduct, GameRecord
+from scoreboard.serializers import GameRecordSerializer, XlogRecordSerializer
 from scripts.achievements import load_achievements
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
 
 sample_xlog = {
     'name': 'asdf',
     'version': '3.6.6',
     'death': 'killed by a Fox',
-    'role': 'Valkyrie',
+    'role': 'Val',
     'starttime': '1604188860',
     'endtime': '1604188935',
     'turns': '165',
     'achieve': '0x0',
 }
 sample_xlog_line = "version=3.6.6	points=87	deathdnum=0	deathlev=1	maxlvl=2	\
-    hp=0	maxhp=12	deaths=1	deathdate=20201101	birthdate=20201101	uid=5	role=Hea	race=Gno	\
+hp=0	maxhp=12	deaths=1	deathdate=20201101	birthdate=20201101	uid=5	role=Hea	race=Gno	\
 gender=Mal	align=Neu	name=thorsb	death=killed by a water demon	conduct=0x11fdfcf	turns=165	\
 achieve=0x0	realtime=74	starttime=1604188860	endtime=1604188935	gender0=Mal	align0=Neu	flags=0x4	\
 tnntachieve0=0x0	tnntachieve1=0x0	tnntachieve2=0x0	tnntachieve3=0x0"
-sample_server = 'hdf-us'
+sample_server = 'hdf'
 sample_conducts = [
     ['asdf', 'fake conduct'],
     ['zomg', 'zomg lol yay'],
@@ -174,6 +176,15 @@ class XlogParserTest(TestCase):
         params =  {'death': 'foobar', 'achieve': '0x00'}
         game_record = self.parser.createGameRecord(gen_xlog(params))
         self.assertEqual(game_record.won, False)
+    
+    def test_serializer(self):
+        game_record = self.parser.createGameRecord(sample_xlog_line)
+        print(GameRecordSerializer(game_record).data)
+        game_record = self.parser.createGameRecord(gen_xlog({}))
+        print(GameRecordSerializer(game_record).data)
+        game_record = self.parser.createGameRecord(gen_xlog({'achieve': '0x100', 'death': 'pwnt the gods'}))
+        print(AscensionSerializer(game_record).data)
+        game_record = XlogRecordSerializer(sample_xlog_line)
 
 #    def test_invalid_utf8_in_input(self):
 #        self.assertRaises(ValueError, self.parser.createGameRecord, gen_xlog("\xc3\x28"))
