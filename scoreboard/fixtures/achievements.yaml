@@ -823,7 +823,7 @@
     variant: tnnt
     version: 3.6.6
     title: Near Death Experience
-    description: #chat to Death while carrying a Terry Pratchett novel
+    description: '#chat to Death while carrying a Terry Pratchett novel'
     xlog_field: tnntachieve1
     bit_index: 16
 - model: scoreboard.achievement

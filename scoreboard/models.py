@@ -27,6 +27,15 @@ OPTIONAL_GAME_RECORD_FIELDS = [
     'bonesless',
 ]
 
+class Achievement(models.Model):
+    unique_together = [['variant', 'version', 'bit_index', 'xlog_field'], ['variant', 'version', 'title']]
+    variant     = models.CharField(max_length=128)
+    version     = models.CharField(max_length=128)
+    title       = models.CharField(max_length=16)
+    description = models.CharField(max_length=128)
+    xlog_field  = models.CharField(max_length=128)
+    bit_index   = models.IntegerField()
+
 class Conduct(models.Model):
     unique_together = [['variant', 'version', 'bit_index', 'achieve_field'], ['variant', 'version', 'short_name']]
     variant    = models.CharField(max_length=128)
