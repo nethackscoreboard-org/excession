@@ -1,6 +1,6 @@
 from django.test import TestCase
 from scoreboard.parsers import XlogParser
-from scoreboard.models import Conduct
+from scoreboard.models import Conduct, GameRecord
 from datetime import datetime, timedelta, timezone
 
 sample_xlog = {
@@ -18,6 +18,17 @@ gender=Mal	align=Neu	name=thorsb	death=killed by a water demon	conduct=0x11fdfcf
 achieve=0x0	realtime=74	starttime=1604188860	endtime=1604188935	gender0=Mal	align0=Neu	flags=0x4	\
 tnntachieve0=0x0	tnntachieve1=0x0	tnntachieve2=0x0	tnntachieve3=0x0"
 sample_server = 'hdf-us'
+sample_conducts = [
+    ['asdf', 'fake conduct'],
+    ['zomg', 'zomg lol yay'],
+    ['lols', 'idk what im doin'],
+    ['heya', 'asdf fjsladjfj'],
+    ['fooo', 'peopel are uman'],
+    ['moma', 'moma dont love me'],
+    ['babe', 'baby wanna cracker'],
+    ['geno', 'genocide route'],
+    ['valk', 'valkyrie love'],
+]
 
 def gen_xlog(modifiers):
     xlog_copy = sample_xlog.copy()
@@ -26,6 +37,11 @@ def gen_xlog(modifiers):
     return "\t".join([ '='.join([k, v]) for k, v in xlog_copy.items() ])
 
 class XlogParserTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        for i, conduct in enumerate(sample_conducts):
+            Conduct.objects.create(variant='tnnt', version='3.6.6', short_name=conduct[0], long_name=conduct[1], bit_index=i)
+
     def setUp(self):
         self.parser = XlogParser(sample_server)
         pass
@@ -104,7 +120,22 @@ class XlogParserTest(TestCase):
     def test_conducts(self):
         params = {'conduct': '0x8'}
         game_record = self.parser.createGameRecord(gen_xlog(params))
-        self.assertIsNotNone(game_record.conducts.get(short_name='athe'))
+        self.assertIsNotNone(game_record.conducts.filter(short_name='heya'))
+        params = {'conduct': '0x9'}
+        game_record = self.parser.createGameRecord(gen_xlog(params))
+        self.assertIsNotNone(game_record.conducts.filter(short_name='heya'))
+        self.assertIsNotNone(game_record.conducts.filter(short_name='asdf'))
+        params = {'conduct': '0x6'}
+        game_record = self.parser.createGameRecord(gen_xlog(params))
+        self.assertEqual(game_record.conducts.filter(short_name='asdf').count(), 0)
+        self.assertEqual(game_record.conducts.filter(short_name='heya').count(), 0)
+        self.assertIsNotNone(game_record.conducts.filter(short_name='zomg'))
+        self.assertIsNotNone(game_record.conducts.filter(short_name='lols'))
+        self.assertEqual(GameRecord.objects.filter(conducts__short_name='asdf').count(), 1)
+        self.assertEqual(GameRecord.objects.filter(conducts__short_name='heya').count(), 2)
+        self.assertEqual(GameRecord.objects.filter(conducts__short_name='zomg').count(), 1)
+        self.assertEqual(GameRecord.objects.filter(conducts__short_name='lols').count(), 1)
+        self.assertEqual(GameRecord.objects.filter(conducts__short_name='geno').count(), 0)
         pass
 
 #    def test_invalid_utf8_in_input(self):

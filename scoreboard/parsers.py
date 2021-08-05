@@ -64,8 +64,10 @@ class XlogParser():
     def __parse_conducts__(self, record):
         if not 'conduct' in record:
             return []
-        return itertools.filterfalse(lambda c: not (record['conduct'] & (1 << c.bit_index)),
-            Conduct.objects.filter(variant=record['variant'], version=record['version']))
+        conduct_specs = Conduct.objects.filter(variant=record['variant'], version=record['version'])
+        if not conduct_specs:
+            return []
+        return itertools.filterfalse(lambda c: not 1 << c.bit_index & record['conduct'], conduct_specs)
 
     def createGameRecord(self, xlog_line):
         if re.search('[\0\r\n]', xlog_line):
@@ -90,7 +92,6 @@ class XlogParser():
 
         parsed_record = GameRecord.objects.create(**self.__squash__(record))
         for conduct in conducts:
-            print("added {}".format(conduct))
-            parsed_record.add(conduct)
+            parsed_record.conducts.add(conduct)
         parsed_record.save()
         return parsed_record

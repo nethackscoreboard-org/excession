@@ -28,7 +28,7 @@ OPTIONAL_GAME_RECORD_FIELDS = [
 ]
 
 class Conduct(models.Model):
-    unique_together = [['variant', 'version', 'bit_index']]
+    unique_together = [['variant', 'version', 'bit_index'], ['variant', 'version', 'short_name']]
     variant    = models.CharField(max_length=128)
     version    = models.CharField(max_length=128)
     long_name  = models.CharField(max_length=128)
