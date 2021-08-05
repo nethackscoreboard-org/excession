@@ -1,20 +1,33 @@
 from django.test import TestCase
 from scoreboard.parsers import XlogParser
+from scoreboard.models import Conduct
+from datetime import datetime, timedelta, timezone
 
 sample_xlog = {
     'name': 'asdf',
     'version': '3.6.6',
     'death': 'killed by a Fox',
+    'role': 'Valkyrie',
+    'starttime': '1604188860',
+    'endtime': '1604188935',
+    'turns': '165',
 }
+sample_xlog_line = "version=3.6.6	points=87	deathdnum=0	deathlev=1	maxlvl=2	\
+    hp=0	maxhp=12	deaths=1	deathdate=20201101	birthdate=20201101	uid=5	role=Hea	race=Gno	\
+gender=Mal	align=Neu	name=thorsb	death=killed by a water demon	conduct=0x11fdfcf	turns=165	\
+achieve=0x0	realtime=74	starttime=1604188860	endtime=1604188935	gender0=Mal	align0=Neu	flags=0x4	\
+tnntachieve0=0x0	tnntachieve1=0x0	tnntachieve2=0x0	tnntachieve3=0x0"
+sample_server = 'hdf-us'
 
-def gen_xlog(modifier):
+def gen_xlog(modifiers):
     xlog_copy = sample_xlog.copy()
-    xlog_copy['death'] = xlog_copy['death'] + modifier
+    for key in modifiers:
+        xlog_copy[key] = modifiers[key]
     return "\t".join([ '='.join([k, v]) for k, v in xlog_copy.items() ])
 
 class XlogParserTest(TestCase):
     def setUp(self):
-        self.parser = XlogParser()
+        self.parser = XlogParser(sample_server)
         pass
 
     def test_missing_required_fields(self):
@@ -27,9 +40,71 @@ class XlogParserTest(TestCase):
         pass
 
     def test_control_chars_in_input(self):
-        self.assertRaises(ValueError, self.parser.createGameRecord, gen_xlog("\n"))
-        self.assertRaises(ValueError, self.parser.createGameRecord, gen_xlog("\r"))
-        self.assertRaises(ValueError, self.parser.createGameRecord, gen_xlog("\0"))
+        self.assertRaises(ValueError, self.parser.createGameRecord, gen_xlog({'death': "\n"}))
+        self.assertRaises(ValueError, self.parser.createGameRecord, gen_xlog({'death': "\r"}))
+        self.assertRaises(ValueError, self.parser.createGameRecord, gen_xlog({'death': "\0"}))
+        pass
+
+    def test_valid_xlog_record(self):
+        game_record = self.parser.createGameRecord(gen_xlog({}))
+        self.assertEqual(game_record.win, False)
+        self.assertEqual(game_record.name, sample_xlog['name'])
+        game_record = self.parser.createGameRecord(sample_xlog_line)
+        self.assertEqual(game_record.align, 'Neu')
+        self.assertEqual(game_record.realtime, timedelta(seconds=74))
+        pass
+    
+    def test_starttime_after_endtime(self):
+        starttime = datetime.now().timestamp()
+        endtime = datetime.now() - timedelta(days=5)
+        params = {'starttime': f"{starttime}", 'endtime': f"{endtime}"}
+        self.assertRaises(ValueError, self.parser.createGameRecord, gen_xlog(params))
+        pass
+
+    def test_realtime_greater_than_wallclock(self):
+        realtime = '40000'
+        starttime = datetime.now().timestamp()
+        endtime = datetime.now() - timedelta(seconds=5)
+        params = {'starttime': f"{starttime}", 'endtime': f"{endtime}", 'realtime': f"{realtime}"}
+        self.assertRaises(ValueError, self.parser.createGameRecord, gen_xlog(params))
+        pass
+    
+    def test_xlog_server_overrides_parser_server(self):
+        params = {'server': 'hdf-eu'}
+        game_record = self.parser.createGameRecord(gen_xlog(params))
+        self.assertEqual(game_record.server, 'hdf-eu')
+        pass
+
+    def test_future_times(self):
+        starttime = int((datetime.now() + timedelta(days=1)).timestamp())
+        endtime = int((datetime.now() + timedelta(days=3)).timestamp())
+        realtime = int(timedelta(days=1).total_seconds())
+        params = {'starttime': f"{starttime}", 'endtime': f"{endtime}", 'realtime': f"{realtime}"}
+        self.assertRaises(ValueError, self.parser.createGameRecord, gen_xlog(params))
+        starttime = int((datetime.now() - timedelta(days=1)).timestamp())
+        endtime = int((datetime.now() + timedelta(days=1)).timestamp())
+        realtime = int(timedelta(days=1).total_seconds())
+        params = {'starttime': f"{starttime}", 'endtime': f"{endtime}", 'realtime': f"{realtime}"}
+        self.assertRaises(ValueError, self.parser.createGameRecord, gen_xlog(params))
+        pass
+
+    def test_flags(self):
+        params = {'flags': '0x4'}
+        game_record = self.parser.createGameRecord(gen_xlog(params))
+        self.assertEqual(game_record.bonesless, True)
+        params = {'flags': '0x6'}
+        game_record = self.parser.createGameRecord(gen_xlog(params))
+        self.assertEqual(game_record.explore, True)
+        self.assertEqual(game_record.bonesless, True)
+        params = {'flags': '0x1'}
+        game_record = self.parser.createGameRecord(gen_xlog(params))
+        self.assertEqual(game_record.wizmode, True)
+        pass
+
+    def test_conducts(self):
+        params = {'conduct': '0x8'}
+        game_record = self.parser.createGameRecord(gen_xlog(params))
+        self.assertIsNotNone(game_record.conducts.get(short_name='athe'))
         pass
 
 #    def test_invalid_utf8_in_input(self):

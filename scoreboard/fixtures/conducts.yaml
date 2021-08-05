@@ -1,0 +1,200 @@
+- model: scoreboard.conduct
+  pk: 1
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    short_name: food
+    long_name: foodless
+    bit_index: 0
+- model: scoreboard.conduct
+  pk: 2
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    short_name: vegn
+    long_name: vegan
+    bit_index: 1
+- model: scoreboard.conduct
+  pk: 3
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    short_name: vegt
+    long_name: vegetarian
+    bit_index: 2
+- model: scoreboard.conduct
+  pk: 4
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    short_name: athe
+    long_name: atheist
+    bit_index: 3
+- model: scoreboard.conduct
+  pk: 5
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    short_name: weap
+    long_name: weaponless
+    bit_index: 4
+- model: scoreboard.conduct
+  pk: 6
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    short_name: paci
+    long_name: pacifist
+    bit_index: 5
+- model: scoreboard.conduct
+  pk: 7
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    short_name: illi
+    long_name: illiterate
+    bit_index: 6
+- model: scoreboard.conduct
+  pk: 8
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    short_name: pile
+    long_name: polypileless
+    bit_index: 7
+- model: scoreboard.conduct
+  pk: 9
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    short_name: self
+    long_name: polyselfless
+    bit_index: 8
+- model: scoreboard.conduct
+  pk: 10
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    short_name: wish
+    long_name: wishless
+    bit_index: 9
+- model: scoreboard.conduct
+  pk: 11
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    short_name: arti
+    long_name: artifact wishless
+    bit_index: 10
+- model: scoreboard.conduct
+  pk: 12
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    short_name: geno
+    long_name: genocideless
+    bit_index: 11
+- model: scoreboard.conduct
+  pk: 13
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    short_name: elbe
+    long_name: elberethless
+    bit_index: 12
+- model: scoreboard.conduct
+  pk: 14
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    short_name: surv
+    long_name: survived
+    bit_index: 13
+- model: scoreboard.conduct
+  pk: 15
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    short_name: swap
+    long_name: swapchestless
+    bit_index: 14
+- model: scoreboard.conduct
+  pk: 16
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    short_name: neme
+    long_name: never killed your quest nemesis
+    bit_index: 15
+- model: scoreboard.conduct
+  pk: 17
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    short_name: vlad
+    long_name: never killed Vlad the Impaler
+    bit_index: 16
+- model: scoreboard.conduct
+  pk: 18
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    short_name: wizy
+    long_name: never killed the Wizard of Yendor
+    bit_index: 17
+- model: scoreboard.conduct
+  pk: 19
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    short_name: hpom
+    long_name: never killed the High Priest of Moloch
+    bit_index: 18
+- model: scoreboard.conduct
+  pk: 20
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    short_name: ride
+    long_name: never killed a Rider
+    bit_index: 19
+- model: scoreboard.conduct
+  pk: 21
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    short_name: arts
+    long_name: never touched an artifact
+    bit_index: 20
+- model: scoreboard.conduct
+  pk: 22
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    short_name: pets
+    long_name: petless
+    bit_index: 21
+- model: scoreboard.conduct
+  pk: 23
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    short_name: deaf
+    long_name: permanently deaf
+    bit_index: 22
+- model: scoreboard.conduct
+  pk: 24
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    short_name: hall
+    long_name: permanently hallucinated
+    bit_index: 23
+- model: scoreboard.conduct
+  pk: 25
+  fields:
+    variant: tnnt
+    version: 3.6.6
+    short_name: bone
+    long_name: bonesless
+    bit_index: 24
