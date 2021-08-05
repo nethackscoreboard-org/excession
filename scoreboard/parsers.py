@@ -62,12 +62,15 @@ class XlogParser():
                 record['bonesless'] = True
     
     def __parse_conducts__(self, record):
-        if not 'conduct' in record:
-            return []
-        conduct_specs = Conduct.objects.filter(variant=record['variant'], version=record['version'])
-        if not conduct_specs:
-            return []
-        return itertools.filterfalse(lambda c: not 1 << c.bit_index & record['conduct'], conduct_specs)
+        conducts = []
+        ach_conducts = []
+        conduct_specs = Conduct.objects.filter(variant=record['variant'], version=record['version'], achieve_field=False)
+        ach_conduct_specs = Conduct.objects.filter(variant=record['variant'], version=record['version'], achieve_field=True)
+        if 'conduct' in record and conduct_specs:
+            conducts = itertools.filterfalse(lambda c: not 1 << c.bit_index & record['conduct'], conduct_specs)
+        if 'achieve' in record and ach_conduct_specs:
+            ach_conducts = itertools.filterfalse(lambda c: not 1 << c.bit_index & record['achieve'], ach_conduct_specs)
+        return conducts, ach_conducts
 
     def createGameRecord(self, xlog_line):
         if re.search('[\0\r\n]', xlog_line):
@@ -80,7 +83,7 @@ class XlogParser():
 
         self.__convert__(record)
         self.__check_flags__(record)
-        conducts = self.__parse_conducts__(record)
+        conducts, ach_conducts = self.__parse_conducts__(record)
 
         if record['starttime'] > datetime.now(tz=timezone.utc) or record['endtime'] > datetime.now(tz=timezone.utc):
             raise ValueError
@@ -93,5 +96,7 @@ class XlogParser():
         parsed_record = GameRecord.objects.create(**self.__squash__(record))
         for conduct in conducts:
             parsed_record.conducts.add(conduct)
+        for ach_conduct in ach_conducts:
+            parsed_record.conducts.add(ach_conduct)
         parsed_record.save()
         return parsed_record

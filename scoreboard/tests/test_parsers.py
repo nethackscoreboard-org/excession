@@ -29,6 +29,10 @@ sample_conducts = [
     ['geno', 'genocide route'],
     ['valk', 'valkyrie love'],
 ]
+sample_ach_conducts = [
+    ['zen', 'you know, blind'],
+    ['nude', 'streaker wooooo'],
+]
 
 def gen_xlog(modifiers):
     xlog_copy = sample_xlog.copy()
@@ -41,6 +45,8 @@ class XlogParserTest(TestCase):
     def setUpTestData(cls):
         for i, conduct in enumerate(sample_conducts):
             Conduct.objects.create(variant='tnnt', version='3.6.6', short_name=conduct[0], long_name=conduct[1], bit_index=i)
+        for i, achieve in enumerate(sample_ach_conducts):
+            Conduct.objects.create(variant='tnnt', version='3.6.6', short_name=achieve[0], long_name=achieve[1], bit_index=i, achieve_field=True)
 
     def setUp(self):
         self.parser = XlogParser(sample_server)
@@ -136,6 +142,9 @@ class XlogParserTest(TestCase):
         self.assertEqual(GameRecord.objects.filter(conducts__short_name='zomg').count(), 1)
         self.assertEqual(GameRecord.objects.filter(conducts__short_name='lols').count(), 1)
         self.assertEqual(GameRecord.objects.filter(conducts__short_name='geno').count(), 0)
+        params = {'achieve': '0x2'}
+        game_record = self.parser.createGameRecord(gen_xlog(params))
+        self.assertEqual(GameRecord.objects.filter(conducts__short_name='nude').count(), 1)
         pass
 
 #    def test_invalid_utf8_in_input(self):

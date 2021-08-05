@@ -28,12 +28,13 @@ OPTIONAL_GAME_RECORD_FIELDS = [
 ]
 
 class Conduct(models.Model):
-    unique_together = [['variant', 'version', 'bit_index'], ['variant', 'version', 'short_name']]
+    unique_together = [['variant', 'version', 'bit_index', 'achieve_field'], ['variant', 'version', 'short_name']]
     variant    = models.CharField(max_length=128)
     version    = models.CharField(max_length=128)
     long_name  = models.CharField(max_length=128)
     short_name = models.CharField(max_length=16)
     bit_index  = models.IntegerField()
+    achieve_field = models.BooleanField(default=False)
 
 # Create your models here.
 class GameRecord(models.Model):
