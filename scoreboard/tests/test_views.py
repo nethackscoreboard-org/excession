@@ -1,5 +1,5 @@
 from scoreboard.serializers import XlogListSerializer, XlogRecordSerializer, XlogParser
-from scoreboard.views import ListAscensions
+from scoreboard.views import AscendedViewSet
 from django.test import TestCase
 
 class AscendedViewSetTest(TestCase):

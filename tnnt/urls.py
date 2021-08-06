@@ -6,11 +6,13 @@ from rest_framework.routers import Route, DynamicRoute, SimpleRouter
 router = routers.DefaultRouter()
 router.register(r'games', views.GameViewSet)
 router.register(r'ascended', views.AscendedViewSet)
-router.register(r'players', views.PlayerViewSet)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
-    path('rs/', include(router.urls)),
+
+    path('players/', views.PlayersList.as_view(), name='players-list'),
+    path('players/<str:player>/', views.GamesByPlayerList.as_view()),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
+urlpatterns += router.urls
