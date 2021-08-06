@@ -1,7 +1,6 @@
 import io
 from datetime import datetime, timedelta
 from django.test import TestCase
-from rest_framework import serializers
 from scoreboard.serializers import XlogListSerializer, XlogRecordSerializer, XlogParser
 
 class XlogParserTest(TestCase):
@@ -38,16 +37,12 @@ class XlogParserTest(TestCase):
         self.assertEqual(serializer.is_valid(), False)
         pass
 
-    def test_future_starttime(self):
+    def test_future_times(self):
         raw_data = self.parser.parse(self.file)[0]
         raw_data['starttime'] = int((datetime.now() + timedelta(days=1)).timestamp())
         raw_data['endtime'] = int((datetime.now() + timedelta(days=2)).timestamp())
         serializer = XlogRecordSerializer(data=raw_data, context={'server': 'hdf', 'variant': 'tnnt'})
         self.assertEqual(serializer.is_valid(), False)
-        pass
-
-    def test_future_endtime(self):
-        raw_data = self.parser.parse(self.file)[0]
         raw_data['starttime'] = int((datetime.now() - timedelta(days=1)).timestamp())
         raw_data['endtime'] = int((datetime.now() + timedelta(days=2)).timestamp())
         serializer = XlogRecordSerializer(data=raw_data, context={'server': 'hdf', 'variant': 'tnnt'})
@@ -59,16 +54,43 @@ class XlogParserTest(TestCase):
         raw_data['flags'] = 0x4
         serializer = XlogRecordSerializer(data=raw_data, context={'server': 'hdf', 'variant': 'tnnt'})
         self.assertEqual(serializer.is_valid(), True)
+        game = serializer.save()
+        self.assertEqual(game.bonesless, True)
+        raw_data['flags'] = 0x6
+        serializer = XlogRecordSerializer(data=raw_data, context={'server': 'hdf', 'variant': 'tnnt'})
+        self.assertEqual(serializer.is_valid(), True)
+        game = serializer.save()
+        self.assertEqual(game.mode, 'explore')
+        self.assertEqual(game.bonesless, True)
+        raw_data['flags'] = 0x1
+        serializer = XlogRecordSerializer(data=raw_data, context={'server': 'hdf', 'variant': 'tnnt'})
+        self.assertEqual(serializer.is_valid(), True)
+        game = serializer.save()
+        self.assertEqual(game.mode, 'wizard')
+        pass
+
+    def test_conducts(self):
+        raw_data = self.parser.parse(self.file)[0]
+        raw_data['conduct'] = 0x1800
+        serializer = XlogRecordSerializer(data=raw_data, context={'server': 'hdf', 'variant': 'tnnt'})
+        self.assertEqual(serializer.is_valid(), True)
+        game = serializer.save()
+        self.assertEqual('elberethless' in game.conducts.split(','), True)
+        self.assertEqual('genocideless' in game.conducts.split(','), True)
+        self.assertEqual('atheist' in game.conducts.split(','), False)
+        raw_data['conduct'] = 0x6
+        serializer = XlogRecordSerializer(data=raw_data, context={'server': 'hdf', 'variant': 'tnnt'})
+        self.assertEqual(serializer.is_valid(), True)
+        game = serializer.save()
+        self.assertEqual('vegan' in game.conducts.split(','), True)
+        self.assertEqual('vegetarian' in game.conducts.split(','), True)
+        self.assertEqual('wishless' in game.conducts.split(','), False)
+        raw_data['achieve'] = 0x1000
+        serializer = XlogRecordSerializer(data=raw_data, context={'server': 'hdf', 'variant': 'tnnt'})
+        self.assertEqual(serializer.is_valid(), True)
+        game = serializer.save()
+        self.assertEqual('blind' in game.conducts.split(','), True)
         pass
     
 #    def test_won(self):
-#        params =  {'achieve': '0x100'}
-#        game_record = self.parser.createGameRecord(gen_xlog(params))
-#        self.assertEqual(game_record.won, True)
-#        params =  {'death': 'ascended'}
-#        game_record = self.parser.createGameRecord(gen_xlog(params))
-#        self.assertEqual(game_record.won, True)
-#        params =  {'death': 'foobar', 'achieve': '0x00'}
-#        game_record = self.parser.createGameRecord(gen_xlog(params))
-#        self.assertEqual(game_record.won, False)
     
