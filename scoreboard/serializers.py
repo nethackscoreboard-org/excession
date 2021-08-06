@@ -32,6 +32,7 @@ flag_bits = {
     'explore': 0x2,
     'bonesless': 0x4,
 }
+achieve_ascended = 0x100
 
 try:
     file = open('scoreboard/data/conducts.json',)
@@ -143,6 +144,14 @@ class XlogRecordSerializer(serializers.ModelSerializer):
                 for bit in itertools.filterfalse(lambda x: not int(x, 0) & data[field], achievements_map[field].keys()) ]
             for field in itertools.filterfalse(lambda key: key not in data, ['achieve', 'tnntachieve0', 'tnntachieve1', 'tnntachieve2', 'tnntachieve3']) ]))
     
+    def _won(self, data):
+        if 'achieve' in data and data['achieve'] & achieve_ascended:
+            return True
+        elif data['death'] == 'ascended':
+            return True
+        else:
+            return False
+    
     def create(self, validated_data):
         return GameRecord.objects.create(**validated_data)
     
@@ -158,6 +167,7 @@ class XlogRecordSerializer(serializers.ModelSerializer):
         data['bonesless'] = self._bonesless(data)
         data['conducts'] = self._conducts(data)
         data['achievements'] = self._achievements(data)
+        data['won'] = self._won(data)
         return {
             field: data[field]
             for field in itertools.filterfalse(lambda k: k in filtered_fields, data.keys())

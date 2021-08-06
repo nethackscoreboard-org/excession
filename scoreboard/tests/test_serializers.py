@@ -91,6 +91,16 @@ class XlogParserTest(TestCase):
         game = serializer.save()
         self.assertEqual('blind' in game.conducts.split(','), True)
         pass
-    
-#    def test_won(self):
-    
+
+    def test_won(self):
+        raw_data = self.parser.parse(self.file)[0]
+        raw_data['achieve'] = 0x100
+        serializer = XlogRecordSerializer(data=raw_data, context={'server': 'hdf', 'variant': 'tnnt'})
+        self.assertEqual(serializer.is_valid(), True)
+        game = serializer.save()
+        self.assertEqual(game.won, True)
+        raw_data['death'] = 'ascended'
+        serializer = XlogRecordSerializer(data=raw_data, context={'server': 'hdf', 'variant': 'tnnt'})
+        self.assertEqual(serializer.is_valid(), True)
+        game = serializer.save()
+        self.assertEqual(game.won, True)
