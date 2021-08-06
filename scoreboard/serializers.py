@@ -1,5 +1,7 @@
+from rest_framework.parsers import BaseParser
 from rest_framework import serializers
 from .models import GameRecord
+import re
 import itertools
 
 STANDARD_SCOREBOARD_FIELDS_GAME = [
@@ -9,6 +11,31 @@ STANDARD_SCOREBOARD_FIELDS_GAME = [
 STANDARD_SCOREBOARD_FIELDS_ASCENSION = [
     'srv', 'var', 'ver', 'name', 'character', 'points', 'turns', 'duration', 'dlvl', 'HP', 'time', 'win_type', 'conducts'
 ]
+
+class XlogParser(BaseParser):
+    delimiter = '\t'
+    separator = '='
+
+    def __convert__(self, value):
+        if re.match('^[0-9]+$', value) or re.match('^0x[0-9a-fA-F]+$', value):
+            return int(value, 0)
+        else:
+            return value
+
+    def parse(self, stream, media_type=None, parser_context=None):
+        """
+        Parse xlogfile data into python primitive types
+        """
+        return [
+            {
+                k: self.__convert__(v)
+                for k, v in [
+                    i.split(self.separator)
+                    for i in line.rstrip().split(self.delimiter)
+                ]
+            }
+            for line in stream.readlines()
+        ]
 
 class ConductListField(serializers.RelatedField):
     def to_representation(self, value):
