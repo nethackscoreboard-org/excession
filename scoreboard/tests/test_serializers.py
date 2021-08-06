@@ -4,7 +4,7 @@ from django.test import TestCase
 from rest_framework import serializers
 from scoreboard.serializers import SimpleGameSerializer, XlogListSerializer, XlogRecordSerializer, XlogParser
 
-class XlogParserTest(TestCase):
+class XlogRecordSerializerTest(TestCase):
     def setUp(self):
         self.file = open('test.xlog',)
         self.parser = XlogParser()
