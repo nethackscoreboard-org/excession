@@ -84,6 +84,7 @@ class XlogParserTest(TestCase):
         game = serializer.save()
         self.assertEqual('vegan' in game.conducts.split(','), True)
         self.assertEqual('vegetarian' in game.conducts.split(','), True)
+        self.assertEqual(game.nconducts, 2)
         self.assertEqual('wishless' in game.conducts.split(','), False)
         raw_data['achieve'] = 0x1000
         serializer = XlogRecordSerializer(data=raw_data, context={'server': 'hdf', 'variant': 'tnnt'})

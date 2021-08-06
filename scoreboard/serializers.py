@@ -166,6 +166,7 @@ class XlogRecordSerializer(serializers.ModelSerializer):
         data['mode'] = self._mode(data)
         data['bonesless'] = self._bonesless(data)
         data['conducts'] = self._conducts(data)
+        data['nconducts'] = len(data['conducts'].split(','))
         data['achievements'] = self._achievements(data)
         data['won'] = self._won(data)
         return {

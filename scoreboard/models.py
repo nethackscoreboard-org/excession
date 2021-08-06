@@ -25,6 +25,7 @@ class GameRecord(models.Model):
     align0       = models.CharField(max_length=16, null=True)
     gender0      = models.CharField(max_length=16, null=True)
     conducts     = models.CharField(max_length=4096, null=True, default='')
+    nconducts    = models.IntegerField(default=0)
     achievements = models.CharField(max_length=4096, null=True, default='')
     won          = models.BooleanField(default=False)
     bonesless    = models.BooleanField(default=False)
