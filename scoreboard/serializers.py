@@ -78,6 +78,27 @@ class XlogParser(BaseParser):
             for line in stream.readlines()
         ]
 
+class AscensionSerializer(serializers.ModelSerializer):
+    character = serializers.SerializerMethodField()
+    dlvl = serializers.SerializerMethodField()
+    HP = serializers.SerializerMethodField()
+    time = serializers.DateTimeField(source='endtime', format="%Y-%m-%d %H:%M:%S")
+    duration = serializers.DurationField(source='wallclock')
+
+    class Meta:
+        model = GameRecord
+        fields = ['server', 'variant', 'version', 'name', 'character', 'points', 'turns', 'duration', 'dlvl', 'HP', 'time', 'conducts']
+    
+    def get_character(self, obj):
+        role = [obj.role, obj.race, obj.gender, obj.align]
+        return '-'.join([i for i in role if i])
+    
+    def get_dlvl(self, obj):
+        return '{}/{}'.format(obj.deathlev, obj.maxlvl)
+    
+    def get_HP(self, obj):
+        return '{}/{}'.format(obj.hp, obj.maxhp)
+
 class GameSerializer(serializers.ModelSerializer):
     character = serializers.SerializerMethodField()
     dlvl = serializers.SerializerMethodField()

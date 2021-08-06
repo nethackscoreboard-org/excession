@@ -13,6 +13,7 @@ urlpatterns = [
 
     path('players/', views.PlayersList.as_view(), name='players-list'),
     path('players/<str:player>/', views.GamesByPlayerList.as_view()),
+    path('players/<str:player>/ascended', views.AscensionsByPlayerList.as_view()),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
 urlpatterns += router.urls
