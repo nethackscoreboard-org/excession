@@ -25,5 +25,12 @@ $ python manage.py makemigrations scoreboard
 $ python manage.py migrate
 ```
 
+#### optional: import test data from xlogfile (e.g. `tnnt-2020-eu`)
+`$ python manage.py shell`
+```python
+>>> from scripts.test_data import TestData
+>>> TestData().import_and_save_from_xlogfile('tnnt-2020-eu')
+```
+
 ### run dev server
 `$ python manage.py runserver`
