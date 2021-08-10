@@ -120,3 +120,14 @@ class ConductsBoard(APIView):
         pbs = [GameRecord.objects.filter(won=True, name=p).order_by('-nconducts').first() for p in players]
         s = AscensionSerializer(pbs, many=True)
         return Response({'links': links, 'player_bests': s.data})
+
+class TurncountBoard(APIView):
+    def get(self, request):
+        players = list(OrderedDict.fromkeys([
+            p['name'] for p in
+            GameRecord.objects.filter(won=True).order_by('turns').values('name')
+        ]))
+        links = {}
+        pbs = [GameRecord.objects.filter(won=True, name=p).order_by('turns').first() for p in players]
+        s = AscensionSerializer(pbs, many=True)
+        return Response({'links': links, 'player_bests': s.data})
