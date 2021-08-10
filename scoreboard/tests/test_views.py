@@ -1,4 +1,4 @@
-import re
+from datetime import datetime, timedelta
 from rest_framework import status
 from django.test import TestCase, Client
 from scoreboard.serializers import XlogListSerializer, XlogRecordSerializer, XlogParser
@@ -56,8 +56,11 @@ class APIViewsTest(TestCase):
         self.assertEqual('links' in response.data, True, 'expect a links field')
         self.assertEqual('players' in response.data, True, 'expect a players field')
         players = response.data['players']
+        names = []
         for name, path in players.items():
             self.assertEqual(path, '/players/' + name, 'expect list of player names with paths to player pages')
+            self.assertEqual(name in names, False, 'names should appear only once')
+            names.append(name)
         pass
 
     def test_null_player(self):
@@ -95,4 +98,28 @@ class APIViewsTest(TestCase):
         for ascension in ascensions:
             self.assertEqual('death' in ascension, False, 'ascended page doesn\'t show death reason')
             self.assertEqual('conducts' in ascension, True, 'ascended page shows conducts')
+        pass
+
+    def test_leaderboards(self):
+        c = Client()
+        response = c.get('/leaderboards')
+        self.assertEqual('links' in response.data, True, 'expect a links field')
+        links = response.data['links']
+        self.assertEqual('realtime' in links, True, 'expect a realtime leaderboard link')
+        pass
+
+    def test_leaderboards_realtime(self):
+        c = Client()
+        response = c.get('/leaderboards/realtime')
+        self.assertEqual('links' in response.data, True, 'expect a links field')
+        self.assertEqual('player_bests' in response.data, True, 'expect player_bests field')
+        pbs = response.data['player_bests']
+        prev_time = timedelta(seconds=0)
+        names = []
+        for win in pbs:
+            time = timedelta(seconds=int(win['realtime']))
+            self.assertEqual(time < prev_time, False, 'entries should be sorted in ascending order by duration')
+            prev_time = time
+            self.assertEqual(win['name'] in names, False, 'a given player should appear no more than once')
+            names.append(win['name'])
         pass

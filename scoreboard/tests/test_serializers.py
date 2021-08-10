@@ -1,8 +1,7 @@
 import io
 from datetime import datetime, timedelta
 from django.test import TestCase
-from rest_framework import serializers
-from scoreboard.serializers import SimpleGameSerializer, XlogListSerializer, XlogRecordSerializer, XlogParser
+from scoreboard.serializers import GameSerializer, XlogListSerializer, XlogRecordSerializer, XlogParser
 
 class XlogRecordSerializerTest(TestCase):
     def setUp(self):
@@ -107,8 +106,10 @@ class XlogRecordSerializerTest(TestCase):
         game = serializer.save()
         self.assertEqual(game.won, True)
     
-    def test_simple_serializer(self):
-        raw_data = self.parser.parse(self.file)
-        serializer = XlogListSerializer(child=XlogRecordSerializer(), data=raw_data, context={'server': 'hdf', 'variant': 'tnnt'})
+    def test_game_serializer(self):
+        raw_data = self.parser.parse(self.file)[0]
+        serializer = XlogRecordSerializer(data=raw_data, context={'server': 'hdf', 'variant': 'tnnt'})
         self.assertEqual(serializer.is_valid(), True)
-        games = serializer.save()
+        game = serializer.save()
+        s = GameSerializer(game)
+        self.assertEqual(game.name, s.data['name'])

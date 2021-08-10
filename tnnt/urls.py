@@ -6,6 +6,13 @@ from scoreboard import views
 urlpatterns = [
     path('ascended', views.AscendedList.as_view(), name='ascended-list'),
     path('games', views.GamesList.as_view(), name='games-list'),
+    path('leaderboards', views.LeaderboardsList.as_view(), name='leaderboards-list'),
+    path('leaderboards/', views.NullView.as_view(), name='null-leaderboard'),
+    path('leaderboards/conducts', views.ConductsBoard.as_view(), name='conducts-leaderboard'),
+    path('leaderboards/minscore', views.MinscoreBoard.as_view(), name='minscore-leaderboard'),
+    path('leaderboards/realtime', views.RealtimeBoard.as_view(), name='realtime-leaderboard'),
+    path('leaderboards/turncount', views.TurncountBoard.as_view(), name='turncount-leaderboard'),
+    path('leaderboards/wallclock', views.WallclockBoard.as_view(), name='wallclock-leaderboard'),
     path('players', views.PlayersList.as_view(), name='players-list'),
     path('players/', views.NullPlayer.as_view(), name='null-player'),
     path('players/<str:player>', views.GamesByPlayerList.as_view(), name='games-by-player'),
