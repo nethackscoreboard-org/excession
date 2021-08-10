@@ -92,6 +92,13 @@ class TimeStampField(serializers.DateTimeField):
     def to_internal_value(self, value):
         return datetime.fromtimestamp(value, timezone.utc)
 
+class PlayerLinkSerializer(serializers.BaseSerializer):
+    def to_internal_value(self, data):
+        return {'name': data['name']}
+    
+    def to_representation(self, instance):
+        return {instance['name']: '/players/{}'.format(instance['name'])}
+
 class GameSerializer(serializers.ModelSerializer):
     character = serializers.SerializerMethodField()
     dlvl = serializers.SerializerMethodField()
