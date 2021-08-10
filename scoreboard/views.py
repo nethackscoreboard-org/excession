@@ -36,6 +36,7 @@ class LeaderboardsList(APIView):
         links = {
             'realtime': request.path + '/' + 'realtime',
             'wallclock': request.path + '/' + 'wallclock',
+            'conducts': request.path + '/' + 'conducts',
         }
         return Response({
             'links': links,
@@ -106,5 +107,16 @@ class WallclockBoard(APIView):
         ]))
         links = {}
         pbs = [GameRecord.objects.filter(won=True, name=p).order_by('wallclock').first() for p in players]
+        s = AscensionSerializer(pbs, many=True)
+        return Response({'links': links, 'player_bests': s.data})
+
+class ConductsBoard(APIView):
+    def get(self, request):
+        players = list(OrderedDict.fromkeys([
+            p['name'] for p in
+            GameRecord.objects.filter(won=True).order_by('-nconducts').values('name')
+        ]))
+        links = {}
+        pbs = [GameRecord.objects.filter(won=True, name=p).order_by('-nconducts').first() for p in players]
         s = AscensionSerializer(pbs, many=True)
         return Response({'links': links, 'player_bests': s.data})
