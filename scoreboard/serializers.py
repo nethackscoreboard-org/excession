@@ -92,36 +92,13 @@ class TimeStampField(serializers.DateTimeField):
     def to_internal_value(self, value):
         return datetime.fromtimestamp(value, timezone.utc)
 
-class AscensionSerializer(serializers.ModelSerializer):
-    character = serializers.SerializerMethodField()
-    dlvl = serializers.SerializerMethodField()
-    HP = serializers.SerializerMethodField()
-    endtime = TimeStampField()
-    realtime = serializers.SerializerMethodField()
-
-    class Meta:
-        model = GameRecord
-        fields = ['server', 'variant', 'version', 'name', 'character', 'points', 'turns', 'realtime', 'wallclock', 'dlvl', 'HP', 'endtime', 'conducts']
-    
-    def get_character(self, obj):
-        role = [obj.role, obj.race, obj.gender, obj.align]
-        return '-'.join([i for i in role if i])
-    
-    def get_dlvl(self, obj):
-        return '{}/{}'.format(obj.deathlev, obj.maxlvl)
-    
-    def get_HP(self, obj):
-        return '{}/{}'.format(obj.hp, obj.maxhp)
-
-    def get_realtime(self, obj):
-        return obj.realtime.total_seconds()
-
 class GameSerializer(serializers.ModelSerializer):
     character = serializers.SerializerMethodField()
     dlvl = serializers.SerializerMethodField()
     HP = serializers.SerializerMethodField()
     endtime = TimeStampField()
     realtime = serializers.SerializerMethodField()
+    wallclock = serializers.SerializerMethodField()
 
     class Meta:
         model = GameRecord
@@ -140,10 +117,13 @@ class GameSerializer(serializers.ModelSerializer):
     def get_realtime(self, obj):
         return obj.realtime.total_seconds()
 
-class SimpleGameSerializer(serializers.ModelSerializer):
+    def get_wallclock(self, obj):
+        return obj.wallclock.total_seconds()
+
+class AscensionSerializer(GameSerializer):
     class Meta:
         model = GameRecord
-        fields = ['name', 'role', 'turns', 'death']
+        fields = ['server', 'variant', 'version', 'name', 'character', 'points', 'turns', 'realtime', 'wallclock', 'dlvl', 'HP', 'endtime', 'conducts']
 
 class XlogListSerializer(serializers.ListSerializer):
     def create(self, validated_data):
