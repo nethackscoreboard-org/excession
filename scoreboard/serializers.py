@@ -95,13 +95,13 @@ class TimeStampField(serializers.DateTimeField):
 class AscensionSerializer(serializers.ModelSerializer):
     character = serializers.SerializerMethodField()
     dlvl = serializers.SerializerMethodField()
-    duration = serializers.SerializerMethodField()
     HP = serializers.SerializerMethodField()
-    time = TimeStampField(source='endtime')
+    endtime = TimeStampField()
+    realtime = serializers.SerializerMethodField()
 
     class Meta:
         model = GameRecord
-        fields = ['server', 'variant', 'version', 'name', 'character', 'points', 'turns', 'duration', 'dlvl', 'HP', 'time', 'conducts']
+        fields = ['server', 'variant', 'version', 'name', 'character', 'points', 'turns', 'realtime', 'wallclock', 'dlvl', 'HP', 'endtime', 'conducts']
     
     def get_character(self, obj):
         role = [obj.role, obj.race, obj.gender, obj.align]
@@ -110,22 +110,22 @@ class AscensionSerializer(serializers.ModelSerializer):
     def get_dlvl(self, obj):
         return '{}/{}'.format(obj.deathlev, obj.maxlvl)
     
-    def get_duration(self, obj):
-        return obj.realtime.total_seconds()
-    
     def get_HP(self, obj):
         return '{}/{}'.format(obj.hp, obj.maxhp)
+
+    def get_realtime(self, obj):
+        return obj.realtime.total_seconds()
 
 class GameSerializer(serializers.ModelSerializer):
     character = serializers.SerializerMethodField()
     dlvl = serializers.SerializerMethodField()
-    duration = serializers.SerializerMethodField()
     HP = serializers.SerializerMethodField()
-    time = TimeStampField(source='endtime')
+    endtime = TimeStampField()
+    realtime = serializers.SerializerMethodField()
 
     class Meta:
         model = GameRecord
-        fields = ['server', 'variant', 'version', 'name', 'character', 'points', 'turns', 'duration', 'dlvl', 'HP', 'time', 'death']
+        fields = ['server', 'variant', 'version', 'name', 'character', 'points', 'turns', 'realtime', 'dlvl', 'HP', 'endtime', 'death']
     
     def get_character(self, obj):
         role = [obj.role, obj.race, obj.gender, obj.align]
@@ -133,12 +133,12 @@ class GameSerializer(serializers.ModelSerializer):
     
     def get_dlvl(self, obj):
         return '{}/{}'.format(obj.deathlev, obj.maxlvl)
-
-    def get_duration(self, obj):
-        return obj.wallclock.total_seconds()
     
     def get_HP(self, obj):
         return '{}/{}'.format(obj.hp, obj.maxhp)
+
+    def get_realtime(self, obj):
+        return obj.realtime.total_seconds()
 
 class SimpleGameSerializer(serializers.ModelSerializer):
     class Meta:

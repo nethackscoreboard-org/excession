@@ -117,7 +117,7 @@ class APIViewsTest(TestCase):
         prev_time = timedelta(seconds=0)
         names = []
         for win in pbs:
-            time = timedelta(seconds=int(win['duration']))
+            time = timedelta(seconds=int(win['realtime']))
             self.assertEqual(time < prev_time, False, 'entries should be sorted in ascending order by duration')
             prev_time = time
             self.assertEqual(win['name'] in names, False, 'a given player should appear no more than once')
