@@ -1,4 +1,5 @@
 from collections import OrderedDict
+import itertools
 from rest_framework import status, generics
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.response import Response
@@ -20,21 +21,27 @@ class RootEndpointList(APIView):
 class GamesList(generics.ListAPIView):
     pagination_class = LimitOffsetPagination
     serializer_class = GameSerializer
+    search_fields = ['role', 'race', 'gender', 'align']
     
     def get_queryset(self):
+        query_params = self.get_serializer_context()['request'].query_params
+        params = {k: query_params[k] for k in itertools.filterfalse(lambda x: x not in self.search_fields, query_params)}
         if 'player' in self.kwargs:
-            return GameRecord.objects.filter(name=self.kwargs['player'])
+            return GameRecord.objects.filter(name=self.kwargs['player'], **params)
         else:
-            return GameRecord.objects.all()
+            return GameRecord.objects.filter(**params)
 
 class AscendedList(GamesList):
     serializer_class = AscensionSerializer
+    search_fields = ['role', 'race', 'gender', 'align']
 
     def get_queryset(self):
+        query_params = self.get_serializer_context()['request'].query_params
+        params = {k: query_params[k] for k in itertools.filterfalse(lambda x: x not in self.search_fields, query_params)}
         if 'player' in self.kwargs:
-            return GameRecord.objects.filter(won=True, name=self.kwargs['player'])
+            return GameRecord.objects.filter(won=True, name=self.kwargs['player'], **params)
         else:
-            return GameRecord.objects.filter(won=True)
+            return GameRecord.objects.filter(won=True, **params)
 
 class LeaderboardsList(APIView):
     def get(self, request):

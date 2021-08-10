@@ -40,7 +40,7 @@ class APIViewsTest(TestCase):
 
     def test_games(self):
         c = Client()
-        response = c.get('/games')
+        response = c.get('/games?foo=bar')
         games = response.data['results']
         for game in games:
             self.assertEqual('death' in game, True, 'games-list page shows death reason')
