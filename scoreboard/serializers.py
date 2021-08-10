@@ -102,7 +102,7 @@ class GameSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = GameRecord
-        fields = ['server', 'variant', 'version', 'name', 'character', 'points', 'turns', 'realtime', 'dlvl', 'HP', 'endtime', 'death']
+        fields = ['server', 'variant', 'version', 'name', 'character', 'points', 'turns', 'realtime', 'wallclock', 'dlvl', 'HP', 'endtime', 'death']
     
     def get_character(self, obj):
         role = [obj.role, obj.race, obj.gender, obj.align]

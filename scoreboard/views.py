@@ -12,6 +12,7 @@ class RootEndpointList(generics.ListAPIView):
                 'ascended': '/ascended',
                 'games': '/games',
                 'players': '/players',
+                'leaderboards': '/leaderboards',
             }
         })
 
@@ -32,7 +33,10 @@ class GamesList(generics.ListAPIView):
 class LeaderboardsList(APIView):
     def get(self, request):
         q = GameRecord.objects.values('name').distinct()
-        links = {'realtime': request.path + '/' + 'realtime'}
+        links = {
+            'realtime': request.path + '/' + 'realtime',
+            'wallclock': request.path + '/' + 'wallclock',
+        }
         return Response({
             'links': links,
         })
@@ -45,21 +49,6 @@ class PlayersList(APIView):
             'links': links,
             'players': {r['name']: request.path + '/' + r['name'] for r in q}
         })
-
-class NullView(APIView):
-    def get(self, request):
-        return Response({'error': 'not found'}, status=status.HTTP_404_NOT_FOUND)
-
-class RealtimeBoard(APIView):
-    def get(self, request):
-        players = list(OrderedDict.fromkeys([
-            p['name'] for p in
-            GameRecord.objects.filter(won=True).order_by('realtime').values('name')
-        ]))
-        links = {}
-        pbs = [GameRecord.objects.filter(won=True, name=p).order_by('realtime').first() for p in players]
-        s = AscensionSerializer(pbs, many=True)
-        return Response({'links': links, 'player_bests': s.data})
 
 class NullPlayer(APIView):
     def get(self, request):
@@ -93,3 +82,29 @@ class GamesByPlayerList(generics.ListAPIView):
             links['ascended'] = request.path + player + '/ascended'
         s = GameSerializer(q, many=True)
         return Response({'links': links, 'games': s.data})
+
+class NullView(APIView):
+    def get(self, request):
+        return Response({'error': 'not found'}, status=status.HTTP_404_NOT_FOUND)
+
+class RealtimeBoard(APIView):
+    def get(self, request):
+        players = list(OrderedDict.fromkeys([
+            p['name'] for p in
+            GameRecord.objects.filter(won=True).order_by('realtime').values('name')
+        ]))
+        links = {}
+        pbs = [GameRecord.objects.filter(won=True, name=p).order_by('realtime').first() for p in players]
+        s = AscensionSerializer(pbs, many=True)
+        return Response({'links': links, 'player_bests': s.data})
+
+class WallclockBoard(APIView):
+    def get(self, request):
+        players = list(OrderedDict.fromkeys([
+            p['name'] for p in
+            GameRecord.objects.filter(won=True).order_by('wallclock').values('name')
+        ]))
+        links = {}
+        pbs = [GameRecord.objects.filter(won=True, name=p).order_by('wallclock').first() for p in players]
+        s = AscensionSerializer(pbs, many=True)
+        return Response({'links': links, 'player_bests': s.data})
