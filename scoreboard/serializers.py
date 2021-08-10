@@ -85,12 +85,19 @@ class XlogParser(BaseParser):
             for line in stream.readlines()
         ]
 
+class TimeStampField(serializers.DateTimeField):
+    def to_representation(self, value):
+        return int(value.timestamp())
+    
+    def to_internal_value(self, value):
+        return datetime.fromtimestamp(value, timezone.utc)
+
 class AscensionSerializer(serializers.ModelSerializer):
     character = serializers.SerializerMethodField()
     dlvl = serializers.SerializerMethodField()
+    duration = serializers.SerializerMethodField()
     HP = serializers.SerializerMethodField()
-    time = serializers.DateTimeField(source='endtime', format="%Y-%m-%d %H:%M:%S")
-    duration = serializers.DurationField(source='wallclock')
+    time = TimeStampField(source='endtime')
 
     class Meta:
         model = GameRecord
@@ -103,15 +110,18 @@ class AscensionSerializer(serializers.ModelSerializer):
     def get_dlvl(self, obj):
         return '{}/{}'.format(obj.deathlev, obj.maxlvl)
     
+    def get_duration(self, obj):
+        return obj.realtime.total_seconds()
+    
     def get_HP(self, obj):
         return '{}/{}'.format(obj.hp, obj.maxhp)
 
 class GameSerializer(serializers.ModelSerializer):
     character = serializers.SerializerMethodField()
     dlvl = serializers.SerializerMethodField()
+    duration = serializers.SerializerMethodField()
     HP = serializers.SerializerMethodField()
-    time = serializers.DateTimeField(source='endtime', format="%Y-%m-%d %H:%M:%S")
-    duration = serializers.DurationField(source='wallclock')
+    time = TimeStampField(source='endtime')
 
     class Meta:
         model = GameRecord
@@ -123,6 +133,9 @@ class GameSerializer(serializers.ModelSerializer):
     
     def get_dlvl(self, obj):
         return '{}/{}'.format(obj.deathlev, obj.maxlvl)
+
+    def get_duration(self, obj):
+        return obj.wallclock.total_seconds()
     
     def get_HP(self, obj):
         return '{}/{}'.format(obj.hp, obj.maxhp)
@@ -131,13 +144,6 @@ class SimpleGameSerializer(serializers.ModelSerializer):
     class Meta:
         model = GameRecord
         fields = ['name', 'role', 'turns', 'death']
-
-class TimeStampField(serializers.DateTimeField):
-    def to_representation(self, value):
-        return int(value.timestamp())
-    
-    def to_internal_value(self, value):
-        return datetime.fromtimestamp(value, timezone.utc)
 
 class XlogListSerializer(serializers.ListSerializer):
     def create(self, validated_data):
