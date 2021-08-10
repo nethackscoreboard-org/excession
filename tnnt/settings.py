@@ -20,8 +20,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-import os
-SECRET_KEY = os.environ['SECRET_KEY']
+#import os
+#SECRET_KEY = os.environ['SECRET_KEY']
+SECRET_KEY = 'django-insecure-)wr%56*n*#c*9c928gx=^+ikkqu3k=w=np&zmh3o-h6+urv7)w'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -92,7 +93,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'scoreboard',
         'USER': 'tnnt',
-        'PASSWORD': os.environ['DATABASE_PASSWORD'],
+        'PASSWORD': 'insecure',
+        'HOST': 'db',
+        'PORT': 3306,
     }
 }
 

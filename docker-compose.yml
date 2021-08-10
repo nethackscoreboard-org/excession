@@ -1,0 +1,18 @@
+version: "3.7"  # optional since v1.27.0
+services:
+  db:
+    image: mysql
+    environment:
+      MYSQL_USER: tnnt
+      MYSQL_PASSWORD: insecure
+      MYSQL_DATABASE: scoreboard
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/django
+    depends_on:
+      - db
