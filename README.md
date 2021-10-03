@@ -32,6 +32,13 @@ $ sudo apt-get install python3 pip mariadb-server mariadb-client
 $ sudo apt-get install python3-dev default-libmysqlclient-dev build-essential
 ```
 
+### Arch Linux
+```shell
+$ sudo pacman -S mariadb mariadb-clients python-mysqlclient
+$ sudo mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
+$ sudo systemctl start mysql.service
+```
+
 #### Optional: enter python virtual environment before install deps
 ```shell
 $ virtualenv env --no-site-packages
