@@ -100,6 +100,8 @@ class PlayerLinkSerializer(serializers.BaseSerializer):
         return {instance['name']: '/players/{}'.format(instance['name'])}
 
 class GameSerializer(serializers.ModelSerializer):
+    server = serializers.SerializerMethodField()
+    variant = serializers.SerializerMethodField()
     character = serializers.SerializerMethodField()
     dlvl = serializers.SerializerMethodField()
     HP = serializers.SerializerMethodField()
@@ -108,7 +110,7 @@ class GameSerializer(serializers.ModelSerializer):
     wallclock = serializers.SerializerMethodField()
 
     class Meta:
-        model = GameRecord
+        model = Game
         fields = ['server', 'variant', 'version', 'name', 'character', 'points', 'turns', 'realtime', 'wallclock', 'dlvl', 'HP', 'endtime', 'death']
     
     def get_character(self, obj):
@@ -129,7 +131,7 @@ class GameSerializer(serializers.ModelSerializer):
 
 class AscensionSerializer(GameSerializer):
     class Meta:
-        model = GameRecord
+        model = Game
         fields = ['server', 'variant', 'version', 'name', 'character', 'points', 'turns', 'realtime', 'wallclock', 'dlvl', 'HP', 'endtime', 'conducts']
 
 class XlogListSerializer(serializers.ListSerializer):

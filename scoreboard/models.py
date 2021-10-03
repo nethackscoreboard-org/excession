@@ -32,7 +32,7 @@ class GameRecord(models.Model):
     bonesless    = models.BooleanField(default=False)
     mode         = models.CharField(choices=GameMode.choices, default='normal', max_length=16)
 
-class LogSource(models.Model):
+class RecordSource(models.Model):
     server      = models.CharField(max_length=128)
     variant     = models.CharField(max_length=128)
     description = models.CharField(max_length=256)
@@ -47,7 +47,7 @@ class Player(models.Model):
     name = models.CharField(max_length=128)
     clan = models.ForeignKey(Clan, on_delete=models.CASCADE)
 
-class Game(models.Model):
-    record = models.OneToOneField(GameRecord, on_delete=models.CASCADE)
-    source = models.ForeignKey(LogSource, on_delete=models.CASCADE)
+class Game(GameRecord):
+    source = models.ForeignKey(RecordSource, on_delete=models.CASCADE)
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
+    record = models.OneToOneField(GameRecord, on_delete=models.CASCADE)
