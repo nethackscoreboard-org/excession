@@ -1,0 +1,36 @@
+{% load static %}
+<header>
+  <div id="headerbar">
+    <h1>The November Nethack Tournament</h1>
+  </div>
+  <table id="navlogo">
+      <tr>
+          <td class="leftmenu"></td>
+          <td id="logo" rowspan="3">
+              <a href="/">
+              <!-- <object style="display:inline" data="tnnt_square_logo.svg" type="image/svg+xml"></objec -->
+              <img src="{% static 'images/tnnt_square_logo.svg' %}" alt="An @ argent on a field azure, a wreath d'or encircling" width="100px" height="100px" />
+              </a>
+          </td>
+          <td class="rightmenu"></td>
+      </tr>
+      <tr>
+          <td class="leftmenu">
+              <a href="/" class="menu {% if page == 'index' %} menusel {% endif %}">HOME</a>
+              <a href="/trophies" class="menu {% if page == 'trophies' %} menusel {% endif %}">TROPHIES</a>
+              <a href="/clans" class="menu {% if page == 'clans' %} menusel {% endif %}">CLANS</a>
+              <a href="/players" class="menu {% if page == 'players' %} menusel {% endif %}">PLAYERS</a>
+          </td>
+          <td class="rightmenu">
+              <a href="/rules" class="menu {% if page == 'rules' %} menusel {% endif %}">RULES</a>
+              <a href="/about" class="menu {% if page == 'about' %} menusel {% endif %}">ABOUT</a>
+              <a href="/archives" class="menu {% if page == 'archive' %} menusel {% endif %}">ARCHIVES</a>
+              <a href="/tnnt/clanmgmt" class="menu {% if page == 'settings' %} menusel {% endif %}">MY CLAN</a>
+          </td>
+      </tr>
+      <tr id="lowerheader">
+          <td></td>
+          <td></td>
+      </tr>
+  </table>
+</header>

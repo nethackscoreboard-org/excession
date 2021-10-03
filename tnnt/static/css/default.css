@@ -1,0 +1,496 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:300,400,700,900');
+
+body {
+  background-color: #003;
+  color: #f2f5ff;
+  font-family: 'Lato', sans-serif;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  font-weight: 400;
+  margin: 0 0 1em 0;
+  overflow-x: hidden;
+}
+
+h2 {
+  text-transform: uppercase;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  font-size: 200%;
+  text-align: center;
+}
+
+h4 {
+  font-weight: 600;
+  font-size: 1.17em;
+  color: #eb0;
+}
+
+h5 {
+  font-weight: 500;
+  font-size: 1em;
+  color: #eb0;
+}
+
+.num {
+  text-align: right;
+  letter-spacing: 0.04em;
+}
+
+.dim {
+  color: #99b;
+  font-weight: 300;
+  font-size: 80%;
+  vertical-align: middle;
+}
+
+.won {
+  font-weight: bold;
+}
+
+.more {
+  text-align: center;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #fd0;
+}
+
+span.streak {
+  display: inline-block;
+  background: #336;
+  padding: 0 0.3em;
+}
+
+div.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.align-top {
+  vertical-align: top;
+}
+
+/* marker for clan-unique games */
+
+span.clan-unique {
+  color: #aaa;
+}
+
+/*====================================================================
+  === DEFAULT TABLES =================================================
+  ====================================================================*/
+
+table {
+  border-collapse: collapse;
+  padding: 1em;
+}
+
+table.trophies {
+  max-width: 70%;
+}
+
+table.clans {
+  max-width: 70%;
+}
+
+td, th {
+  padding: 0.3em 0.6em;
+}
+
+th {
+  font-weight: 500;
+}
+
+thead tr.framed {
+  border-bottom: 0.1em solid #abf;
+  border-top: 0.1em solid #abf;
+  background-color: #237;
+}
+
+td.ach {
+  font-weight: 400;
+}
+
+td.descr {
+  font-weight: 400;
+  font-style: italic;
+}
+
+tfoot tr.overline {
+  border-top: 0.01em solid white;
+}
+
+td.total {
+  letter-spacing: 0.3em;
+}
+
+div.row table
+{
+  margin: 0 2em;
+}
+
+/* don't wrap contents of this cell */
+
+td.nowrap {
+  white-space: nowrap;
+}
+
+/*====================================================================
+  === CLANS ==========================================================
+  ====================================================================*/
+
+/* clan name in clan listing */
+
+span.clan {
+  font-size: 200%;
+  font-weight: 400;
+}
+
+/* Non-breakable text box with dimmed additional information, used for
+   showing number of players */
+
+span.subinfo {
+  font-weight: 300;
+  color: #888;
+  font-size: 80%;
+  display: inline-block;
+  margin-left: 0.5em;
+}
+
+/* admin player highlight */
+
+span.plradmin {
+  font-weight: bold;
+}
+
+/* no clans exist message */
+
+.noclans {
+  font-size: 100%;
+  letter-spacing: 0.3em;
+  text-align: center;
+  padding: 1em;
+}
+
+/*====================================================================
+  === PLAYERS & CLANS ================================================
+  ====================================================================*/
+
+/*--- achievements display -------------------------------------------*/
+
+/* the grid container */
+
+div.achieve-top {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  max-width: 52em;
+  column-gap: 1em;
+  row-gap: 1em;
+  margin-bottom: 2em;
+}
+
+/* the individual achievement box, a grid element */
+
+div.achieve-item {
+  padding: 1.4em;
+  height: 3.5em;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+}
+
+/* style for the non-attained achievements */
+
+div.achieve-item.not-achieved {
+  background: #224;
+}
+
+/* style for the attained achievements */
+
+div.achieve-item.achieved {
+  background: #c90;
+  color: #000;
+  font-weight: 600;
+  /* optional; I could go either way on this */
+  /* border: 0.3em solid #960;  */
+}
+
+/* style for the achievement summary with in-laid progress bar */
+
+div.achieve-summary {
+  grid-column-start: 1;
+  grid-column-end: 5;
+  text-align: center;
+  color: #f2f5ff;
+  position: relative;
+  width: 100%;
+  background-color: #224;
+  border-radius: 5px;
+}
+
+div.achieve-bar {
+  /* background-color: #c90; */
+  background-color: #237;
+  height: 2rem;
+  border-radius: 5px;
+}
+
+div.achieve-msg {
+  position: absolute;
+  display: inline-block;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0.35rem;
+}
+
+/* style for ascension breakdown data */
+
+.ascbreakdown {
+  color: #888;
+}
+
+/*====================================================================
+  === CLAN PAGES =====================================================
+  ====================================================================*/
+
+TABLE.clan-members {
+  max-width: 20em;
+}
+
+.no-games {
+  letter-spacing: 0.3em;
+  font-weight: 300;
+}
+
+/*====================================================================
+  === TROPHIES =======================================================
+  ====================================================================*/
+
+table.trophies td {
+  min-width: 8em;
+  border-bottom: 1px solid #eee;
+  padding: 0.6rem 1.4rem;
+  vertical-align: top;
+}
+
+td.trophy-name {
+  font-size: 166%;
+  text-transform: uppercase;
+  padding-right: 2em;
+  font-weight: 300;
+  width: 30%;
+}
+
+td.trophy-single {
+  font-size: 200%;
+  font-weight: 300;
+  width: 30%;
+}
+
+td.trophy-multi {
+  font-weight: 400;
+  font-size: 110%;
+  width: 30%;
+}
+
+td.trophy-na {
+  font-weight: 300;
+  font-size: 166%;
+  color: #ddd;
+  text-align: center;
+  width: 30%;
+}
+
+/* Put clans on their own lines. Won't work for players, too many players can
+ * get a trophy and that'd create a super tall table cell. */
+table.trophies tr td.trophy-multi:last-child a {
+/* table.trophies tr td.trophy-multi a { */
+    display:block;
+}
+
+/*====================================================================
+  === HEADER BAR =====================================================
+  ====================================================================*/
+
+header {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width:100%;
+  margin:0 auto 1em auto;
+}
+
+/* Can't have background color set on the whole header; it creates artifacts
+ * around the bottom of the element. */
+#headerbar {
+  background-color:#237;
+  width:101%;
+  margin:auto;
+  text-align:center;
+}
+
+#headerbar h1 {
+  text-transform: uppercase;
+  /* font-variant:small-caps; */
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  font-size: 200%;
+  margin: auto;
+  padding: 0.2em 0 0.2em 0;
+  text-shadow: 0.1em 0.1em black;
+}
+
+a.menu {
+  color : #f2f5ff;
+  text-decoration : inherit;
+  padding-left: 0.8em;
+  padding-right: 0.8em;
+  text-shadow : 0.1em 0.1em black;
+  letter-spacing: 0.1em;
+  margin : 0;
+}
+
+a.menusel {
+  color : #59f;
+  margin : 0;
+}
+
+table#navlogo {
+  width: 100%;
+}
+
+table#navlogo tr {
+  background-color: #237;
+}
+
+table#navlogo tr#lowerheader {
+  /* should appear as the body background color */
+  background-color: #003;
+}
+
+table#navlogo td {
+  border-bottom: 2pt solid #f2f5ff;
+}
+
+table#navlogo td.leftmenu {
+  width:50%;
+  text-align:right;
+  margin-left:auto;
+}
+
+table#navlogo td.rightmenu {
+  width:50%;
+  text-align:left;
+  margin-left:auto;
+}
+
+table#navlogo td#logo {
+  padding: 0 1em 0 1em;
+  text-align: center;
+  width: 100px;
+  border-left: 2pt solid #f2f5ff;
+  border-right:2pt solid #f2f5ff;
+}
+
+table#navlogo tr#lowerheader td {
+  border-bottom:none;
+}
+
+/*====================================================================
+  === MAIN PAGE ======================================================
+  ====================================================================*/
+
+#salespitch {
+  text-align: center;
+  margin: 0.5em 0 1em 0;
+}
+
+#salespitch h3 {
+  margin: 0;
+  margin-top: 0.8em;
+}
+
+#salespitch a {
+  color: #59f;
+}
+
+#salespitch a:hover {
+  color:#fd0;
+}
+
+hr {
+  width: 60%;
+  color: #668;
+}
+
+article {
+  max-width: 50%;
+}
+
+/* so as not to step on the toes of other links... */
+article a {
+  color: #59f;
+}
+
+article a:visited {
+  color: #59f;
+}
+
+article a:hover {
+  color: #fd0;
+}
+
+#countdown {
+  font-size: 133%;
+  text-align: center;
+}
+
+#countdown .before {
+  display: none;
+}
+
+#countdown .during {
+  display: none;
+}
+
+#countdown .over {
+  display: none;
+}
+
+#countdown .counter {
+  display: none;
+}
+
+#countdown .when {
+  display: none;
+}
+
+span#counter {
+  color: #59f;
+}
+
+/*====================================================================
+  === SCORING LOG ====================================================
+  ====================================================================*/
+
+.filter-entry {
+  margin-left: 1em;
+  cursor: pointer;
+  user-select: none;
+}
+
+.filter-entry.disabled:before {
+  content: "◻ ";
+}
+
+.filter-entry.enabled:before {
+  content: "◼ ";
+}

@@ -1,5 +1,6 @@
 from django.urls import include, path
 from scoreboard import views
+from tnnt import views as tnntviews
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
@@ -16,5 +17,10 @@ urlpatterns = [
     path('players/<str:player>', views.GamesList.as_view(), name='games-by-player'),
     path('players/<str:player>/ascended', views.AscendedList.as_view(), name='wins-by-player'),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('', views.RootEndpointList.as_view(), name='root'),
+    # path('', views.RootEndpointList.as_view(), name='root'),
+    path('', tnntviews.HomepageView.as_view(), name='root'),
+    path('rules', tnntviews.RulesView.as_view(), name='rules'),
+    path('about', tnntviews.AboutView.as_view(), name='about'),
+    path('archives', tnntviews.ArchivesView.as_view(), name='archives'),
 ]
+
