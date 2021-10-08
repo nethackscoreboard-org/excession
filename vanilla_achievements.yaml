@@ -1,0 +1,68 @@
+- model: scoreboard.achievement
+  fields:
+    name: Ringing in My Ears
+    description: Get the Bell of Opening
+    xlogfield: achieve
+    bit: 0
+- model: scoreboard.achievement
+  fields:
+    name: Feel the Burn
+    description: Enter Gehennom
+    xlogfield: achieve
+    bit: 1
+- model: scoreboard.achievement
+  fields:
+    name: Emerging Into the Light
+    description: Get the Candelabrum of Invocation
+    xlogfield: achieve
+    bit: 2
+- model: scoreboard.achievement
+  fields:
+    name: Weighing of the Heart
+    description: Get the Book of the Dead
+    xlogfield: achieve
+    bit: 3
+- model: scoreboard.achievement
+  fields:
+    name: Bell, Book and Candle
+    description: Perform the invocation ritual
+    xlogfield: achieve
+    bit: 4
+- model: scoreboard.achievement
+  fields:
+    name: My Preciousss
+    description: Get the Amulet of Yendor
+    xlogfield: achieve
+    bit: 5
+- model: scoreboard.achievement
+  fields:
+    name: From the Dungeon they Came
+    description: Enter the Elemental Planes
+    xlogfield: achieve
+    bit: 6
+- model: scoreboard.achievement
+  fields:
+    name: The Halls of the Gods
+    description: Enter the Astral Plane
+    xlogfield: achieve
+    bit: 7
+# note: bit 8, 0x100, is used for "u.uachieve.ascended". We don't track this as
+# a TNNT achievement.
+- model: scoreboard.achievement
+  fields:
+    name: Are You Feeling Lucky
+    description: Get the luckstone from Mines' End
+    xlogfield: achieve
+    bit: 9
+- model: scoreboard.achievement
+  fields:
+    name: Boulder Pusher
+    description: Finish Sokoban
+    xlogfield: achieve
+    bit: 10
+- model: scoreboard.achievement
+  fields:
+    name: Anti-Stoner
+    description: Kill Medusa
+    xlogfield: achieve
+    bit: 11
