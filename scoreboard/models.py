@@ -8,7 +8,8 @@ class Trophy(models.Model):
 
 class Conduct(models.Model):
     # The "perma-conduct" structure. Loaded from config.
-    name      = models.CharField(max_length=32, unique=True)
+    name      = models.CharField(max_length=64, unique=True)
+    shortname = models.CharField(max_length=4, unique=True)
 
     # the xlog field name this achievement is encoded with
     # "conduct" in most cases but blind and nudist use "achieve"...
@@ -16,6 +17,10 @@ class Conduct(models.Model):
     # xlog bit position this conduct occupies in the "conduct" xlog field
     # (assuming "1 << bit")
     bit       = models.IntegerField()
+
+    class Meta:
+        # no two conducts should have the same xlogfield and bit
+        unique_together = ('xlogfield', 'bit')
 
 class Achievement(models.Model):
     # The "perma-achievement" structure. Loaded from config.
@@ -27,6 +32,10 @@ class Achievement(models.Model):
     xlogfield   = models.CharField(max_length=16)
     # xlog bit position this conduct occupies (assuming "1 << bit")
     bit         = models.IntegerField()
+
+    class Meta:
+        # no two achievements should have the same xlogfield and bit
+        unique_together = ('xlogfield', 'bit')
 
 class LeaderboardBaseFields(models.Model):
     # Abstract base class that provides leaderboard-related fields that both

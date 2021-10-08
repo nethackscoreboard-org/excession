@@ -72,12 +72,12 @@ $ python manage.py makemigrations scoreboard
 $ python manage.py migrate
 ```
 
-#### Import achievements data
+#### Import achievements, conducts, and trophies data
 Note: this requires a copy of the TNNT game source to pull TNNT achievement
 names and descriptions from.
 ```shell
 $ ./ach_to_yaml.sh /path/to/tnnt/source > scoreboard/fixtures/achievements.yaml
-$ python manage.py loaddata achievements.yaml
+$ python manage.py loaddata achievements conducts trophies
 ```
 
 #### Optional: import test data from xlogfile (e.g. `tnnt-2020-eu`)
