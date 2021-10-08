@@ -3,17 +3,30 @@ from tnnt import settings
 
 class Trophy(models.Model):
     # The "perma-trophy" structure. Loaded from config.
-    name        = models.CharField(max_length=64)
+    name        = models.CharField(max_length=64, unique=True)
     description = models.CharField(max_length=128)
 
 class Conduct(models.Model):
     # The "perma-conduct" structure. Loaded from config.
-    name = models.CharField(max_length=32)
+    name      = models.CharField(max_length=32, unique=True)
+
+    # the xlog field name this achievement is encoded with
+    # "conduct" in most cases but blind and nudist use "achieve"...
+    xlogfield = models.CharField(max_length=16)
+    # xlog bit position this conduct occupies in the "conduct" xlog field
+    # (assuming "1 << bit")
+    bit       = models.IntegerField()
 
 class Achievement(models.Model):
     # The "perma-achievement" structure. Loaded from config.
-    name        = models.CharField(max_length=128)
+    name        = models.CharField(max_length=128, unique=True)
     description = models.CharField(max_length=128)
+
+    # the xlog field name this achievement is encoded with
+    # "achieve", "tnntachieveX", etc
+    xlogfield   = models.CharField(max_length=16)
+    # xlog bit position this conduct occupies (assuming "1 << bit")
+    bit         = models.IntegerField()
 
 class LeaderboardBaseFields(models.Model):
     # Abstract base class that provides leaderboard-related fields that both
@@ -34,19 +47,19 @@ class LeaderboardBaseFields(models.Model):
     games_over_1000_turns  = models.IntegerField()
 
 class Clan(LeaderboardBaseFields):
-    name     = models.CharField(max_length=128)
+    name     = models.CharField(max_length=128, unique=True)
     # perhaps trophies could go in LeaderboardBaseFields but it's not actually a
     # leaderboard field so keeping it conceptually separate makes sense for now
     trophies = models.ManyToManyField(Trophy)
 
 class Player(LeaderboardBaseFields):
-    name     = models.CharField(max_length=32)
+    name     = models.CharField(max_length=32, unique=True)
     clan     = models.ForeignKey(Clan, null=True, on_delete=models.SET_NULL)
     trophies = models.ManyToManyField(Trophy)
 
 class Source(models.Model):
     # Information about a source of aggregate game data (e.g. an xlogfile).
-    server      = models.CharField(max_length=32)
+    server      = models.CharField(max_length=32, unique=True)
     local_file  = models.FilePathField(path=settings.XLOG_DIR)
     file_pos    = models.BigIntegerField()
     last_check  = models.DateTimeField()
