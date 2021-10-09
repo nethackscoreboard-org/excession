@@ -32,6 +32,13 @@ $ sudo apt-get install python3 pip mariadb-server mariadb-client
 $ sudo apt-get install python3-dev default-libmysqlclient-dev build-essential
 ```
 
+### Arch Linux
+```shell
+$ sudo pacman -S mariadb mariadb-clients python-mysqlclient python-yaml
+$ sudo mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
+$ sudo systemctl start mysql.service
+```
+
 #### Optional: enter python virtual environment before install deps
 ```shell
 $ virtualenv env --no-site-packages
@@ -63,6 +70,14 @@ $ python manage.py migrate
 $ python manage.py createsuperuser
 $ python manage.py makemigrations scoreboard
 $ python manage.py migrate
+```
+
+#### Import achievements, conducts, and trophies data
+Note: this requires a copy of the TNNT game source to pull TNNT achievement
+names and descriptions from.
+```shell
+$ ./ach_to_yaml.sh /path/to/tnnt/source > scoreboard/fixtures/achievements.yaml
+$ python manage.py loaddata achievements conducts trophies
 ```
 
 #### Optional: import test data from xlogfile (e.g. `tnnt-2020-eu`)

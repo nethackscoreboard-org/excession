@@ -1,0 +1,176 @@
+- model: scoreboard.trophy
+  fields:
+    name: Great Dwarf
+    description: Ascend a dwarven Arc, Cav, and Val
+- model: scoreboard.trophy
+  fields:
+    name: Great Orc
+    description: Ascend an orcish Bar, Ran, Rog, and Wiz
+- model: scoreboard.trophy
+  fields:
+    name: Great Elf
+    description: Ascend an elvish Pri, Ran, and Wiz
+- model: scoreboard.trophy
+  fields:
+    name: Great Gnome
+    description: Ascend a gnomish Arc, Cav, Hea, Ran, and Wiz
+- model: scoreboard.trophy
+  fields:
+    name: Great Human
+    description: Ascend a Kni, Mon, Sam, and Tou
+- model: scoreboard.trophy
+  fields:
+    name: Great Archeologist
+    description: Ascend all 4 race/alignment combos for Archeologist
+- model: scoreboard.trophy
+  fields:
+    name: Great Barbarian
+    description: Ascend all 3 race/alignment combos for Barbarian
+- model: scoreboard.trophy
+  fields:
+    name: Great Caveperson
+    description: Ascend all 4 race/alignment combos for Caveperson
+- model: scoreboard.trophy
+  fields:
+    name: Great Healer
+    description: Ascend all 2 race/alignment combos for Healer
+- model: scoreboard.trophy
+  fields:
+    name: Great Monk
+    description: Ascend all 3 alignments for Monk
+- model: scoreboard.trophy
+  fields:
+    name: Great Priest
+    description: Ascend all 4 race/alignment combos for Priest
+- model: scoreboard.trophy
+  fields:
+    name: Great Ranger
+    description: Ascend all 5 race/alignment combos for Ranger
+- model: scoreboard.trophy
+  fields:
+    name: Great Rogue
+    description: Ascend all 2 race/alignment combos for Rogue
+- model: scoreboard.trophy
+  fields:
+    name: Great Valkyrie
+    description: Ascend all 3 race/alignment combos for Valkyrie
+- model: scoreboard.trophy
+  fields:
+    name: Great Wizard
+    description: Ascend all 5 race/alignment combos for Wizard
+- model: scoreboard.trophy
+  fields:
+    name: Lesser Dwarf
+    description: Complete Mines and Soko with a dwarven Arc, Cav, and Val
+- model: scoreboard.trophy
+  fields:
+    name: Lesser Orc
+    description: Complete Mines and Soko with an orcish Bar, Ran, Rog, and Wiz
+- model: scoreboard.trophy
+  fields:
+    name: Lesser Elf
+    description: Complete Mines and Soko with an elvish Pri, Ran, and Wiz
+- model: scoreboard.trophy
+  fields:
+    name: Lesser Gnome
+    description: Complete Mines and Soko with a gnomish Arc, Cav, Hea, Ran, and Wiz
+- model: scoreboard.trophy
+  fields:
+    name: Lesser Human
+    description: Complete Mines and Soko with a Kni, Mon, Sam, and Tou
+- model: scoreboard.trophy
+  fields:
+    name: Lesser Archeologist
+    description: Complete Mines and Soko with all 4 race/alignment combos for Archeologist
+- model: scoreboard.trophy
+  fields:
+    name: Lesser Barbarian
+    description: Complete Mines and Soko with all 3 race/alignment combos for Barbarian
+- model: scoreboard.trophy
+  fields:
+    name: Lesser Caveperson
+    description: Complete Mines and Soko with all 4 race/alignment combos for Caveperson
+- model: scoreboard.trophy
+  fields:
+    name: Lesser Healer
+    description: Complete Mines and Soko with all 2 race/alignment combos for Healer
+- model: scoreboard.trophy
+  fields:
+    name: Lesser Monk
+    description: Complete Mines and Soko with all 3 alignments for Monk
+- model: scoreboard.trophy
+  fields:
+    name: Lesser Priest
+    description: Complete Mines and Soko with all 4 race/alignment combos for Priest
+- model: scoreboard.trophy
+  fields:
+    name: Lesser Ranger
+    description: Complete Mines and Soko with all 5 race/alignment combos for Ranger
+- model: scoreboard.trophy
+  fields:
+    name: Lesser Rogue
+    description: Complete Mines and Soko with all 2 race/alignment combos for Rogue
+- model: scoreboard.trophy
+  fields:
+    name: Lesser Valkyrie
+    description: Complete Mines and Soko with all 3 race/alignment combos for Valkyrie
+- model: scoreboard.trophy
+  fields:
+    name: Lesser Wizard
+    description: Complete Mines and Soko with all 5 race/alignment combos for Wizard
+- model: scoreboard.trophy
+  fields:
+    name: Both Genders
+    description: Ascend games with both starting genders
+- model: scoreboard.trophy
+  fields:
+    name: All Alignments
+    description: Ascend games with every starting alignment
+- model: scoreboard.trophy
+  fields:
+    name: All Roles
+    description: Ascend games with all 13 roles
+- model: scoreboard.trophy
+  fields:
+    name: All Races
+    description: Ascend games with all 5 races
+- model: scoreboard.trophy
+  fields:
+    name: All Conducts
+    description: Preserve each conduct at least once across all ascensions
+- model: scoreboard.trophy
+  fields:
+    name: All Achievements
+    description: Complete each achievement at least once across all games
+- model: scoreboard.trophy
+  fields:
+    name: NetHack Master
+    description: Ascend games with all possible (73) race/role/gender0/align0 combinations
+- model: scoreboard.trophy
+  fields:
+    name: NetHack Dominator
+    description: Accomplish NetHack Master and All Conducts.
+- model: scoreboard.trophy
+  fields:
+    name: Never Scum a Game
+    description: Never quit or escape within the first 100 turns
+- model: scoreboard.trophy
+  fields:
+    name: Never Kill the Quest Nemesis
+    description: Never kill the quest nemesis
+- model: scoreboard.trophy
+  fields:
+    name: Never Kill Vlad
+    description: Never kill Vlad
+- model: scoreboard.trophy
+  fields:
+    name: Never Kill Rodney
+    description: Never kill the Wizard of Yendor
+- model: scoreboard.trophy
+  fields:
+    name: Never Kill the High Priest of Moloch
+    description: Never kill the High Priest of Moloch
+- model: scoreboard.trophy
+  fields:
+    name: Never Kill a Rider
+    description: Never kill a Rider

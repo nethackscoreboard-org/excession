@@ -1,0 +1,85 @@
+<!doctype html>
+
+<html>
+
+<head>
+  <title>TNNT::About</title>
+  {% include "headlinks.html" %}
+</head>
+
+<body>
+
+{% include "header.html" with page='about' %}
+
+<article>
+  <h4>History</h4>
+  <p>
+    The long-running
+    <a href="https://nethackwiki.com/wiki//dev/null/nethack_tournament" target="_blank">
+      /dev/null/nethack tournament
+    </a>
+    was unexpectedly shut down in September 2017. When this was announced, some
+    players from TeamSplat banded together quickly with the help of the
+    hardfought.org server to put together a tribute tournament, which was
+    intended to be the same as devnull but updated to 3.6.0.
+  </p>
+  <p>
+    The tribute tournament was never planned to run for a second year;
+    instead, respecting devnull's wishes to shut down completely and not keep
+    its name going, plans for a new tournament were laid. This new tournament
+    would be based off the newly available development version of NetHack, and
+    would remain a primarily vanilla-like tournament, unlike other tournaments
+    like <a href="https://junethack.net" target="_blank">Junethack</a> which focus on variant
+    play.  It was also decided to keep the tradition of running the tournament
+    throughout November, when a lot of veteran players come out of the woodwork
+    checking to see if there's a tournament.
+  </p>
+
+  <h4>So TNNT is devnull?</h4>
+  <p>
+    TNNT is <i>not</i> devnull. As per krystal's wishes, the devnull name,
+    tournament structure, and game changes have been retired. TNNT is a fresh
+    start - any game changes are based on a clean vanilla nethack codebase, and
+    the various components of the tournament were designed from scratch.
+  </p>
+
+  <h4>What about the devnull challenges?</h4>
+  <p>
+    As with the rest of devnull, the challenges have been permanently retired
+    and are not implemented in TNNT. However, TNNT does add some of its own
+    gameplay content, including features that don't exist in any variants. It's
+    a bit of a work in progress. We plan to keep adding a bit of new content
+    every year.
+  </p>
+  <p>
+    If you are looking for the code powering the devnull tribute challenges,
+    to use as a patch for your own purposes, you can find the devnull tribute
+    scoreboard repo <a href="https://github.com/borekl/devnull-tribute-2017" target="_blank">here</a>,
+    and the devnull tribute game code <a href="https://github.com/NHTangles/NetHack36/tree/devnull_hdf" target="_blank">here</a>.
+  </p>
+
+  <h4>What's the new content in TNNT?</h4>
+  <p>
+    To not spoil players that are new to TNNT, the additional content that
+    has been added to the game has been purposely omitted from this site.
+    For those that wish to learn about all of the new game content in TNNT,
+    please visit the TNNT entry on the <a href="https://nethackwiki.com/wiki/The_November_NetHack_Tournament" target="_blank">NetHack Wiki</a>.
+  </p>
+
+  <h4>Contributors</h4>
+  <ul>
+    <!-- 2021 TODO: let's update this after scoreboard work is done -->
+    <li>Tangles: Server admin and programmer. Ensures that the various interactions between the game and the server network are working properly.</li>
+    <li>Mandevil: Creator of the scoreboard, the website, and the backend that turns raw game logs into tables of game statistics and trophies.</li>
+    <li>aosdict: Author of the achievements system and various in-game features.</li>
+    <li>K2: Server admin and jack-of-all-trades programmer, maintainer, problem fixer, and designer.</li>
+    <li>aoei: Scoreboard coding.</li>
+    <li>Elenmirie: Overall tournament designer, project manager, coordinator, and alpha tester.</li>
+    <li>Raisse, Jilles, Hothraxxa, and oh6: Tournament designers and alpha testers.</li>
+  </ul>
+
+</article>
+
+</body>
+
+</html>

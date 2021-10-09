@@ -1,0 +1,163 @@
+- model: scoreboard.conduct
+  fields:
+    name: Foodless
+    shortname: food
+    xlogfield: conduct
+    bit: 0
+- model: scoreboard.conduct
+  fields:
+    name: Vegan
+    shortname: vgn
+    xlogfield: conduct
+    bit: 1
+- model: scoreboard.conduct
+  fields:
+    name: Vegetarian
+    shortname: veg
+    xlogfield: conduct
+    bit: 2
+- model: scoreboard.conduct
+  fields:
+    name: Atheist
+    shortname: athe
+    xlogfield: conduct
+    bit: 3
+- model: scoreboard.conduct
+  fields:
+    name: Weaponless
+    shortname: weap
+    xlogfield: conduct
+    bit: 4
+- model: scoreboard.conduct
+  fields:
+    name: Pacifist
+    shortname: paci
+    xlogfield: conduct
+    bit: 5
+- model: scoreboard.conduct
+  fields:
+    name: Illiterate
+    shortname: illi
+    xlogfield: conduct
+    bit: 6
+- model: scoreboard.conduct
+  fields:
+    name: Polypileless
+    shortname: pile
+    xlogfield: conduct
+    bit: 7
+- model: scoreboard.conduct
+  fields:
+    name: Polyselfless
+    shortname: self
+    xlogfield: conduct
+    bit: 8
+- model: scoreboard.conduct
+  fields:
+    name: Wishless
+    shortname: wish
+    xlogfield: conduct
+    bit: 9
+- model: scoreboard.conduct
+  fields:
+    name: Artiwishless
+    shortname: artw
+    xlogfield: conduct
+    bit: 10
+- model: scoreboard.conduct
+  fields:
+    name: Genocideless
+    shortname: geno
+    xlogfield: conduct
+    bit: 11
+- model: scoreboard.conduct
+  fields:
+    name: Elberethless
+    shortname: elbe
+    xlogfield: conduct
+    bit: 12
+- model: scoreboard.conduct
+  fields:
+    name: Survivor
+    shortname: surv
+    xlogfield: conduct
+    bit: 13
+- model: scoreboard.conduct
+  fields:
+    name: Swapchestless
+    shortname: swap
+    xlogfield: conduct
+    bit: 14
+- model: scoreboard.conduct
+  fields:
+    name: Never kill a quest nemesis
+    shortname: neme
+    xlogfield: conduct
+    bit: 15
+- model: scoreboard.conduct
+  fields:
+    name: Never kill Vlad
+    shortname: vlad
+    xlogfield: conduct
+    bit: 16
+- model: scoreboard.conduct
+  fields:
+    name: Never kill the Wizard of Yendor
+    shortname: wiz
+    xlogfield: conduct
+    bit: 17
+- model: scoreboard.conduct
+  fields:
+    name: Never kill the High Priest of Moloch
+    shortname: prst
+    xlogfield: conduct
+    bit: 18
+- model: scoreboard.conduct
+  fields:
+    name: Never kill a Rider
+    shortname: ride
+    xlogfield: conduct
+    bit: 19
+- model: scoreboard.conduct
+  fields:
+    name: Artifactless
+    shortname: arti
+    xlogfield: conduct
+    bit: 20
+- model: scoreboard.conduct
+  fields:
+    name: Petless
+    shortname: pets
+    xlogfield: conduct
+    bit: 21
+- model: scoreboard.conduct
+  fields:
+    name: Permadeaf
+    shortname: deaf
+    xlogfield: conduct
+    bit: 22
+- model: scoreboard.conduct
+  fields:
+    name: Permahallucinating
+    shortname: halu
+    xlogfield: conduct
+    bit: 23
+- model: scoreboard.conduct
+  fields:
+    name: Bonesless
+    shortname: bone
+    xlogfield: conduct
+    bit: 24
+# mumble grumble devteam putting conducts in the achieve field grumble mumble...
+- model: scoreboard.conduct
+  fields:
+    name: Zen
+    shortname: zen
+    xlogfield: achieve
+    bit: 12
+- model: scoreboard.conduct
+  fields:
+    name: Nudist
+    shortname: nude
+    xlogfield: achieve
+    bit: 13

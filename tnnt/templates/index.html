@@ -1,0 +1,287 @@
+{% load static %}
+<!doctype html>
+
+<html>
+
+<head>
+  <title>TNNT - The November NetHack Tournament</title>
+  {% include "headlinks.html" %}
+  <script type="text/javascript" src="{% static 'js/countdown.js' %}"></script>
+</head>
+
+<body>
+
+{% include "header.html" with page="index" %}
+
+<div id="salespitch">
+  <h3> Do you love to play <a href="https://nethack.org">NetHack</a>? </h3>
+  <h3> Want to show everyone your personal <a href="players.html">prowess?</a></h3>
+  <h3> Join a <a href="clans.html">clan</a> and team up to accomplish feats too hard for one player?</h3>
+  <h3> Or just mess around and see <!-- Link to unique deaths page here? --> how many different ways you can get yourself killed?</h3>
+  <h3> Then come join us in November <!-- put js countdown here? --> for a month of NetHacking fun.</h3>
+  <!-- or maybe put js countdown here, with a "The tournament starts in:\n X days HH:MM:SS" message, that disappears or turns into a "Play Now" after it's actually November -->
+  <p id="countdown">
+    <span class="initial">&nbsp;</span>
+    <span class="before">The tournament starts in</span>
+    <span class="during">The tournament ends in</span>
+    <span class="over">The tournament is over; see you all next November</span>
+    <span class="counter">
+      <span id="counter"></span> on <span id="when"></span>!
+    </span>
+  </p>
+</div>
+
+<hr>
+
+<article>
+  <h4> How to Play </h4>
+  <p>
+    You will need an <a href="https://en.wikipedia.org/wiki/SSH">SSH client</a>
+    to connect to the game servers. Linux and Mac OS typically come with this
+    installed; Windows users can use either a free client like
+    <a href="https://putty.org">PuTTY</a> or Windows Subsystem for Linux.
+  </p>
+  <p>
+    TNNT is hosted by <a href="/nethack">hardfought.org</a>.
+    Connect to "nethack@hardfought.org" via SSH, and register an account.
+    Then, you can choose any of three servers to play on:
+    <ul>
+      <li>hardfought.org: USA (East Coast)</li>
+      <li>eu.hardfought.org: Europe (London)</li>
+      <li>au.hardfought.org: Australia (Sydney)</li>
+    </ul>
+    Connect to your preferred server the same way via SSH and select the TNNT game
+    option. That's all there is to it! If you'd like to play with the TNNT tileset,
+    or you're at a location that blocks everything except web access, check out our
+    <a href="/nethack/hterm">hterm</a> page, you can play this way from any of the three
+    servers listed above.
+  </p>
+  <p>
+    To create, join, or manage clans, go
+    <a href="/tnnt/clanmgmt">here</a>.
+    Clan membership (creating and joining) will be frozen after November 10th!
+  </p>
+
+  <!-- was going to put a section for "helpful links" here, but not sure they're needed since the header is pretty obvious -->
+
+  <h4> More Information </h4>
+  <p>
+    For more general information on NetHack, check out
+    <a href="https://en.wikipedia.org/wiki/NetHack">Wikipedia</a>,
+    the <a href="https://nethackwiki.com">NetHackWiki</a>,
+    and <a href="https://thegreatestgameyouwilleverplay.com">The Greatest Game You Will Ever Play</a>.
+  </p>
+  <p>
+    TNNT-related in-game commands include:
+    <ul>
+      <li>#tnntstats: a listing of all TNNT-related goals</li>
+      <li>#achievements: shows all achievements, completed and those not</li>
+      <li>#snacks: shows all foods eaten</li>
+      <li>#species: shows all eligible species killed and not killed</li>
+      <li>#conduct: not a new macro for TNNT, but this will show TNNT-specific conducts</li>
+    </ul>
+  </p>
+  <p>
+    For more information about the TNNT tournament, see the <a href="about.html">About page</a>
+    and <a href="rules.html">Rules page</a>.
+  </p>
+  <p>
+    Live game events via Twitter feed! Be sure to check out and follow our <a href="https://twitter.com/TNNT_announce/">TNNT Twitter Feed</a> to stay current.
+  </p>
+  <p>
+    TNNT chat discussion happens on the <a href="https://freenode.net">Freenode</a>
+    IRC server, on the #tnnt and #hardfought channels. All TNNT discussion is
+    on-topic in these channels, and this is the best way to reach the admins if
+    you have any issues.
+    <a href="https://webchat.freenode.net/?channels=#tnnt">Click here to open the chat.</a>
+  </p>
+</article>
+
+<h2>Overall Statistics</h2>
+ [% IF games.all.size %]
+  <table>
+    <tbody>
+      <tr>
+        <td>Clans</td>
+        <td>[% clans.all.size %]
+      </tr>
+      <tr>
+        <td>Players</td>
+        <td>[% players.all.size %]
+      </tr>
+      <tr>
+        <td>Games</td>
+        <td>[% games.all.size %]
+      </tr>
+      <tr>
+        <td>Scummed games</td>
+        <td>[% games.scums %]
+      </tr>
+      <tr>
+        <td>Ascensions</td>
+        <td>[% games.ascs.size %]
+      </tr>
+      <tr>
+        <td>Ascending players</td>
+        <td>
+          [%
+            SET cnt = 0;
+            FOREACH p IN players.all.keys;
+              IF players.all.item(p).exists('ascs');
+                SET cnt = cnt + 1;
+              END;
+            END;
+            cnt;
+          %]
+        </td>
+      </tr>
+    </tbody>
+  </table>
+[% ELSE %]
+  <p>No games played yet</p>
+[% END %]
+
+[%# ###########################################################################
+###############################################################################
+############################################################################ %]
+
+ <h2>List of Top 10 Players</h2>
+
+ [% IF players.all.size %]
+  <table>
+    <thead>
+      <tr class="framed">
+        <th>#</th>
+        <th>player</th>
+        <th>clan</th>
+        <th>games</th>
+        <th>wins</th>
+        <th>score</th>
+        <th>ach</th>
+      </tr>
+    </thead>
+    <tbody>
+      [% SET i = 1; FOREACH plr IN players.ordered %]
+        [% SET p = players.all.item(plr) %]
+        <tr class="framed">
+           <td>[% i; SET i = i + 1 %]</td>
+           <td>[% plink(plr) %]</td>
+           <td>[% IF p.exists('clan'); clink(clans.all.item(p.clan)); END %]</td>
+           <td>[% p.games.size %]</td>
+           <td>[% p.ascs.size %]</td>
+           <td>[% p.score %]</td>
+           <td>[% p.achievements.size %]</td>
+        </tr>
+        [% LAST IF i == 10 + 1 %]
+      [% END %]
+    </tbody>
+  </table>
+[% ELSE %]
+  <p>No players have played so far</p>
+[% END %]
+
+[%# ###########################################################################
+###############################################################################
+############################################################################ %]
+
+ <h2>List of Top 10 Clans</h2>
+
+ [% IF clans.all.size %]
+  <table>
+    <thead>
+      <tr class="framed">
+        <th>#</th>
+        <th>clan</th>
+        <th>score</th>
+        <th>games</th>
+        <th>wins</th>
+        <th>ach</th>
+      </tr>
+    </thead>
+    <tbody>
+      [% SET i = 1; FOREACH clan_idx IN clans.ordered %]
+        [% SET c = clans.all.item(clan_idx) %]
+        <tr class="framed">
+          <td>[% i; SET i = i + 1 %]</td>
+          <td>[% clink(c) %]</td>
+          <td>[% c.score %]</td>
+          <td>[% c.games.size %]</td>
+          <td>[% c.ascs.size %]</td>
+          <td>[% c.achievements.size %]</td>
+        </tr>
+        [% LAST IF i == 10 + 1 %]
+      [% END %]
+    </tbody>
+  </table>
+[% ELSE %]
+  <p>There are no clans yet</p>
+[% END %]
+
+[%# ###########################################################################
+###############################################################################
+############################################################################ %]
+
+ <h2>Last 10 Ascensions</h2>
+
+ [% IF games.ascs.size %]
+  <table>
+    <thead>
+      [% INCLUDE game.tt head=1 aswon=1 class="framed" %]
+    </thead>
+    <tbody>
+      [%
+        SET i = games.ascs.size;
+        SET cnt = 10;
+        FOREACH game IN games.ascs.reverse;
+          INCLUDE game.tt aswon=1;
+          SET i = i - 1;
+          SET cnt = cnt - 1;
+          LAST IF cnt < 1 || i < 1;
+        END;
+      %]
+      <tr>
+        <td colspan=10 class="more"><a href="ascensions.html">. . .</a></td>
+      </tr>
+    </tbody>
+  </table>
+[% ELSE %]
+  <p>There are no ascensions yet</p>
+[% END %]
+
+[%# ###########################################################################
+###############################################################################
+############################################################################ %]
+
+ <h2>Last 10 Games</h2>
+
+ [% IF games.all.size %]
+  <table>
+    <thead>
+      [% INCLUDE game.tt head=1 aswon=1 class="framed" %]
+    </thead>
+    <tbody>
+      [%
+        SET i = games.all.size;
+        SET cnt = 10;
+        FOREACH game IN games.all.reverse;
+          IF !game.scum;
+            INCLUDE game.tt game=game.n;
+            SET cnt = cnt - 1;
+          END;
+          SET i = i - 1;
+          LAST IF cnt < 1 || i < 1;
+        END;
+      %]
+      <tr>
+        <td colspan=10 class="more"><a href="games.html">. . .</a></td>
+      </tr>
+    </tbody>
+  </table>
+[% ELSE %]
+  <p>There are no games played yet</p>
+[% END %]
+
+</body>
+
+</html>
+
