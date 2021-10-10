@@ -1,4 +1,4 @@
-# TNNT backend powerd by Django REST Framework
+# TNNT backend powered by Django REST Framework
 This is a rewrite of the old
 [Perl backend](https://github.com/tnnt-devteam/tnnt-backend), intended to be
 designed as a REST API using
@@ -26,11 +26,6 @@ results before rendering the output as JSON.
  - `/leaderboards/wallclock`
 
 ## Dependencies and setup
-### Ubuntu/Debian
-```shell
-$ sudo apt-get install python3 pip mariadb-server mariadb-client
-$ sudo apt-get install python3-dev default-libmysqlclient-dev build-essential
-```
 
 ### Arch Linux
 ```shell
@@ -39,7 +34,26 @@ $ sudo mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
 $ sudo systemctl start mysql.service
 ```
 
-#### Optional: enter python virtual environment before install deps
+### Debian/Ubuntu
+```shell
+$ sudo apt-get install python3 pip mariadb-server mariadb-client
+$ sudo apt-get install python3-dev default-libmysqlclient-dev build-essential
+```
+
+### macOS Big Sur
+In order for the rest of this guide to be consistent, add the following to `~/.zshrc`.
+```shell
+alias python='python3'
+alias pip='pip3'
+```
+Install mariadb:
+```shell
+$ brew install mariadb
+$ mysql.server start
+```
+
+### OS-independent steps
+#### Optional: enter python virtual environment before installing dependencies
 ```shell
 $ virtualenv env --no-site-packages
 $ source env/bin/activate
@@ -61,8 +75,8 @@ export DATABASE_PASSWORD='<db_pass_here>'
 `$ sudo mysql`
 ```sql
 > CREATE DATABASE scoreboard;
-> CREATE USER tnnt IDENTIFIED BY '<db_pass_here>';
-> GRANT ALL ON *.* TO tnnt;
+> CREATE USER 'tnnt'@'localhost' IDENTIFIED BY '<db_pass_here>';
+> GRANT ALL ON *.* TO 'tnnt'@'localhost';
 ```
 #### migrate
 ```shell
@@ -74,7 +88,10 @@ $ python manage.py migrate
 
 #### Import achievements, conducts, and trophies data
 Note: this requires a copy of the TNNT game source to pull TNNT achievement
-names and descriptions from.
+names and descriptions from. However, achievements are now part of the repository,
+and the first command below only needs to be run if/when achievements are modified
+in the TNNT game source code. The import of fixtures should also only be done once,
+when a fresh Django server is being set up.
 ```shell
 $ ./ach_to_yaml.sh /path/to/tnnt/source > scoreboard/fixtures/achievements.yaml
 $ python manage.py loaddata achievements conducts trophies
