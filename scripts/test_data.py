@@ -1,4 +1,4 @@
-from scoreboard.serializers import XlogListSerializer, XlogRecordSerializer, XlogParser
+from scoreboard.parsers import XlogListSerializer, XlogRecordSerializer, XlogParser
 
 class TestData:
     def import_and_save_from_xlogfile(self, filename):

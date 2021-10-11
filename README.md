@@ -94,7 +94,7 @@ in the TNNT game source code. The import of fixtures should also only be done on
 when a fresh Django server is being set up.
 ```shell
 $ ./ach_to_yaml.sh /path/to/tnnt/source > scoreboard/fixtures/achievements.yaml
-$ python manage.py loaddata achievements conducts trophies
+$ python manage.py loaddata achievements conducts sources trophies
 ```
 
 #### Optional: import test data from xlogfile (e.g. `tnnt-2020-eu`)

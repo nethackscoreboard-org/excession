@@ -1,4 +1,4 @@
-- model: scoreboard.conduct
+ - model: scoreboard.conduct
   fields:
     name: Foodless
     shortname: food

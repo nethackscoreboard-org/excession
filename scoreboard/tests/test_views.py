@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from rest_framework import status
 from django.test import TestCase, Client
-from scoreboard.serializers import XlogListSerializer, XlogRecordSerializer, XlogParser
+from scoreboard.parsers import XlogListSerializer, XlogRecordSerializer, XlogParser
 
 class APIViewsTest(TestCase):
     @classmethod

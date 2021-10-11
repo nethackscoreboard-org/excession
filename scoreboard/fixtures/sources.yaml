@@ -1,0 +1,18 @@
+- model: scoreboard.source
+  fields:
+    server: hdf
+    local_file: hdf.tnnt.xlog
+    location: https://www.hardfought.org/xlogfiles/tnnt/xlogfile
+    last_check: 2021-10-01T00:00+00:00
+- model: scoreboard.source
+  fields:
+    server: hfe
+    local_file: hfe.tnnt.xlog
+    location: https://eu.hardfought.org/xlogfiles/tnnt/xlogfile
+    last_check: 2021-10-01T00:00+00:00
+- model: scoreboard.source
+  fields:
+    server: hfa
+    local_file: hfa.tnnt.xlog
+    location: https://au.hardfought.org/xlogfiles/tnnt/xlogfile
+    last_check: 2021-10-01T00:00+00:00

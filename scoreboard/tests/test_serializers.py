@@ -1,7 +1,7 @@
 import io
 from datetime import datetime, timedelta
 from django.test import TestCase
-from scoreboard.serializers import GameSerializer, XlogListSerializer, XlogRecordSerializer, XlogParser
+from scoreboard.parsers import GameSerializer, XlogListSerializer, XlogRecordSerializer, XlogParser
 
 class XlogRecordSerializerTest(TestCase):
     def setUp(self):
