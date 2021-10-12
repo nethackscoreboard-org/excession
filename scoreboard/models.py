@@ -57,14 +57,18 @@ class LeaderboardBaseFields(models.Model):
 
 class Clan(LeaderboardBaseFields):
     name     = models.CharField(max_length=128, unique=True)
+    # clan admin can configure message
+    message  = models.CharField(max_length=512, default='')
     # perhaps trophies could go in LeaderboardBaseFields but it's not actually a
     # leaderboard field so keeping it conceptually separate makes sense for now
     trophies = models.ManyToManyField(Trophy)
 
 class Player(LeaderboardBaseFields):
-    name     = models.CharField(max_length=32, unique=True)
-    clan     = models.ForeignKey(Clan, null=True, on_delete=models.SET_NULL)
-    trophies = models.ManyToManyField(Trophy)
+    name       = models.CharField(max_length=32, unique=True)
+    clan       = models.ForeignKey(Clan, null=True, on_delete=models.SET_NULL)
+    trophies   = models.ManyToManyField(Trophy)
+    clan_admin = models.BooleanField(default=False)
+    invites    = models.ManyToManyField(Clan, related_name='invitees')
 
 class Source(models.Model):
     # Information about a source of aggregate game data (e.g. an xlogfile).
