@@ -22,5 +22,7 @@ urlpatterns = [
     path('rules', tnntviews.RulesView.as_view(), name='rules'),
     path('about', tnntviews.AboutView.as_view(), name='about'),
     path('archives', tnntviews.ArchivesView.as_view(), name='archives'),
+    path('clanmgmt', tnntviews.ClanMgmtView.as_view(), name='clanmgmt'),
+    path('', include('django.contrib.auth.urls')),
 ]
 

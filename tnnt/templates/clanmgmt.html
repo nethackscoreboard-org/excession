@@ -1,0 +1,136 @@
+{% load static %}
+<!doctype html>
+
+<html>
+
+<head>
+  <title>TNNT::Clan Management</title>
+  {% include "headlinks.html" %}
+</head>
+
+<body>
+
+{% include "header.html" with page="clanmgmt" %}
+
+<h2>Clan Management</h2>
+
+<article>
+{% if not user.is_authenticated %}
+  <p> You are not logged in. </p>
+  <p><a href="/login">Log in here.</a> </p>
+{% else %}
+  <p>Logged in as {{ user.username }}. <a href="{% url 'logout' %}">Log Out</a></p>
+
+  <hr>
+  {% if errmsg is not None %}
+    <p class="errmsg">Error: {{errmsg}}</p>
+  {% endif %}
+
+  {% if clan is None %}
+    <p>You are not in a clan right now.</p>
+    <form method="post">
+        {% csrf_token %}
+        {{ create_clan_form }}
+        <button name="create_clan" type="submit">Create</button>
+    </form>
+  {% else %}
+    <h3>{{clan.name}}</h3>
+    <form method="post" class="inline-form">
+      {% csrf_token %}
+        <button name="leave" type="submit" {% if members.count == 1 %}disabled{% endif %}>
+          Leave clan
+        </button>
+      {% if me.clan_admin %}
+        <button name="disband" type="submit">Disband clan</button>
+      {% endif %}
+    </form>
+    <p>Clan members:</p>
+    <ul class="clanlist">
+      {% for member in members %}
+        <!-- TODO here: 1) link to players -->
+        <li {% if member.id == me.id %}class="current-player"{% endif %}>
+          {{member.name}} {% if member.clan_admin %}(admin){% endif %}
+          {% if member.id != me.id and me.clan_admin %}
+            <form method="post" class="disguised-button">
+              {% csrf_token %}
+              <input name="kick_or_admin_id" type="hidden" value="{{member.id}}" />
+              {% if not member.clan_admin %}
+                <button name="adminify" type="submit">Make Admin</button>
+              {% endif %}
+              <button name="kick" type="submit">Kick</button>
+            </form>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+    {% if me.clan_admin %}
+      <form method="post">
+          {% csrf_token %}
+          {{ invite_member_form }}
+          <button name="invite" type="submit">Invite</button>
+      </form>
+    {% endif %}
+    {% if invitees.all %}
+      <p>Your clan has invited:</p>
+      <ul>
+        {% for othplayer in invitees %}
+          <li>
+            {{othplayer.name}}
+            {% if me.clan_admin %}
+              <form method="post" class="disguised-button">
+                {% csrf_token %}
+                <input name="rescind_id" type="hidden" value="{{othplayer.id}}" />
+                <button name="rescind" type="submit">Rescind Invite</button>
+              </form>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>There are no outstanding invites.</p>
+    {% endif %}
+  {% endif %}
+  <hr>
+  {% if invites.all %}
+    <p>The following clans have invited you: </p>
+    <ul>
+      {% for othclan in invites %}
+        <li>
+          <form method="post" class="disguised-button">
+            {% csrf_token %}
+            <input name="join_clan_id" type="hidden" value="{{othclan.id}}" />
+            <button name="join_clan" type="submit" value="{{othclan.name}}">
+              {{othclan.name}}
+            </button>
+          </form>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>You do not have any invites.</p>
+  {% endif %}
+
+  <!-- TODO:
+      - if already in a clan don't show clan creation (but backend needs to guard
+        against this anyway), should instead display clan and all members
+      - if admin of a clan, pending invites should be displayed
+      - if admin of a clan, text box for entering player name to invite should be displayed
+      - BACKEND: admin should be able to invite people who haven't interacted and
+        don't exist in db at all (but who do exist in dgl)
+      - list of invites for this player should be displayed
+        BUT if this player is admin, they should not be able to accept them (backend must guard)
+      - if admin of a clan, disband button should be displayed
+      - if admin of a clan, must be able to make others admin
+      - clan admin must be able to rescind invite
+      - clan admin must be able to kick members
+      - FUTURE: if admin of a clan, clan message should be editable
+      - FUTURE: anyone with a clan should see its message
+      - FUTURE: players should be able to request being in a clan
+  -->
+{% endif %}
+</article>
+
+</body>
+
+</html>
+

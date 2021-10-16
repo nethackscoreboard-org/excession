@@ -87,5 +87,12 @@ $ python manage.py loaddata achievements conducts trophies
 >>> TestData().import_and_save_from_xlogfile('tnnt-2020-eu')
 ```
 
+#### Optional: point DGL\_DATABASE\_PATH at real database
+This is in `tnnt/settings.py`. By default, it points at `dgamelaunch_test.db`,
+which provides several "registered dgamelaunch accounts" (alice, bob, chuck,
+david, eve, fred, and gimli; each password is the same as the username) for
+dev and testing purposes. For production, you will want to point this to the
+full path of the real dgamelaunch sqlite database.
+
 ### Run dev server
 `$ python manage.py runserver`
