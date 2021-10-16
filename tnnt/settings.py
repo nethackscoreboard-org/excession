@@ -72,6 +72,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(SETTINGS_PATH, 'templates'),
+            os.path.join(BASE_DIR, 'templates'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -148,3 +149,17 @@ STATICFILES_DIRS = [ # why is this needed?
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Where you get taken after logging in/out
+
+LOGIN_REDIRECT_URL = '/clanmgmt'
+LOGOUT_REDIRECT_URL = '/'
+
+# Custom authentication backend (hooks into dgamelaunch)
+
+AUTHENTICATION_BACKENDS = [
+    'tnnt.hardfought_utils.HdfAuthBackend',
+]
+
+# Path to dgl sqlite3 database
+
+DGL_DATABASE_PATH = './dgamelaunch_test.db'

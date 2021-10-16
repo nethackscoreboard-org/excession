@@ -1,3 +1,4 @@
+<!-- This is the header bar for the page, not the elements in <head>. -->
 {% load static %}
 <header>
   <div id="headerbar">
@@ -17,6 +18,7 @@
       <tr>
           <td class="leftmenu">
               <a href="/" class="menu {% if page == 'index' %} menusel {% endif %}">HOME</a>
+              <!-- TODO: this should likely become "Results" -->
               <a href="/trophies" class="menu {% if page == 'trophies' %} menusel {% endif %}">TROPHIES</a>
               <a href="/clans" class="menu {% if page == 'clans' %} menusel {% endif %}">CLANS</a>
               <a href="/players" class="menu {% if page == 'players' %} menusel {% endif %}">PLAYERS</a>
@@ -25,7 +27,11 @@
               <a href="/rules" class="menu {% if page == 'rules' %} menusel {% endif %}">RULES</a>
               <a href="/about" class="menu {% if page == 'about' %} menusel {% endif %}">ABOUT</a>
               <a href="/archives" class="menu {% if page == 'archive' %} menusel {% endif %}">ARCHIVES</a>
-              <a href="/tnnt/clanmgmt" class="menu {% if page == 'settings' %} menusel {% endif %}">MY CLAN</a>
+              {% if user.is_authenticated %}
+                <a href="/clanmgmt" class="menu {% if page == 'clanmgmt' %} menusel {% endif %}">MY CLAN</a>
+              {% else %}
+                <a href="/login" class="menu {% if page == 'login' %} menusel {% endif %}">LOGIN</a>
+              {% endif %}
           </td>
       </tr>
       <tr id="lowerheader">

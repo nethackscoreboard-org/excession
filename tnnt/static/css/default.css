@@ -54,7 +54,7 @@ h5 {
 
 a {
   color: inherit;
-  text-decoration: none;
+  text-decoration: underline;
 }
 
 a:hover {
@@ -493,4 +493,39 @@ span#counter {
 
 .filter-entry.enabled:before {
   content: "◼ ";
+}
+
+/*====================================================================
+  === CLAN MANAGEMENT ================================================
+  ====================================================================*/
+
+form.disguised-button, form.inline-form {
+    display: inline;
+}
+
+form.disguised-button button {
+    /* Make this appear like a link. */
+    background: none;
+    border: none;
+    color: #f2f5ff;
+    text-decoration: underline;
+    font-size: 1em;
+    font-family: 'Lato', sans-serif;
+    cursor: pointer;
+}
+
+form.disguised-button button:focus {
+    outline: none;
+}
+
+form.disguised-button button:hover {
+    color: #fd0;
+}
+
+.errmsg {
+    color: red;
+}
+
+.current-player {
+    font-weight: bold;
 }

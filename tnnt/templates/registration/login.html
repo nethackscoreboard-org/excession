@@ -1,0 +1,38 @@
+{% load static %}
+<!doctype html>
+
+<html>
+
+<head>
+  <title>TNNT::Login</title>
+  {% include "headlinks.html" %}
+</head>
+
+<body>
+
+{% include "header.html" with page="login" %}
+
+<article>
+    <h2>Log In</h2>
+    <p>Use your Hardfought credentials to log in.</p>
+    <p>
+      If you've never played on Hardfought before, you'll need to register your
+      account through dgamelaunch. See
+      <a href="https://www.hardfought.org/nethack/#how-to-connect">this page</a>
+      for instructions.
+    </p>
+    <form method="post">
+        {% csrf_token %} <!-- guard against cross-site submission of this POST -->
+    {{ form.as_table }}
+    <button type="submit">Log In</button>
+    </form>
+</article>
+
+
+<hr>
+
+
+</body>
+
+</html>
+
