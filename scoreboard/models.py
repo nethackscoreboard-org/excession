@@ -46,17 +46,18 @@ class LeaderboardBaseFields(models.Model):
         abstract = True
 
     # these need to be nullable otherwise initial player/clan creation fails
-    lowest_turncount       = models.IntegerField(null=True)
-    fastest_realtime       = models.DurationField(null=True)
-    max_conducts_in_1_game = models.IntegerField(null=True)
-    max_ach_in_1_game      = models.IntegerField(null=True)
-    min_score              = models.IntegerField(null=True)
-    max_score              = models.IntegerField(null=True)
-    longest_streak         = models.IntegerField(null=True)
-    earliest_asc_time      = models.DateTimeField(null=True)
-    unique_deaths          = models.IntegerField(null=True)
-    unique_ascs            = models.IntegerField(null=True)
-    games_over_1000_turns  = models.IntegerField(null=True)
+    # ascension_count        = models.IntegerField(default=0)
+    # games_t1000_count      = models.IntegerField(default=0)
+    longest_streak         = models.IntegerField(default=0)
+    unique_deaths          = models.IntegerField(default=0)
+    unique_ascs            = models.IntegerField(default=0)
+    lowest_turncount_asc   = models.ForeignKey('Game', null=True, on_delete=models.SET_NULL, related_name='+')
+    fastest_realtime_asc   = models.ForeignKey('Game', null=True, on_delete=models.SET_NULL, related_name='+')
+    max_conducts_asc       = models.ForeignKey('Game', null=True, on_delete=models.SET_NULL, related_name='+')
+    max_achieves_game      = models.ForeignKey('Game', null=True, on_delete=models.SET_NULL, related_name='+')
+    min_score_asc          = models.ForeignKey('Game', null=True, on_delete=models.SET_NULL, related_name='+')
+    max_score_asc          = models.ForeignKey('Game', null=True, on_delete=models.SET_NULL, related_name='+')
+    first_asc              = models.ForeignKey('Game', null=True, on_delete=models.SET_NULL, related_name='+')
 
 class Clan(LeaderboardBaseFields):
     name     = models.CharField(max_length=128, unique=True)
@@ -86,6 +87,31 @@ class Source(models.Model):
 class GameManager(models.Manager):
     simple_fields = ['version', 'role', 'race', 'gender', 'align', 'points', 'turns', 'realtime', 'maxlvl', 'death',
                      'align0', 'gender0']
+    
+    def _update_leaderboard_fields(self, entity, game):
+        if entity.max_achieves_game is None or game.achievements.count() > entity.max_achieves_game.achievements.count():
+            entity.max_achieves_game = game
+
+        if not game.won:
+            return
+        
+        if entity.lowest_turncount_asc is None or game.turns < entity.lowest_turncount_asc.turns:
+            entity.lowest_turncount_asc = game
+
+        if entity.fastest_realtime_asc is None or game.realtime < entity.fastest_realtime_asc.realtime:
+            entity.fastest_realtime_asc = game
+
+        if entity.max_conducts_asc is None or game.conducts.count() > entity.max_conducts_asc.conducts.count():
+            entity.max_conducts_asc = game
+
+        if entity.min_score_asc is None or game.points < entity.min_score_asc.points:
+            entity.min_score_asc = game
+
+        if entity.max_score_asc is None or game.points > entity.max_score_asc.points:
+            entity.max_score_asc = game
+
+        if entity.first_asc is None or game.endtime < entity.first_asc.endtime:
+            entity.first_asc = game
 
     def from_xlog(self, source, xlog_dict):
         # TODO: validate xlog_dict contains some set of 'required_fields'
@@ -122,15 +148,20 @@ class GameManager(models.Manager):
 
         # add conducts (does it make sense to do this for non-ascended games?)
         for conduct in Conduct.objects.all():
-            if xlog_dict[conduct.xlogfield] & 1 << conduct.bit:
+            if conduct.xlogfield in xlog_dict and xlog_dict[conduct.xlogfield] & 1 << conduct.bit:
                 game.conducts.add(conduct)
 
         # add achievements (this we *do* want for non-ascended games)
         for achieve in Achievement.objects.all():
-            if xlog_dict[achieve.xlogfield] & 1 << achieve.bit:
+            if achieve.xlogfield in xlog_dict and xlog_dict[achieve.xlogfield] & 1 << achieve.bit:
                 game.achievements.add(achieve)
 
-        # TODO: handle/make call to handler for trophy and leaderboard tracking
+        # perform win check within _update_leaderboard_fields, because a few things
+        # e.g. max achievements in a single game, and unique deaths, will consider
+        # games that haven't won
+        self._update_leaderboard_fields(player, game)
+        if player.clan:
+            self._update_leaderboard_fields(player.clan, game)
 
         return game
 
