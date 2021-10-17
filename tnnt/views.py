@@ -106,11 +106,12 @@ class ClanMgmtView(View):
     # Helper function triggered when a create_clan POST request comes in
     def create_clan(self, request, player, ctx):
         create_clan_form = CreateClanForm(request.POST)
-        new_clan_name = request.POST['clan_name']
 
         if not create_clan_form.is_valid():
             ctx['create_clan_form'] = create_clan_form
             return
+
+        new_clan_name = create_clan_form.cleaned_data['clan_name']
 
         # clan freeze must not be in effect
         if self.clan_freeze_in_effect():
@@ -168,7 +169,7 @@ class ClanMgmtView(View):
             # but they are in dgl database, create the player in our
             # database (we need to do this because we need to record
             # them as having an invite)
-            invitee = hardfought_utils.find_player(request.POST['invitee'])
+            invitee = hardfought_utils.find_player(invite_form.cleaned_data['invitee'])
             invitee.invites.add(player.clan)
         except Player.DoesNotExist:
             ctx['errmsg'] = 'No such player exists'
