@@ -26,13 +26,22 @@
     <p class="errmsg">Error: {{errmsg}}</p>
   {% endif %}
 
+  {% if clan_freeze %}
+    <p>
+      <strong>Clan freeze is now in effect.</strong> You can no longer create or
+      join clans.
+    </p>
+  {% endif %}
+
   {% if clan is None %}
     <p>You are not in a clan right now.</p>
-    <form method="post">
-        {% csrf_token %}
-        {{ create_clan_form }}
-        <button name="create_clan" type="submit">Create</button>
-    </form>
+    {% if not clan_freeze %}
+      <form method="post">
+          {% csrf_token %}
+          {{ create_clan_form }}
+          <button name="create_clan" type="submit">Create</button>
+      </form>
+    {% endif %}
   {% else %}
     <h3>{{clan.name}}</h3>
     <form method="post" class="inline-form">
@@ -63,7 +72,7 @@
         </li>
       {% endfor %}
     </ul>
-    {% if me.clan_admin %}
+    {% if me.clan_admin and not clan_freeze %}
       <form method="post">
           {% csrf_token %}
           {{ invite_member_form }}

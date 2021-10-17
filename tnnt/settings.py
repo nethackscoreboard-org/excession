@@ -167,3 +167,9 @@ DGL_DATABASE_PATH = './dgamelaunch_test.db'
 # Clan size limit
 
 MAX_CLAN_PLAYERS = 12
+
+# Clan freeze (no new clan creation / joining clans)
+# This is intentionally timezone-less, because it's compared against a
+# datetime.now() that is also timezone-less ("naive" in datetime parlance).
+
+CLAN_FREEZE_TIME = '2021-11-10T00:00:00'

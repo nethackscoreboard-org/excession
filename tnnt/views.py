@@ -6,6 +6,7 @@ from tnnt.forms import CreateClanForm, InviteMemberForm
 from django.http import HttpResponseRedirect
 from . import hardfought_utils # find_player
 from . import settings
+from datetime import datetime
 
 def impossible(*args):
     # Yes, I made impossible(). I'm too used to having it around.
@@ -46,12 +47,17 @@ class ClanMgmtView(View):
         except Player.DoesNotExist:
             clan = None
 
+        kwargs['clan_freeze'] = self.clan_freeze_in_effect()
+
         if 'invite_member_form' not in kwargs:
             kwargs['invite_member_form'] = InviteMemberForm()
         if 'create_clan_form' not in kwargs:
             kwargs['create_clan_form'] = CreateClanForm()
 
         return kwargs
+
+    def clan_freeze_in_effect(self):
+        return datetime.fromisoformat(settings.CLAN_FREEZE_TIME) <= datetime.now()
 
     def get(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
@@ -106,10 +112,17 @@ class ClanMgmtView(View):
             ctx['create_clan_form'] = create_clan_form
             return
 
+        # clan freeze must not be in effect
+        if self.clan_freeze_in_effect():
+            ctx['errmsg'] = 'Clans cannot be created with clan freeze in effect'
+            return
+
+        # new clan name must be unique
         if Clan.objects.filter(name=new_clan_name).exists():
             ctx['errmsg'] = 'That clan already exists'
             return
 
+        # player must not already be in a clan
         if player.clan is not None:
             ctx['errmsg'] = 'You are already in a clan'
             return
@@ -131,6 +144,12 @@ class ClanMgmtView(View):
             ctx['invite_member_form'] = invite_form
             return
 
+        # invites are pointless when clan freeze is in effect
+        if self.clan_freeze_in_effect():
+            ctx['errmsg'] = 'Invites cannot be made with clan freeze in effect'
+            return
+
+        # must have a clan to invite to
         if player.clan is None:
             # no impossible() >:(
             # maybe someone's messing around with POST requests... >_>
@@ -202,6 +221,11 @@ class ClanMgmtView(View):
     # Helper function triggered when a clan's invite is clicked
     def join_clan(self, request, player, ctx):
         join_clan_id = request.POST['join_clan_id']
+
+        # joins are not allowed when clan freeze is in effect
+        if self.clan_freeze_in_effect():
+            ctx['errmsg'] = 'You cannot join a clan with clan freeze in effect'
+            return
 
         # can't join a clan if already in one
         if player.clan:
