@@ -154,7 +154,7 @@ class ClanMgmtView(View):
             # no impossible() >:(
             # maybe someone's messing around with POST requests... >_>
             impossible('Weird error? %s is clan admin but has no clan!' % (player.name))
-            ctx['errmsg'] = "You can't invite people without being in a clan! Please report this bug"
+            ctx['errmsg'] = "You can't invite people without being in a clan"
             return
 
         # only clan admins can invite players
@@ -171,11 +171,16 @@ class ClanMgmtView(View):
             invitee = hardfought_utils.find_player(request.POST['invitee'])
             invitee.invites.add(player.clan)
         except Player.DoesNotExist:
-            ctx['errmsg'] = 'No such player "' + request.POST['invitee'] + '" exists.'
+            ctx['errmsg'] = 'No such player exists'
 
     # Helper function triggered when "leave" is clicked
     def leave_clan(self, request, player, ctx):
         clan = player.clan
+
+        # must actually have a clan
+        if clan is None:
+            ctx['errmsg'] = "You're not in a clan to leave"
+            return
 
         # ideally "leave clan" shouldn't be displayed if the player is the only
         # member of their clan, but if the POST is submitted anyway, disband the
@@ -277,14 +282,14 @@ class ClanMgmtView(View):
         except Player.DoesNotExist:
             impossible('%s attempted to do clan admin stuff with nonexistent id %d'
                        % (player.name, oth_id))
-            ctx['errmsg'] = 'The player was not found.'
+            ctx['errmsg'] = 'The player was not found'
             return None
 
         # player must be in a clan
         if player.clan is None:
             impossible('%s attempted to do clan admin stuff without being in a clan'
                        % (player.name))
-            ctx['errmsg'] = "You can't do that if you're not in a clan!"
+            ctx['errmsg'] = "You can't do that if you're not in a clan"
             return None
 
         # player must be an admin of their clan
@@ -316,13 +321,13 @@ class ClanMgmtView(View):
         # other player must be in this clan
         if player.clan != new_admin.clan:
             impossible('%s attempted to do make %s (not in their clan) an admin'
-                       % (player.name, otherplayer.name))
-            ctx['errmsg'] = otherplayer.name + ' is not in your clan'
+                       % (player.name, new_admin.name))
+            ctx['errmsg'] = new_admin.name + ' is not in your clan'
             return
 
         # can't make someone an admin who's already an admin
         if new_admin.clan_admin:
-            ctx['errmsg'] = '%s is already a clan admin!' % (new_admin.name)
+            ctx['errmsg'] = '%s is already a clan admin' % (new_admin.name)
             return
 
         # if we passed checks, we're good to make this person an admin
@@ -339,8 +344,8 @@ class ClanMgmtView(View):
         # other player must be in this clan
         if player.clan != kickee.clan:
             impossible('%s attempted to kick %s (not in their clan)'
-                       % (player.name, otherplayer.name))
-            ctx['errmsg'] = otherplayer.name + ' is not in your clan'
+                       % (player.name, kickee.name))
+            ctx['errmsg'] = kickee.name + ' is not in your clan'
             return
 
         if kickee_id == player.id:
