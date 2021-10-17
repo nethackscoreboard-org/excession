@@ -58,6 +58,10 @@ class ClanMgmtView(View):
             return HttpResponseRedirect('/login')
         return render(request, self.template_name, self.get_context_data(**kwargs))
 
+    # FUTURE TODO:
+    # This isn't a very Djangoish way of doing things to have a bunch of
+    # different post requests to clanmgmt. Ideally they'd all be different
+    # endpoints, but not take you to other pages.
     def post(self, request, *args, **kwargs):
 
         if not request.user.is_authenticated:

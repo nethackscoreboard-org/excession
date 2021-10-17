@@ -65,6 +65,9 @@ class Clan(LeaderboardBaseFields):
     # perhaps trophies could go in LeaderboardBaseFields but it's not actually a
     # leaderboard field so keeping it conceptually separate makes sense for now
     trophies = models.ManyToManyField(Trophy)
+    # FUTURE TODO: perhaps there should be:
+    # admins = models.ManyToManyField(Player)
+    # instead of Player having a clan_admin field
 
 class Player(LeaderboardBaseFields):
     name       = models.CharField(max_length=32, unique=True)
