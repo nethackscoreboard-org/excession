@@ -163,3 +163,7 @@ AUTHENTICATION_BACKENDS = [
 # Path to dgl sqlite3 database
 
 DGL_DATABASE_PATH = './dgamelaunch_test.db'
+
+# Clan size limit
+
+MAX_CLAN_PLAYERS = 12

@@ -5,6 +5,7 @@ from scoreboard.models import Player, Clan
 from tnnt.forms import CreateClanForm, InviteMemberForm
 from django.http import HttpResponseRedirect
 from . import hardfought_utils # find_player
+from . import settings
 
 def impossible(*args):
     # Yes, I made impossible(). I'm too used to having it around.
@@ -217,6 +218,11 @@ class ClanMgmtView(View):
         # (this shouldn't come up in normal use)
         if not player.invites.filter(id=join_clan_id):
             ctx['errmsg'] = "That clan has not invited you"
+            return
+
+        # clan can't be full
+        if Player.objects.filter(clan=newclan).count() >= settings.MAX_CLAN_PLAYERS:
+            ctx['errmsg'] = "That clan is full"
             return
 
         # if we got here, we're good to join the clan
