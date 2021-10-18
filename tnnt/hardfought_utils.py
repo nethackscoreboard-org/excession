@@ -46,7 +46,6 @@ class HdfAuthBackend(BaseBackend):
             print('  db path:', DGL_DATABASE_PATH)
             print('  username:', username)
             return None
-        print(pwd_hash)
         if pwd_hash is None:
             # doesn't exist in dgl, can't join site
             return None
