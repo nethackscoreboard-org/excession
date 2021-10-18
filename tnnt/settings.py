@@ -173,3 +173,36 @@ MAX_CLAN_PLAYERS = 12
 # datetime.now() that is also timezone-less ("naive" in datetime parlance).
 
 CLAN_FREEZE_TIME = '2021-11-10T00:00:00'
+
+# Main log file
+
+TNNT_LOG_FILE = "tnnt.log"
+
+# Django logging configuration
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'normal': {
+            'format': '%(levelname)s %(asctime)s %(message)s',
+            'style': '%', # use {} to enclose variables in logging calls
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'DEBUG' if DEBUG else 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': TNNT_LOG_FILE,
+            'formatter': 'normal',
+        },
+        'console': {
+            'class': 'logging.StreamHandler',
+            'level': 'DEBUG',
+            'formatter': 'normal'
+        },
+    },
+    'root': {
+        'handlers': [ 'file', 'console' ],
+        'level': 'DEBUG',
+    },
+}

@@ -2,3 +2,4 @@ secrets.sh
 db.sqlite3
 *__pycache__*
 scoreboard/migrations/*
+tnnt.log

@@ -7,14 +7,9 @@ from django.http import HttpResponseRedirect
 from . import hardfought_utils # find_player
 from . import settings
 from datetime import datetime
+import logging
 
-def impossible(*args):
-    # Yes, I made impossible(). I'm too used to having it around.
-    # TODO: ideally, we use proper logging (i.e. Logging) for this. Even though
-    # this just wraps print(), it's useful for seeing where something really is
-    # known to be impossible (outside of someone messing around with manual POST
-    # requests).
-    print('impossible:', *args)
+logger = logging.getLogger() # use root logger
 
 class HomepageView(TemplateView):
     template_name = 'index.html'
@@ -77,6 +72,18 @@ class ClanMgmtView(View):
         player = Player.objects.get(user=request.user.id)
         ctx = {}
 
+        # People could theoretically mess with POST requests and trigger
+        # unexpected behavior. This logic should guard against things like that
+        # while logging that it happened so we can see if it's a bug or someone
+        # trying to exploit something.
+        #
+        # How things are logged:
+        # error - we actually don't know what to do and the site will have to
+        # inform the user a serious error occurred.
+        # warning - something happened that the UI is not supposed to allow, but
+        # we can handle it gracefully.
+        # info - normal events.
+
         if 'create_clan' in request.POST:
             self.create_clan(request, player, ctx)
 
@@ -115,6 +122,8 @@ class ClanMgmtView(View):
 
         # clan freeze must not be in effect
         if self.clan_freeze_in_effect():
+            logger.warning('%s attempted to make a clan during freeze',
+                           player.name)
             ctx['errmsg'] = 'Clans cannot be created with clan freeze in effect'
             return
 
@@ -125,6 +134,8 @@ class ClanMgmtView(View):
 
         # player must not already be in a clan
         if player.clan is not None:
+            logger.warning('%s attempted to make a clan while already in one',
+                           player.name)
             ctx['errmsg'] = 'You are already in a clan'
             return
 
@@ -132,10 +143,10 @@ class ClanMgmtView(View):
         # admin
         newclan = Clan(name=new_clan_name)
         newclan.save()
-        print('Player "%s" created clan "%s"' % (player.name, newclan.name))
         player.clan = newclan
         player.clan_admin = True
         player.save()
+        logger.info('%s created clan %s', player.name, newclan.name)
 
     # Helper function triggered when a invite-to-clan POST request comes in
     def invite_to_clan(self, request, player, ctx):
@@ -152,26 +163,32 @@ class ClanMgmtView(View):
 
         # must have a clan to invite to
         if player.clan is None:
-            # no impossible() >:(
-            # maybe someone's messing around with POST requests... >_>
-            impossible('Weird error? %s is clan admin but has no clan!' % (player.name))
+            logger.warning('%s attempted to invite without being in a clan',
+                           player.name)
             ctx['errmsg'] = "You can't invite people without being in a clan"
             return
 
         # only clan admins can invite players
         if not player.clan_admin:
+            logger.warning('%s attempted to invite without being admin',
+                           player.name)
             ctx['errmsg'] = "You can't invite people because you aren't a clan admin"
             return
 
         # if we got here, we're good to attempt the invite
+        invitee_name = invite_form.cleaned_data['invitee']
         try:
             # retrieve player if exists in our database, if not
             # but they are in dgl database, create the player in our
             # database (we need to do this because we need to record
             # them as having an invite)
-            invitee = hardfought_utils.find_player(invite_form.cleaned_data['invitee'])
+            invitee = hardfought_utils.find_player(invitee_name)
             invitee.invites.add(player.clan)
+            logger.info('%s invited %s to clan %s',
+                        player.name, invitee_name, player.clan.name)
         except Player.DoesNotExist:
+            logger.warning('%s attempted to invite nonexistent player %s',
+                           player.name, invitee_name)
             ctx['errmsg'] = 'No such player exists'
 
     # Helper function triggered when "leave" is clicked
@@ -180,6 +197,8 @@ class ClanMgmtView(View):
 
         # must actually have a clan
         if clan is None:
+            logger.warning('%s attempted to leave without being in a clan',
+                           player.name)
             ctx['errmsg'] = "You're not in a clan to leave"
             return
 
@@ -192,12 +211,16 @@ class ClanMgmtView(View):
 
         # don't allow if this would leave the clan admin-less
         if not Player.objects.filter(clan=player.clan, clan_admin=True).exclude(id=player.id).exists():
+            logger.warning('%s attempted to leave and cause admin-less clan',
+                           player.name)
             ctx['errmsg'] = 'You cannot leave this clan because it would leave it without an admin'
             return
 
         # if we got here, we're good to leave the clan
+        save_clan_name = player.clan.name
         player.clan = None
         player.save()
+        logger.info('%s left clan %s', player.name, save_clan_name)
 
     # Helper function triggered when "disband" is clicked
     def disband_clan(self, request, player, ctx):
@@ -205,11 +228,13 @@ class ClanMgmtView(View):
 
         # doesn't make sense if player isn't in a clan
         if clan is None:
+            logger.warning('%s attempted to disband with no clan', player.name)
             ctx['errmsg'] = 'You are not in a clan to disband'
             return
 
         # only admins can disband the clan
         if not player.clan_admin:
+            logger.warning('%s attempted to disband as non-admin', player.name)
             ctx['errmsg'] = 'Only clan admins can disband your clan'
             return
 
@@ -222,7 +247,10 @@ class ClanMgmtView(View):
             member.clan = None
             member.clan_admin = False
             member.save()
+        save_clan_name = player.clan.name
         clan.delete()
+        logger.info('%s disbanded clan %s',
+                    player.name, save_clan_name)
 
     # Helper function triggered when a clan's invite is clicked
     def join_clan(self, request, player, ctx):
@@ -230,11 +258,15 @@ class ClanMgmtView(View):
 
         # joins are not allowed when clan freeze is in effect
         if self.clan_freeze_in_effect():
+            logger.warning('%s attempted to join a clan during freeze',
+                           player.name)
             ctx['errmsg'] = 'You cannot join a clan with clan freeze in effect'
             return
 
         # can't join a clan if already in one
         if player.clan:
+            logger.warning('%s attempted to join clan %s while already in a clan',
+                           player.name, join_clan_id)
             ctx['errmsg'] = "You can't join that clan because you're already in one"
             return
 
@@ -245,57 +277,67 @@ class ClanMgmtView(View):
         try:
             newclan = Clan.objects.get(id=join_clan_id)
         except Clan.DoesNotExist:
+            logger.warning('%s attempted to join nonexistent clan id %s',
+                           player.name, join_clan_id)
             ctx['errmsg'] = "You tried to join a clan that doesn't exist"
             return
 
         # clan needs to have actually extended the invite
         # (this shouldn't come up in normal use)
         if not player.invites.filter(id=join_clan_id):
+            logger.warning('%s attempted to join clan %s without an invitation',
+                           player.name, newclan.name)
             ctx['errmsg'] = "That clan has not invited you"
             return
 
         # clan can't be full
         if Player.objects.filter(clan=newclan).count() >= settings.MAX_CLAN_PLAYERS:
+            logger.info('%s attempted to join full clan %s',
+                        player.name, newclan.name)
             ctx['errmsg'] = "That clan is full"
             return
 
         # if we got here, we're good to join the clan
         player.clan = newclan
         if player.clan_admin:
-            impossible('player %s was somehow an admin with no clan!' % (player.name))
+            logger.warning('%s, while joining, was somehow already an admin',
+                           player.name)
         player.clan_admin = False # to be safe
         player.save()
         # A bit questionable whether the invite should be left in place or
         # removed here, but we decided that if a player leaves or is kicked from
         # the clan, it's cleaner if they have to ask for the invite again
         player.invites.remove(newclan)
+        logger.info('%s accepted invite to clan %s',
+                    player.name, newclan.name)
 
     # Helper function for common logic between rescinding, making admin, and
     # kicking - all of these take a player ID and require similar checks to be made.
     # It does NOT check that the other player is in the clan, since invites
     # don't require that.
     # This returns the Player associated with oth_id.
-    def clan_admin_other_member_checks(self, request, player, ctx, oth_id):
+    def clan_admin_other_member_checks(self, request, player, ctx, oth_id, action):
         # other player must exist
-        print(oth_id)
         try:
             otherplayer = Player.objects.get(id=oth_id)
         except Player.DoesNotExist:
-            impossible('%s attempted to do clan admin stuff with nonexistent id %d'
-                       % (player.name, oth_id))
+            logger.warning('%s attempted to %s with nonexistent id %s',
+                           player.name, action, oth_id)
             ctx['errmsg'] = 'The player was not found'
             return None
 
         # player must be in a clan
         if player.clan is None:
-            impossible('%s attempted to do clan admin stuff without being in a clan'
-                       % (player.name))
-            ctx['errmsg'] = "You can't do that if you're not in a clan"
+            logger.warning('%s attempted to %s without being in a clan',
+                           player.name, action)
+            ctx['errmsg'] = "You can't %s if you're not in a clan" % (action)
             return None
 
         # player must be an admin of their clan
         if not player.clan_admin:
-            ctx['errmsg'] = 'Only admins can do this'
+            logger.warning('%s attempted to %s without being an admin',
+                           player.name, action)
+            ctx['errmsg'] = 'Only admins can %s' % (action)
             return None
 
         return otherplayer
@@ -305,59 +347,73 @@ class ClanMgmtView(View):
         # TODO? all of these helpers should test that the key is in POST, and if
         # not, log an error and return
         rescindee_id = request.POST['rescind_id']
-        rescindee = self.clan_admin_other_member_checks(request, player, ctx, rescindee_id)
+        rescindee = self.clan_admin_other_member_checks(request, player, ctx,
+                                                        rescindee_id, "rescind")
         if rescindee is None:
             return
 
         # if we passed checks, we're good to rescind the invite
         rescindee.invites.remove(player.clan)
+        logger.info("%s rescinded clan %s's invite to %s",
+                    player.name, player.clan.name, rescindee.name)
 
     # Helper function triggered when "Make Admin" is clicked on a clan member
     def make_admin(self, request, player, ctx):
         new_admin_id = request.POST['kick_or_admin_id']
-        new_admin = self.clan_admin_other_member_checks(request, player, ctx, new_admin_id)
+        new_admin = self.clan_admin_other_member_checks(request, player, ctx,
+                                                        new_admin_id, "make admin")
         if new_admin is None:
             return
 
         # other player must be in this clan
         if player.clan != new_admin.clan:
-            impossible('%s attempted to do make %s (not in their clan) an admin'
-                       % (player.name, new_admin.name))
-            ctx['errmsg'] = new_admin.name + ' is not in your clan'
+            logger.warning('%s attempted to make %s (not in their clan) an admin',
+                           player.name, new_admin.name)
+            ctx['errmsg'] = '%s is not in your clan' % (new_admin.name)
             return
 
         # can't make someone an admin who's already an admin
         if new_admin.clan_admin:
+            logger.warning('%s attempted to make %s an admin, but they already were',
+                           player.name, new_admin.name)
             ctx['errmsg'] = '%s is already a clan admin' % (new_admin.name)
             return
 
         # if we passed checks, we're good to make this person an admin
         new_admin.clan_admin = True
         new_admin.save()
+        logger.info('%s made %s an admin of clan %s',
+                    player.name, new_admin.name, player.clan.name)
 
     # Helper function triggered when "Kick" is clicked on a clan member
     def kick_member(self, request, player, ctx):
         kickee_id = request.POST['kick_or_admin_id']
-        kickee = self.clan_admin_other_member_checks(request, player, ctx, kickee_id)
+        kickee = self.clan_admin_other_member_checks(request, player, ctx,
+                                                     kickee_id, "kick")
         if kickee is None:
             return
 
         # other player must be in this clan
         if player.clan != kickee.clan:
-            impossible('%s attempted to kick %s (not in their clan)'
-                       % (player.name, kickee.name))
-            ctx['errmsg'] = kickee.name + ' is not in your clan'
+            logger.warning('%s attempted to kick %s (not in their clan)',
+                           player.name, kickee.name)
+            ctx['errmsg'] = '%s is not in your clan' % (kickee.name)
             return
 
         if kickee_id == player.id:
             # the UI should not allow this, but "kick self out" is basically the
             # same as leaving...
+            logger.warning('%s is kicking themself out of their clan, not leaving',
+                           player.name)
             self.leave_clan(request, player, ctx)
+            return
 
         # if we passed checks, we're good to kick this player out of the clan
         kickee.clan = None
         kickee.clan_admin = False
         kickee.save()
+        logger.info('%s kicked %s out of clan %s',
+                    player.name, kickee.name, player.clan.name)
         # FUTURE TODO: would be nice if this and all the other post operations
         # also updated a context message that gets displayed to show success; in
         # this case it would be "Successfully kicked foo out of the clan"
