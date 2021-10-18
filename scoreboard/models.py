@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 from tnnt import settings
 
 class Trophy(models.Model):
@@ -43,28 +44,39 @@ class LeaderboardBaseFields(models.Model):
     class Meta:
         abstract = True
 
-    lowest_turncount       = models.IntegerField()
-    fastest_realtime       = models.DurationField()
-    max_conducts_in_1_game = models.IntegerField()
-    max_ach_in_1_game      = models.IntegerField()
-    min_score              = models.IntegerField()
-    max_score              = models.IntegerField()
-    longest_streak         = models.IntegerField()
-    earliest_asc_time      = models.DateTimeField()
-    unique_deaths          = models.IntegerField()
-    unique_ascs            = models.IntegerField()
-    games_over_1000_turns  = models.IntegerField()
+    # These are all nullable, because a Player or Clan can exist with no games
+    # (i.e. during pre tournament registration).
+    lowest_turncount       = models.IntegerField(null=True)
+    fastest_realtime       = models.DurationField(null=True)
+    max_conducts_in_1_game = models.IntegerField(null=True)
+    max_ach_in_1_game      = models.IntegerField(null=True)
+    min_score              = models.IntegerField(null=True)
+    max_score              = models.IntegerField(null=True)
+    longest_streak         = models.IntegerField(null=True)
+    earliest_asc_time      = models.DateTimeField(null=True)
+    unique_deaths          = models.IntegerField(null=True)
+    unique_ascs            = models.IntegerField(null=True)
+    games_over_1000_turns  = models.IntegerField(null=True)
 
 class Clan(LeaderboardBaseFields):
     name     = models.CharField(max_length=128, unique=True)
+    # clan admin can configure message
+    message  = models.CharField(max_length=512, default='')
     # perhaps trophies could go in LeaderboardBaseFields but it's not actually a
     # leaderboard field so keeping it conceptually separate makes sense for now
     trophies = models.ManyToManyField(Trophy)
+    # FUTURE TODO: perhaps there should be:
+    # admins = models.ManyToManyField(Player)
+    # instead of Player having a clan_admin field
 
 class Player(LeaderboardBaseFields):
-    name     = models.CharField(max_length=32, unique=True)
-    clan     = models.ForeignKey(Clan, null=True, on_delete=models.SET_NULL)
-    trophies = models.ManyToManyField(Trophy)
+    name       = models.CharField(max_length=32, unique=True)
+    clan       = models.ForeignKey(Clan, null=True, on_delete=models.SET_NULL)
+    trophies   = models.ManyToManyField(Trophy)
+    clan_admin = models.BooleanField(default=False)
+    invites    = models.ManyToManyField(Clan, related_name='invitees')
+    # link to User model for web logins
+    user       = models.OneToOneField(User, on_delete=models.PROTECT, null=True)
 
 class Source(models.Model):
     # Information about a source of aggregate game data (e.g. an xlogfile).
