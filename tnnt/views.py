@@ -41,9 +41,9 @@ class ClanMgmtView(View):
             clan = player.clan
             if clan is not None:
                 kwargs['clan'] = clan
-                kwargs['members'] = Player.objects.filter(clan=clan)
-                kwargs['invitees'] = clan.invitees.all()
-            kwargs['invites'] = player.invites.all()
+                kwargs['members'] = Player.objects.filter(clan=clan).order_by('-clan_admin','name')
+                kwargs['invitees'] = clan.invitees.all().order_by('name')
+            kwargs['invites'] = player.invites.all().order_by('name')
         except Player.DoesNotExist:
             clan = None
 
