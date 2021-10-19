@@ -94,14 +94,17 @@ in the TNNT game source code. The import of fixtures should also only be done on
 when a fresh Django server is being set up.
 ```shell
 $ ./ach_to_yaml.sh /path/to/tnnt/source > scoreboard/fixtures/achievements.yaml
-$ python manage.py loaddata achievements conducts trophies
+$ python manage.py loaddata achievements conducts sources trophies
 ```
 
-#### Optional: import test data from xlogfile (e.g. `tnnt-2020-eu`)
-`$ python manage.py shell`
-```python
->>> from scripts.test_data import TestData
->>> TestData().import_and_save_from_xlogfile('tnnt-2020-eu')
+### Running and operation
+The pollxlogs command will read xlog data from a list of sources with associated URLs,
+saved in the DB. Those sources were defined as fixtures and imported with the above
+loaddata command. The aggregate command will loop over all games and compute various
+aggregate data for individual players and for clans standings.
+```shell
+$ ./manage.py pollxlogs
+$ ./manage.py aggregate
 ```
 
 #### Optional: point DGL\_DATABASE\_PATH at real database
