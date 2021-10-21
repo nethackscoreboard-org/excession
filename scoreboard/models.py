@@ -45,9 +45,15 @@ class LeaderboardBaseFields(models.Model):
     class Meta:
         abstract = True
 
+    # Most/all of these are set in the aggregation step, after xlog data has
+    # been read into the database but before it's ready for consumption.
     longest_streak         = models.IntegerField(default=0)
     unique_deaths          = models.IntegerField(default=0)
     unique_ascs            = models.IntegerField(default=0)
+    unique_achievements    = models.IntegerField(default=0)
+    games_over_1000_turns  = models.IntegerField(default=0)
+    total_games            = models.IntegerField(default=0)
+    wins                   = models.IntegerField(default=0)
     lowest_turncount_asc   = models.ForeignKey('Game', null=True, on_delete=models.SET_NULL, related_name='+')
     fastest_realtime_asc   = models.ForeignKey('Game', null=True, on_delete=models.SET_NULL, related_name='+')
     max_conducts_asc       = models.ForeignKey('Game', null=True, on_delete=models.SET_NULL, related_name='+')
@@ -117,6 +123,9 @@ class GameManager(models.Manager):
         kwargs['realtime'] = timedelta(seconds=xlog_dict['realtime'])
         kwargs['wallclock'] = kwargs['endtime'] - kwargs['starttime']
 
+        # TODO: filter games here based on starttime and endtime being outside
+        # of the configured starttime and endtime for the tournament
+
         # find/create player
         try:
             player = Player.objects.get(name=xlog_dict['name'])
@@ -148,9 +157,11 @@ class Game(models.Model):
 
     # these are handled as python ints in an intermediate step
     # TODO: check: how big are python ints?
+    # TODO: rename points => score
     points       = models.BigIntegerField(null=True)
     turns        = models.BigIntegerField()
 
+    # NOTE: All the "fastest realtime" code uses wallclock, NOT realtime
     realtime     = models.DurationField(null=True)
     wallclock    = models.DurationField(null=True)
     maxlvl       = models.IntegerField(null=True)

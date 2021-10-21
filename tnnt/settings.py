@@ -206,3 +206,44 @@ LOGGING = {
         'level': 'DEBUG',
     },
 }
+
+# Regexes for unique deaths handling.
+# Rejections are a flat list of regexes that, should they match a death, will
+# remove it from consideration.
+# Normalizations are a list of 2-tuples of regex and string, which will be the
+# first and second arguments to a re.sub() call whose third argument is the
+# death string. They are executed in the order they appear here.
+UNIQUE_DEATH_REJECTIONS = [
+    r"^ascended",
+    r"^quit",
+    r"^escaped",
+]
+UNIQUE_DEATH_NORMALIZATIONS = [
+    (r"^killed by an ", "killed by a "),
+    (r", while .*", ""),
+    (r"hallucinogen-distorted ", ""),
+    (r"by the invisible ", "by "),
+    (r"by (an|a) invisible ", "by a "),
+    (r"by invisible ", "by "),
+    (r" (her|his) ", " eir "),
+    (r" (herself|himself) ", " eirself "),
+    (r" (herself|himself)$", " eirself"),
+    (r" (called|named) .*", ""),
+    (r" \(with the Amulet\)$", ""),
+    (r"choked on .*", "choked on something"),
+    (r"killed by kicking .*", "killed by kicking something"),
+    # (r"killed by a falling (?!rock)$", "killed by a falling object"), # don't think we need this
+    (r" (an? )?M[rs]\. [A-Z].*[,;] the shopkeeper", " a shopkeeper"),
+    (r" (an?|the) ghost of .+", " a ghost"),
+    (r"poisoned by a rotted .* corpse", "poisoned by a rotted corpse"),
+    (r"wrath of .+", "wrath of a deity"),
+    (r"priest(ess)?", "priest(ess)"),
+    # This next one must come after the last one, because it assumes the
+    # priest/priestess has already turned into already priest(ess) with the
+    # parens
+    (r"priest\(ess\) of .+", "priest(ess) of a deity"),
+    # this is ugly... it's the list of things that can be summoned as a minion
+    # (to prevent farming a bunch of unique deaths off repeated prayers until
+    # the god summons a minion)
+    (r"an? (\w+ elemental|Aleax|couatl|Angel|\w+ demon|\w+ devil|(suc|in)cubus|balrog|pit fiend|nalfeshnee|hezrou|vrock|marilith|erinyes) of .+", "minion of a deity"),
+]
