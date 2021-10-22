@@ -1,9 +1,10 @@
 from django.views.generic import TemplateView
 from django.views import View
-from django.shortcuts import render
-from scoreboard.models import Player, Clan
+from django.shortcuts import render, get_object_or_404
+from django.db.models import Exists, OuterRef
+from scoreboard.models import Player, Clan, Game, Achievement
 from tnnt.forms import CreateClanForm, InviteMemberForm
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from . import hardfought_utils # find_player
 from . import settings
 from datetime import datetime
@@ -23,24 +24,90 @@ class AboutView(TemplateView):
 class ArchivesView(TemplateView):
     template_name = 'archives.html'
 
+class LeaderboardsView(TemplateView):
+    template_name = 'leaderboards.html'
+
+    def get_context_data(self, **kwargs):
+        kwargs['mostasc'] = Player.ascenders.order_by('-wins')
+        kwargs['firstasc'] = Player.ascenders.order_by('first_asc__endtime')
+        kwargs['minturns'] = Player.ascenders.order_by('lowest_turncount_asc__turns')
+        # TODO: this function is incomplete and more leaderboard data sources
+        # will need to be added.
+
+        kwargs['players'] = Player.objects.all() # TODO: What is this needed for?
+        return kwargs
+
+class PlayersView(TemplateView):
+    template_name = 'players.html'
+
+    def get_context_data(self, **kwargs):
+        kwargs['players'] = Player.objects.order_by('-wins', 'name')
+        return kwargs
+
+class SinglePlayerView(TemplateView):
+    template_name = 'singleplayer.html'
+
+    def get_context_data(self, **kwargs):
+        kwargs['player'] = get_object_or_404(Player, name=kwargs['playername'])
+
+        gameswith_ach = Game.objects \
+            .filter(player=kwargs['player'],
+                    achievements__pk=OuterRef('pk'))
+        achievements = Achievement.objects.annotate(obtained=Exists(gameswith_ach))
+        kwargs['achievements'] = achievements
+
+        kwargs['ascensions'] = \
+            Game.objects.filter(player=kwargs['player'], won=True).order_by('-endtime')
+        # 10 most recent games
+        kwargs['recentgames'] = \
+            Game.objects.filter(player=kwargs['player']).order_by('-endtime')[:10]
+        return kwargs
+
 class ClanMgmtView(View):
     template_name = 'clanmgmt.html'
+
+    def get_player(self, request_user):
+        # Attempt to get the player linked with this user ID. Contains some
+        # checks against weird edge cases.
+        # Argument is request.user from an HTTP request.
+        # If we seriously can't find a player, raise Player.DoesNotExist; the
+        # expectation is that the caller will return an appropriate error (500)
+        # to the browser.
+        try:
+            return Player.objects.get(user=request_user.id)
+        except Player.DoesNotExist:
+            logger.warning('No Player found linked to logged-in user (id %s, name %s)',
+                           request_user.id, request_user)
+            try:
+                # ok THIS shouldn't fail... we really shouldn't have allowed a
+                # user to exist without a Player of corresponding name
+                player = Player.objects.get(name=request_user)
+                player.user = request_user
+                player.save()
+                logger.warning('Fell back on linking to existing Player named %s',
+                               request_user)
+                return player
+            except Player.DoesNotExist as e:
+                logger.error('No Player found with name of logged in user (name %s)',
+                             request_user)
+                raise e
 
     def get_context_data(self, **kwargs):
         user = self.request.user
         # look up their clan
-        kwargs['clan'] = None
         try:
-            player = Player.objects.get(user=user.id)
-            kwargs['me'] = player
-            clan = player.clan
-            if clan is not None:
-                kwargs['clan'] = clan
-                kwargs['members'] = Player.objects.filter(clan=clan).order_by('-clan_admin','name')
-                kwargs['invitees'] = clan.invitees.all().order_by('name')
-            kwargs['invites'] = player.invites.all().order_by('name')
+            player = self.get_player(user)
         except Player.DoesNotExist:
-            clan = None
+            return HttpResponse(status=500)
+
+        kwargs['me'] = player
+        kwargs['clan'] = None
+        clan = player.clan
+        if clan is not None:
+            kwargs['clan'] = clan
+            kwargs['members'] = Player.objects.filter(clan=clan).order_by('-clan_admin','name')
+            kwargs['invitees'] = clan.invitees.all().order_by('name')
+        kwargs['invites'] = player.invites.all().order_by('name')
 
         kwargs['clan_freeze'] = self.clan_freeze_in_effect()
 
@@ -69,7 +136,11 @@ class ClanMgmtView(View):
             return HttpResponseRedirect('/login')
 
         # if we passed the auth test above then this shouldn't fail...
-        player = Player.objects.get(user=request.user.id)
+        # but it could if the Player db is wiped without the auth.user db being wiped.
+        try:
+            player = self.get_player(request.user)
+        except Player.DoesNotExist:
+            return HttpResponse(status=500)
         ctx = {}
 
         # People could theoretically mess with POST requests and trigger

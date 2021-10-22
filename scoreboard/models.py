@@ -28,6 +28,8 @@ class Achievement(models.Model):
     # The "perma-achievement" structure. Loaded from config.
     name        = models.CharField(max_length=128)
     description = models.CharField(max_length=128)
+    # TODO (post 2021): possibly an int primary key or string id for this, so it
+    # can be shown with the achievement and matches the one shown in-game
 
     # the xlog field name this achievement is encoded with
     # "achieve", "tnntachieveX", etc
@@ -45,9 +47,16 @@ class LeaderboardBaseFields(models.Model):
     class Meta:
         abstract = True
 
+    # Most/all of these are set in the aggregation step, after xlog data has
+    # been read into the database but before it's ready for consumption.
     longest_streak         = models.IntegerField(default=0)
     unique_deaths          = models.IntegerField(default=0)
     unique_ascs            = models.IntegerField(default=0)
+    unique_achievements    = models.IntegerField(default=0)
+    games_over_1000_turns  = models.IntegerField(default=0)
+    games_scummed          = models.IntegerField(default=0)
+    total_games            = models.IntegerField(default=0)
+    wins                   = models.IntegerField(default=0)
     lowest_turncount_asc   = models.ForeignKey('Game', null=True, on_delete=models.SET_NULL, related_name='+')
     fastest_realtime_asc   = models.ForeignKey('Game', null=True, on_delete=models.SET_NULL, related_name='+')
     max_conducts_asc       = models.ForeignKey('Game', null=True, on_delete=models.SET_NULL, related_name='+')
@@ -67,6 +76,12 @@ class Clan(LeaderboardBaseFields):
     # admins = models.ManyToManyField(Player)
     # instead of Player having a clan_admin field
 
+class AscendingPlayersManager(models.Manager):
+    # Manager that returns only Players with at least one ascension, which is a
+    # pretty common request.
+    def get_queryset(self):
+        return super().get_queryset().filter(wins__gt=0)
+
 class Player(LeaderboardBaseFields):
     name       = models.CharField(max_length=32, unique=True)
     clan       = models.ForeignKey(Clan, null=True, on_delete=models.SET_NULL)
@@ -76,6 +91,14 @@ class Player(LeaderboardBaseFields):
     # link to User model for web logins
     user       = models.OneToOneField(User, on_delete=models.PROTECT, null=True)
 
+    objects   = models.Manager() # default
+    ascenders = AscendingPlayersManager()
+
+    # Return a string denoting the ascension ratio of this player.
+    # This can assume that total_games > 0, but wins could be 0.
+    def ratio(self):
+        return '{:.2f}%'.format(self.wins * 100 / self.total_games)
+
 class Source(models.Model):
     # Information about a source of aggregate game data (e.g. an xlogfile).
     server      = models.CharField(max_length=32, unique=True)
@@ -84,10 +107,16 @@ class Source(models.Model):
     last_check  = models.DateTimeField()
     location    = models.URLField(null=True)
 
+    # dumplog_fmt uses a few custom format specifiers which are intended to be
+    # server-agnostic. Currently these are:
+    # %n1 - first character of the player's name.
+    # %n  - player's full name.
+    # %st - game start timestamp.
+    dumplog_fmt = models.CharField(max_length=128)
+
     # These fields are more NHS specific (not relevant to tnnt).
     # variant     = models.CharField(max_length=32)
     # description = models.CharField(max_length=256)
-    # dumplog_fmt = models.CharField(max_length=128)
     # website     = models.URLField(null=True)
 
 class GameManager(models.Manager):
@@ -116,6 +145,9 @@ class GameManager(models.Manager):
         kwargs['endtime'] = datetime.fromtimestamp(xlog_dict['endtime'], timezone.utc)
         kwargs['realtime'] = timedelta(seconds=xlog_dict['realtime'])
         kwargs['wallclock'] = kwargs['endtime'] - kwargs['starttime']
+
+        # TODO: filter games here based on starttime and endtime being outside
+        # of the configured starttime and endtime for the tournament
 
         # find/create player
         try:
@@ -148,9 +180,11 @@ class Game(models.Model):
 
     # these are handled as python ints in an intermediate step
     # TODO: check: how big are python ints?
+    # TODO: rename points => score
     points       = models.BigIntegerField(null=True)
     turns        = models.BigIntegerField()
 
+    # NOTE: All the "fastest realtime" code uses wallclock, NOT realtime
     realtime     = models.DurationField(null=True)
     wallclock    = models.DurationField(null=True)
     maxlvl       = models.IntegerField(null=True)
@@ -173,9 +207,22 @@ class Game(models.Model):
     player       = models.ForeignKey(Player, on_delete=models.CASCADE)
     conducts     = models.ManyToManyField(Conduct)
     achievements = models.ManyToManyField(Achievement)
-    # TODO: should this key to the server field or some such?
     source       = models.ForeignKey(Source, on_delete=models.PROTECT)
 
-    # this allows the BookManager class to handle creation of new Game objects,
+    # this allows the GameManager class to handle creation of new Game objects,
     # using Game.objects.from_xlog()
     objects = GameManager()
+
+    # Return a URL to the dumplog of this game.
+    # ASSUMPTION: No two Games of the same player will have the same starttime.
+    def get_dumplog(self):
+        return self.source.dumplog_fmt \
+            .replace('%n1', self.player.name[0]) \
+            .replace('%n', self.player.name) \
+            .replace('%st', str(int(self.starttime.timestamp())))
+
+    # Return a string containing this game's conducts in human readable form
+    # e.g. "poly wish veg"
+    def conducts_as_str(self):
+        return ' '.join(c.shortname for c in self.conducts.all())
+

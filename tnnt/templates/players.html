@@ -1,0 +1,64 @@
+<!doctype html>
+
+<html>
+
+<head>
+  <title>TNNT::Players</title>
+  {% include "headlinks.html" %}
+</head>
+
+<body>
+
+{% include "header.html" with page='players' %}
+
+<table>
+  <thead>
+    <tr class="framed">
+      <th></th>
+      <th>player</th>
+      <th>clan</th>
+      <th>wins</th>
+      <th>games</th>
+      <th>ratio</th>
+      <th>achieve</th>
+      <th>maxcond</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for plr in players %}
+      <tr>
+        <td class="num dim">{{ forloop.counter }}</td>
+        <td {% if plr.wins > 0 %} class="won"{% endif %}>
+          {% include "plink.html" with name=plr.name %}
+        </td>
+        <td>
+          {% if plr.clan %}
+            {% include "clink.html" with clan=plr.clan.name %}
+          {% endif %}
+        </td>
+        <td class="num">
+          {% if plr.wins > 0 %}
+            {{ plr.wins }}
+          {% endif %}
+        </td>
+        <td class="num">{{ plr.total_games }}</td>
+        <td class="num">
+          {% if plr.wins > 0 and plr.total_games > 0 %}
+            {{ plr.ratio }}
+          {% endif %}
+        </td>
+        <td class="num">{{ plr.unique_achievements }}</td>
+        <td class="num">
+          {% if plr.wins > 0 %}
+            {{ plr.max_conducts_asc.conducts.count }}
+          {% endif %}
+        </td>
+        <!-- TODO: streak? -->
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+</body>
+
+</html>

@@ -4,15 +4,18 @@
     local_file: hdf.tnnt.xlog
     location: https://www.hardfought.org/xlogfiles/tnnt/xlogfile
     last_check: 2021-10-01T00:00+00:00
+    dumplog_fmt: https://hardfought.org/userdata/%n1/%n/tnnt/dumplog/%st.tnnt.html
 - model: scoreboard.source
   fields:
     server: hfe
     local_file: hfe.tnnt.xlog
     location: https://eu.hardfought.org/xlogfiles/tnnt/xlogfile
     last_check: 2021-10-01T00:00+00:00
+    dumplog_fmt: https://eu.hardfought.org/userdata/%n1/%n/tnnt/dumplog/%st.tnnt.html
 - model: scoreboard.source
   fields:
     server: hfa
     local_file: hfa.tnnt.xlog
     location: https://au.hardfought.org/xlogfiles/tnnt/xlogfile
     last_check: 2021-10-01T00:00+00:00
+    dumplog_fmt: https://au.hardfought.org/userdata/%n1/%n/tnnt/dumplog/%st.tnnt.html
