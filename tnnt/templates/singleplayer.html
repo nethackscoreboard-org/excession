@@ -1,0 +1,175 @@
+<!doctype html>
+<html>
+<head>
+  <title>TNNT::{{ player.name }}</title>
+  {% include "headlinks.html" %}
+</head>
+
+<body>
+
+{% include "header.html" with page='players' %}
+
+<h1>{{ player.name }}</h1>
+
+<div class="row">
+
+<!-- === GENERAL INFORMATION ============================================== -->
+
+<table>
+  <thead>
+    <tr class="framed"><th colspan=2>general information</th></tr>
+  </thead>
+  {% if player.clan %}
+    <tr>
+      <td>clan</td>
+      <td class="num">{% include "clink.html" with clan=player.clan.name %}</td>
+    </tr>
+  {% endif %}
+  <tr>
+    <td>total games</td>
+    <td class="num">{{ player.total_games }}</td>
+  </tr>
+  <tr>
+    <td>games ascended</td>
+    <td class="num">{{ player.wins }}</td>
+  </tr>
+  <tr>
+    <td>games over 1000 turns</td>
+    <td class="num">{{ player.games_over_1000_turns }}</td>
+  </tr>
+  <tr>
+    <td>games scummed</td>
+    <td class="num">{{ player.games_scummed }}</td>
+  </tr>
+  <tr>
+    <td>ascension ratio</td>
+    <td class="num">{{ player.ratio }}</td>
+  </tr>
+  <tr>
+    <td>distinct achievements</td>
+    <td class="num">{{ player.unique_achievements }}</td>
+  </tr>
+
+</table>
+
+<!-- == TROPHIES ========================================================== -->
+
+<table>
+  <thead>
+    <tr class="framed"><th colspan="2">trophies</th></tr>
+  </thead>
+  <tbody>
+    <!-- [% FOREACH tr IN plr.trophies %] -->
+    <tr>
+      <td>[% tr.title %]</td>
+      <!-- <td>[% tr.when %]</td> -->
+      <!-- TODO: show when a trophy was attained (stretch goal) -->
+    </tr>
+    <!-- [% END %] -->
+  </tbody>
+</table>
+</div>
+
+<!-- TODO: possibly show leaderboard ranks (stretch goal, not necessary for 2021) -->
+
+<!-- == STREAKS =========================================================== -->
+
+[% IF plr.streaks.size %]
+
+<h2>STREAKS</h2>
+<table>
+  <thead>
+    [% INCLUDE streak.tt head=1 class="framed" %]
+  </thead>
+  <tbody>
+    [% SET i = plr.streaks.size %]
+    [% FOREACH streak IN plr.streaks.reverse %]
+      [% INCLUDE streak.tt %]
+      [% SET i = i - 1 %]
+    [% END %]
+  </tbody>
+</table>
+[% END %]
+
+<!-- == ASCENSIONS & RECENT GAMES ========================================= -->
+
+{% if player.total_games > 0 %}
+  <table>
+    {% if player.wins > 0 %}
+      <thead>
+        <tr><td colspan=8><h2>ASCENSIONS</h2></td></tr>
+        <!-- TODO: old backend had this as a template, likely move this to a template -->
+        <!-- [% INCLUDE game.tt head=1 aswon=1 class="framed" %] -->
+        <tr class="won framed">
+          <!-- there used to be a counter td here, which has been removed -->
+          <th>name</th>
+          <th>character</th>
+          <th>turns</th>
+          <th>score</th>
+          <th>duration</th>
+          <th>endtime</th>
+          <th colspan=2>conducts</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for game in ascensions %}
+          {% include "gamerow.html" with ascview=True %}
+        {% endfor %}
+      </tbody>
+    {% endif %} <!-- wins > 0 -->
+
+    <thead>
+      <tr><td colspan=8><h2>RECENT GAMES</h2></td></tr>
+      <tr class="framed">
+        <th>name</th>
+        <th>character</th>
+        <th>turns</th>
+        <th>score</th>
+        <th>duration</th>
+        <th>endtime</th>
+        <th colspan=2>death reason</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for game in recentgames %}
+        {% include "gamerow.html" with ascview=False %}
+      {% endfor %}
+    </tbody>
+  </table>
+{% endif %} <!-- games > 0 -->
+
+<!-- == ACHIEVEMENTS ====================================================== -->
+
+<h2 id="achievements">Achievements</h2>
+<div class="achieve-top">
+  <table>
+    <thead>
+      <tr class="framed">
+        <th>Achievement</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for ach in achievements %}
+        <tr {% if ach.obtained %}class="achieved"{% endif %}>
+          <td>{{ ach.name }}</td>
+          <td>{{ ach.description }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <!-- TODO: Make this a template so that singleclan can use it too? Actually,
+    how about most of the whole page? -->
+  <div class="achieve-summary">
+    {% with plr_ach=player.unique_achievements tot_ach=achievements.count %}
+      <div class="achieve-bar"
+          style="width:{% widthratio plr_ach tot_ach 100 %}%"></div>
+      <div class="achieve-msg">
+        {{ plr_ach }} out of {{ tot_ach }} achievements attained
+      </div>
+    {% endwith %}
+  </div>
+</div>
+
+</body>
+</html>

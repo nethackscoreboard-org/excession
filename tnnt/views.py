@@ -1,7 +1,8 @@
 from django.views.generic import TemplateView
 from django.views import View
-from django.shortcuts import render
-from scoreboard.models import Player, Clan
+from django.shortcuts import render, get_object_or_404
+from django.db.models import Exists, OuterRef
+from scoreboard.models import Player, Clan, Game, Achievement
 from tnnt.forms import CreateClanForm, InviteMemberForm
 from django.http import HttpResponse, HttpResponseRedirect
 from . import hardfought_utils # find_player
@@ -28,6 +29,25 @@ class PlayersView(TemplateView):
 
     def get_context_data(self, **kwargs):
         kwargs['players'] = Player.objects.order_by('-wins', 'name')
+        return kwargs
+
+class SinglePlayerView(TemplateView):
+    template_name = 'singleplayer.html'
+
+    def get_context_data(self, **kwargs):
+        kwargs['player'] = get_object_or_404(Player, name=kwargs['playername'])
+
+        gameswith_ach = Game.objects \
+            .filter(player=kwargs['player'],
+                    achievements__pk=OuterRef('pk'))
+        achievements = Achievement.objects.annotate(obtained=Exists(gameswith_ach))
+        kwargs['achievements'] = achievements
+
+        kwargs['ascensions'] = \
+            Game.objects.filter(player=kwargs['player'], won=True).order_by('-endtime')
+        # 10 most recent games
+        kwargs['recentgames'] = \
+            Game.objects.filter(player=kwargs['player']).order_by('-endtime')[:10]
         return kwargs
 
 class ClanMgmtView(View):

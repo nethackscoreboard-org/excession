@@ -1,0 +1,21 @@
+<!-- Expects "player", "game", "ascview" to be present in context -->
+<tr class="{% if game.won %} won {% else %} lost {% endif %}">
+  <td>{{ player.name }}</td>
+  <td class="nowrap">
+    {{ game.role }}-{{ game.race }}-{{ game.gender }}-{{ game.align }}
+    <!-- TODO: old scoreboard had something here for marking clan-unique
+      ascensions with "markuniq" -->
+  </td>
+  <td class="num">{{ game.turns }}</td>
+  <td class="num">
+    <a href="{{ game.get_dumplog }}"> {{ game.points }} </a>
+  </td>
+  <td class="num">{{ game.wallclock }}</td>
+  <td class="num">{{ game.endtime }}</td>
+  {% if ascview %}
+    <td class="num">{{ game.conducts.count }}</td>
+    <td>{{ game.conducts_as_str }}</td>
+  {% else %}
+    <td colspan=2>{{ game.death }}</td>
+  {% endif %}
+</tr>

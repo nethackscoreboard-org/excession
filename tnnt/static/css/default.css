@@ -184,38 +184,15 @@ span.plradmin {
 
 /*--- achievements display -------------------------------------------*/
 
-/* the grid container */
+/* the grid container - well no longer a grid */
 
 div.achieve-top {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  max-width: 52em;
-  column-gap: 1em;
-  row-gap: 1em;
   margin-bottom: 2em;
-}
-
-/* the individual achievement box, a grid element */
-
-div.achieve-item {
-  padding: 1.4em;
-  height: 3.5em;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 5px;
-}
-
-/* style for the non-attained achievements */
-
-div.achieve-item.not-achieved {
-  background: #224;
 }
 
 /* style for the attained achievements */
 
-div.achieve-item.achieved {
+.achieved {
   background: #c90;
   color: #000;
   font-weight: 600;

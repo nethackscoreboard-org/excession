@@ -28,6 +28,8 @@ class Achievement(models.Model):
     # The "perma-achievement" structure. Loaded from config.
     name        = models.CharField(max_length=128)
     description = models.CharField(max_length=128)
+    # TODO (post 2021): possibly an int primary key or string id for this, so it
+    # can be shown with the achievement and matches the one shown in-game
 
     # the xlog field name this achievement is encoded with
     # "achieve", "tnntachieveX", etc
@@ -209,3 +211,9 @@ class Game(models.Model):
             .replace('%n1', self.player.name[0]) \
             .replace('%n', self.player.name) \
             .replace('%st', str(int(self.starttime.timestamp())))
+
+    # Return a string containing this game's conducts in human readable form
+    # e.g. "poly wish veg"
+    def conducts_as_str(self):
+        return ' '.join(c.shortname for c in self.conducts.all())
+
