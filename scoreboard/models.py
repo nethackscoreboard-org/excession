@@ -83,6 +83,11 @@ class Player(LeaderboardBaseFields):
     # link to User model for web logins
     user       = models.OneToOneField(User, on_delete=models.PROTECT, null=True)
 
+    # Return a string denoting the ascension ratio of this player.
+    # This can assume that total_games > 0, but wins could be 0.
+    def ratio(self):
+        return '{:.2f}%'.format(self.wins * 100 / self.total_games)
+
 class Source(models.Model):
     # Information about a source of aggregate game data (e.g. an xlogfile).
     server      = models.CharField(max_length=32, unique=True)

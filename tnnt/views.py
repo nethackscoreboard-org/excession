@@ -23,6 +23,13 @@ class AboutView(TemplateView):
 class ArchivesView(TemplateView):
     template_name = 'archives.html'
 
+class PlayersView(TemplateView):
+    template_name = 'players.html'
+
+    def get_context_data(self, **kwargs):
+        kwargs['players'] = Player.objects.order_by('-wins', 'name')
+        return kwargs
+
 class ClanMgmtView(View):
     template_name = 'clanmgmt.html'
 
