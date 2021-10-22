@@ -1,0 +1,140 @@
+<!doctype html>
+{% load static %}
+
+<html>
+
+<head>
+  <title>TNNT::Players</title>
+  {% include "headlinks.html" %}
+  <script type="text/javascript" src="{% static 'js/leaderboard-select.js' %}"></script>
+</head>
+
+<body>
+
+{% include "header.html" with page='leaderboards' %}
+
+<div id="leaderboard-select">
+  <label for="boards">Select leaderboard: </label>
+  <select name="boards" id="boards-combobox">
+    <option value="mostasc">Most Ascensions</option>
+    <option value="firstasc">Earliest Ascension</option>
+    <option value="minturns">Lowest Turn Count</option>
+    <option value="mintime">Fastest Realtime</option>
+    <option value="maxcond">Most Conducts in One Ascension</option>
+    <option value="mostachgame">Most Achievements in One Game</option>
+    <option value="mostach">Most Achievements Overall</option>
+    <option value="minscore">Lowest Score</option>
+    <option value="maxscore">Highest Score</option>
+    <option value="longstreak">Longest Streak</option>
+    <option value="uniquedeaths">Most Unique Deaths</option>
+    <option value="uniqueasc">Most Unique Ascension Combos</option>
+    <option value="mostgames">Most Games over 1000 Turns</option>
+  </select>
+</div>
+<hr>
+
+<!--
+  Leaderboard id is "leaderboard-" + the value of the option in the
+  leaderboard-select. This is used by the javascript that switches them.
+-->
+<!-- TODO? if the number of leaderboards on this page gets unwieldy, hand them
+off to included templates -->
+<div class="leaderboard" id="leaderboard-mostasc">
+  <h3>Most Ascensions</h3>
+  <table>
+    <thead>
+      <tr class="framed">
+        <th></th>
+        <th>player</th>
+        <th>clan</th>
+        <th>wins</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for plr in mostasc %}
+        <tr>
+          <td class="num dim">{{ forloop.counter }}</td>
+          <td>{{ plr.name }}</td>
+          <td>{{ plr.clan.name }}</td>
+          <td class="rjust">{{ plr.wins }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="leaderboard" id="leaderboard-firstasc" hidden="true">
+  <h3>Earliest Ascension</h3>
+  <table>
+    <thead>
+      <tr class="framed">
+        <th></th>
+        <th>player</th>
+        <th>clan</th>
+        <th>ascension time</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for plr in firstasc %}
+        <tr>
+          <td class="num dim">{{ forloop.counter }}</td>
+          <td>{{ plr.name }}</td>
+          <td>{{ plr.clan.name }}</td>
+          <td class="rjust">{{ plr.first_asc.endtime }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="leaderboard" id="leaderboard-minturns" hidden="true">
+  <h3>Lowest Turn Count</h3>
+  <table>
+    <thead>
+      <tr class="framed">
+        <th></th>
+        <th>player</th>
+        <th>clan</th>
+        <th>ascension time</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for plr in minturns %}
+        <tr>
+          <td class="num dim">{{ forloop.counter }}</td>
+          <td>{{ plr.name }}</td>
+          <td>{{ plr.clan.name }}</td>
+          <td class="rjust">{{ plr.lowest_turncount_asc.turns }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="leaderboard" id="leaderboard-mintime" hidden="true">
+  <h3>Fastest Realtime</h3>
+  <table>
+    <thead>
+      <tr class="framed">
+        <th></th>
+        <th>player</th>
+        <th>clan</th>
+        <th>ascension duration</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for plr in mintime %}
+        <tr>
+          <td class="num dim">{{ forloop.counter }}</td>
+          <td>{{ plr.name }}</td>
+          <td>{{ plr.clan.name }}</td>
+          <td class="rjust">{{ plr.fastest_realtime_asc.wallclock }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+</body>
+
+</html>

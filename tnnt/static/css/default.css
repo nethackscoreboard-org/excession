@@ -52,6 +52,10 @@ h5 {
   text-align: center;
 }
 
+.rjust {
+  text-align: right;
+}
+
 a {
   color: inherit;
   text-decoration: underline;
@@ -506,3 +510,7 @@ form.disguised-button button:hover {
 .current-player {
     font-weight: bold;
 }
+
+/*====================================================================
+  === LEADERBOARDS ===================================================
+  ====================================================================*/

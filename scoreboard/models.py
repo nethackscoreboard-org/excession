@@ -76,6 +76,12 @@ class Clan(LeaderboardBaseFields):
     # admins = models.ManyToManyField(Player)
     # instead of Player having a clan_admin field
 
+class AscendingPlayersManager(models.Manager):
+    # Manager that returns only Players with at least one ascension, which is a
+    # pretty common request.
+    def get_queryset(self):
+        return super().get_queryset().filter(wins__gt=0)
+
 class Player(LeaderboardBaseFields):
     name       = models.CharField(max_length=32, unique=True)
     clan       = models.ForeignKey(Clan, null=True, on_delete=models.SET_NULL)
@@ -84,6 +90,9 @@ class Player(LeaderboardBaseFields):
     invites    = models.ManyToManyField(Clan, related_name='invitees')
     # link to User model for web logins
     user       = models.OneToOneField(User, on_delete=models.PROTECT, null=True)
+
+    objects   = models.Manager() # default
+    ascenders = AscendingPlayersManager()
 
     # Return a string denoting the ascension ratio of this player.
     # This can assume that total_games > 0, but wins could be 0.

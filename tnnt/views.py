@@ -24,6 +24,19 @@ class AboutView(TemplateView):
 class ArchivesView(TemplateView):
     template_name = 'archives.html'
 
+class LeaderboardsView(TemplateView):
+    template_name = 'leaderboards.html'
+
+    def get_context_data(self, **kwargs):
+        kwargs['mostasc'] = Player.ascenders.order_by('-wins')
+        kwargs['firstasc'] = Player.ascenders.order_by('first_asc__endtime')
+        kwargs['minturns'] = Player.ascenders.order_by('lowest_turncount_asc__turns')
+        # TODO: this function is incomplete and more leaderboard data sources
+        # will need to be added.
+
+        kwargs['players'] = Player.objects.all() # TODO: What is this needed for?
+        return kwargs
+
 class PlayersView(TemplateView):
     template_name = 'players.html'
 
