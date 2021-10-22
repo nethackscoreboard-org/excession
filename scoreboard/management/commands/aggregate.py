@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand, CommandError
 from scoreboard.models import Source, Game, Player, Clan
 from scoreboard.parsers import XlogParser
 from django.db import transaction
-from django.db.models import Sum, Min, Max, Count, Q
+from django.db.models import Sum, Min, Max, Count
 from tnnt import uniqdeaths
 import urllib
 
@@ -20,7 +20,7 @@ def aggregatePlayerData():
         plr.games_over_1000_turns = gamesby_plr.filter(turns__gte=1000).count()
         # This is the source of truth for "what is a scummed game".
         plr.games_scummed = gamesby_plr.filter(
-            Q(death='quit') | Q(death='escaped'),
+            death__in=('quit','escaped'),
             turns__lte=100).count()
 
         # a more complex aggregate
