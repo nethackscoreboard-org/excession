@@ -91,10 +91,16 @@ class Source(models.Model):
     last_check  = models.DateTimeField()
     location    = models.URLField(null=True)
 
+    # dumplog_fmt uses a few custom format specifiers which are intended to be
+    # server-agnostic. Currently these are:
+    # %n1 - first character of the player's name.
+    # %n  - player's full name.
+    # %st - game start timestamp.
+    dumplog_fmt = models.CharField(max_length=128)
+
     # These fields are more NHS specific (not relevant to tnnt).
     # variant     = models.CharField(max_length=32)
     # description = models.CharField(max_length=256)
-    # dumplog_fmt = models.CharField(max_length=128)
     # website     = models.URLField(null=True)
 
 class GameManager(models.Manager):
@@ -185,9 +191,16 @@ class Game(models.Model):
     player       = models.ForeignKey(Player, on_delete=models.CASCADE)
     conducts     = models.ManyToManyField(Conduct)
     achievements = models.ManyToManyField(Achievement)
-    # TODO: should this key to the server field or some such?
     source       = models.ForeignKey(Source, on_delete=models.PROTECT)
 
-    # this allows the BookManager class to handle creation of new Game objects,
+    # this allows the GameManager class to handle creation of new Game objects,
     # using Game.objects.from_xlog()
     objects = GameManager()
+
+    # Return a URL to the dumplog of this game.
+    # ASSUMPTION: No two Games of the same player will have the same starttime.
+    def get_dumplog(self):
+        return self.source.dumplog_fmt \
+            .replace('%n1', self.player.name[0]) \
+            .replace('%n', self.player.name) \
+            .replace('%st', str(int(self.starttime.timestamp())))
