@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand, CommandError
 from scoreboard.models import Source, Game, Player, Clan
 from scoreboard.parsers import XlogParser
 from django.db import transaction
-from django.db.models import Sum, Min, Max, Count
+from django.db.models import Sum, Min, Max, Count, Q
 from tnnt import uniqdeaths
 import urllib
 
@@ -18,6 +18,10 @@ def aggregatePlayerData():
         plr.total_games = gamesby_plr.count()
         plr.wins = winsby_plr.count()
         plr.games_over_1000_turns = gamesby_plr.filter(turns__gte=1000).count()
+        # This is the source of truth for "what is a scummed game".
+        plr.games_scummed = gamesby_plr.filter(
+            Q(death='quit') | Q(death='escaped'),
+            turns__lte=100).count()
 
         # a more complex aggregate
         # different from max_achieves_game; this is the total number of
@@ -78,10 +82,12 @@ def aggregateClanData():
         aggrs_dict = clan_plrs.aggregate(Sum('total_games'),
                                          Sum('wins'),
                                          Sum('games_over_1000_turns'),
+                                         Sum('games_scummed'),
                                          Max('longest_streak'))
         clan.total_games = aggrs_dict['total_games__sum']
         clan.wins = aggrs_dict['wins__sum']
         clan.games_over_1000_turns = aggrs_dict['games_over_1000_turns__sum']
+        clan.games_scummed = aggrs_dict['games_scummed']
         clan.longest_streak = aggrs_dict['longest_streak__max']
 
         # Unfortunately, we have to do a rather nasty multiple join to get the

@@ -52,6 +52,7 @@ class LeaderboardBaseFields(models.Model):
     unique_ascs            = models.IntegerField(default=0)
     unique_achievements    = models.IntegerField(default=0)
     games_over_1000_turns  = models.IntegerField(default=0)
+    games_scummed          = models.IntegerField(default=0)
     total_games            = models.IntegerField(default=0)
     wins                   = models.IntegerField(default=0)
     lowest_turncount_asc   = models.ForeignKey('Game', null=True, on_delete=models.SET_NULL, related_name='+')
