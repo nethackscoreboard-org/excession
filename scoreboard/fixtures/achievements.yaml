@@ -92,1628 +92,1628 @@
     bit: 3
 - model: scoreboard.achievement
   fields:
-    name: "Indulgences"
-    description: "Buy protection from a priest"
+    name: "Orpheus"
+    description: "Activate a drawbridge with the passtune"
     xlogfield: "tnntachieve0"
     bit: 4
-- model: scoreboard.achievement
-  fields:
-    name: "Part-time Statue"
-    description: "Survive stoning"
-    xlogfield: "tnntachieve0"
-    bit: 5
-- model: scoreboard.achievement
-  fields:
-    name: "The Blob"
-    description: "Survive sliming"
-    xlogfield: "tnntachieve0"
-    bit: 6
-- model: scoreboard.achievement
-  fields:
-    name: "Captain Ahab"
-    description: "Survive being grabbed by a sea monster"
-    xlogfield: "tnntachieve0"
-    bit: 7
-- model: scoreboard.achievement
-  fields:
-    name: "Furry Little Problem"
-    description: "Cure lycanthropy"
-    xlogfield: "tnntachieve0"
-    bit: 8
-- model: scoreboard.achievement
-  fields:
-    name: "New Lease on Life"
-    description: "Cure deathly illness"
-    xlogfield: "tnntachieve0"
-    bit: 9
-- model: scoreboard.achievement
-  fields:
-    name: "The Royal Treatment"
-    description: "Sit on a throne"
-    xlogfield: "tnntachieve0"
-    bit: 10
-- model: scoreboard.achievement
-  fields:
-    name: "It'll Turn Up Later"
-    description: "Drop a ring in a sink"
-    xlogfield: "tnntachieve0"
-    bit: 11
-- model: scoreboard.achievement
-  fields:
-    name: "Nine for Mortal Men Doomed to Die ... Again"
-    description: "Kill all nine Nazgul"
-    xlogfield: "tnntachieve0"
-    bit: 12
-- model: scoreboard.achievement
-  fields:
-    name: "Furious"
-    description: "Kill all three erinyes"
-    xlogfield: "tnntachieve0"
-    bit: 13
-- model: scoreboard.achievement
-  fields:
-    name: "Orthodoxy"
-    description: "Convert an altar"
-    xlogfield: "tnntachieve0"
-    bit: 14
-- model: scoreboard.achievement
-  fields:
-    name: "Always Talk to the Wise Old Man"
-    description: "Chat with Izchak"
-    xlogfield: "tnntachieve0"
-    bit: 15
-- model: scoreboard.achievement
-  fields:
-    name: "Isaac Newton"
-    description: "Get fruit by kicking a tree"
-    xlogfield: "tnntachieve0"
-    bit: 16
-- model: scoreboard.achievement
-  fields:
-    name: "Dungeon Economics"
-    description: "Buy or sell something at a shop"
-    xlogfield: "tnntachieve0"
-    bit: 17
-- model: scoreboard.achievement
-  fields:
-    name: "Stop, Thief!"
-    description: "Be chased by the Keystone Kops"
-    xlogfield: "tnntachieve0"
-    bit: 18
-- model: scoreboard.achievement
-  fields:
-    name: "Wash it Clean"
-    description: "Uncurse an item in a fountain"
-    xlogfield: "tnntachieve0"
-    bit: 19
-- model: scoreboard.achievement
-  fields:
-    name: "Well-Read"
-    description: "Learn a level 5+ spell"
-    xlogfield: "tnntachieve0"
-    bit: 20
-- model: scoreboard.achievement
-  fields:
-    name: "Pet Whisperer"
-    description: "Tame a monster by feeding it"
-    xlogfield: "tnntachieve0"
-    bit: 21
-- model: scoreboard.achievement
-  fields:
-    name: "Beast Master"
-    description: "Tame a monster without using food"
-    xlogfield: "tnntachieve0"
-    bit: 22
-- model: scoreboard.achievement
-  fields:
-    name: "The Chosen One"
-    description: "Get crowned"
-    xlogfield: "tnntachieve0"
-    bit: 23
-- model: scoreboard.achievement
-  fields:
-    name: "Go Forth and Smite"
-    description: "Receive an artifact gift from your deity"
-    xlogfield: "tnntachieve0"
-    bit: 24
-- model: scoreboard.achievement
-  fields:
-    name: "Some Watery Tart"
-    description: "Be gifted Excalibur"
-    xlogfield: "tnntachieve0"
-    bit: 25
-- model: scoreboard.achievement
-  fields:
-    name: "Hand Crafted"
-    description: "Make a dragon scale mail"
-    xlogfield: "tnntachieve0"
-    bit: 26
-- model: scoreboard.achievement
-  fields:
-    name: "A Little Light Larceny"
-    description: "Get robbed by a nymph"
-    xlogfield: "tnntachieve0"
-    bit: 27
-- model: scoreboard.achievement
-  fields:
-    name: "Pot of Greed"
-    description: "Have your purse lightened by a leprechaun"
-    xlogfield: "tnntachieve0"
-    bit: 28
-- model: scoreboard.achievement
-  fields:
-    name: "The Birds and the Bees"
-    description: "Dally with a foocubus"
-    xlogfield: "tnntachieve0"
-    bit: 29
-- model: scoreboard.achievement
-  fields:
-    name: "The Most Dangerous Game"
-    description: "Catch a monster in a trap set by you"
-    xlogfield: "tnntachieve0"
-    bit: 30
-- model: scoreboard.achievement
-  fields:
-    name: "Minetown Avenger"
-    description: "Kill every orc in Orctown"
-    xlogfield: "tnntachieve0"
-    bit: 31
-- model: scoreboard.achievement
-  fields:
-    name: "All Clear"
-    description: "Kill all hostiles in the Big Room"
-    xlogfield: "tnntachieve0"
-    bit: 32
-- model: scoreboard.achievement
-  fields:
-    name: "Liberated"
-    description: "Get yourself unpunished"
-    xlogfield: "tnntachieve0"
-    bit: 33
-- model: scoreboard.achievement
-  fields:
-    name: "It's Called That For a Reason"
-    description: "Come to earth by levitating over a sink"
-    xlogfield: "tnntachieve0"
-    bit: 34
-- model: scoreboard.achievement
-  fields:
-    name: "Diamond in the Rough"
-    description: "Identify a gem with a touchstone"
-    xlogfield: "tnntachieve0"
-    bit: 35
-- model: scoreboard.achievement
-  fields:
-    name: "Scribe"
-    description: "Write a scroll with a magic marker"
-    xlogfield: "tnntachieve0"
-    bit: 36
-- model: scoreboard.achievement
-  fields:
-    name: "First Edition"
-    description: "Write a book"
-    xlogfield: "tnntachieve0"
-    bit: 37
-- model: scoreboard.achievement
-  fields:
-    name: "Dragon Rider"
-    description: "Ride a dragon"
-    xlogfield: "tnntachieve0"
-    bit: 38
-- model: scoreboard.achievement
-  fields:
-    name: "Motherhood"
-    description: "Lay an egg"
-    xlogfield: "tnntachieve0"
-    bit: 39
-- model: scoreboard.achievement
-  fields:
-    name: "Shimmer"
-    description: "Fireproof an item"
-    xlogfield: "tnntachieve0"
-    bit: 40
-- model: scoreboard.achievement
-  fields:
-    name: "They Like Shiny Things"
-    description: "Throw a gem at a unicorn"
-    xlogfield: "tnntachieve0"
-    bit: 41
-- model: scoreboard.achievement
-  fields:
-    name: "Reincarnation Cancelled"
-    description: "Tin a troll"
-    xlogfield: "tnntachieve0"
-    bit: 42
-- model: scoreboard.achievement
-  fields:
-    name: "Kill it Twice"
-    description: "Destroy a ghost"
-    xlogfield: "tnntachieve0"
-    bit: 43
-- model: scoreboard.achievement
-  fields:
-    name: "Only Mostly Dead"
-    description: "Revive a corpse"
-    xlogfield: "tnntachieve0"
-    bit: 44
-- model: scoreboard.achievement
-  fields:
-    name: "Buffy"
-    description: "Destroy an undead with #turn"
-    xlogfield: "tnntachieve0"
-    bit: 45
-- model: scoreboard.achievement
-  fields:
-    name: "Wasn't a Meal, Wasn't Ready, And You Shouldn't Have Eaten It"
-    description: "Eat a military ration"
-    xlogfield: "tnntachieve0"
-    bit: 46
 - model: scoreboard.achievement
   fields:
     name: "Have Fun Storming the Castle"
     description: "Blow up the Castle drawbridge"
     xlogfield: "tnntachieve0"
-    bit: 47
+    bit: 5
 - model: scoreboard.achievement
   fields:
-    name: "Insert Quarter to Continue"
-    description: "Get life-saved"
+    name: "The Chosen One"
+    description: "Get crowned"
     xlogfield: "tnntachieve0"
-    bit: 48
+    bit: 6
 - model: scoreboard.achievement
   fields:
-    name: "What It Was Made For"
-    description: "Kill a appropriate monster with a Bane weapon"
+    name: "Watch Your Footing"
+    description: "Step onto the vibrating square"
     xlogfield: "tnntachieve0"
-    bit: 49
+    bit: 7
 - model: scoreboard.achievement
   fields:
-    name: "Buried Treasure"
-    description: "Dig up a grave not in a graveyard"
+    name: "It's Dangerous To Go Alone! Take This"
+    description: "Put an item into a swap chest"
     xlogfield: "tnntachieve0"
-    bit: 50
+    bit: 8
+- model: scoreboard.achievement
+  fields:
+    name: "The True Dungeon Masters"
+    description: "Chat with an active devteam member"
+    xlogfield: "tnntachieve0"
+    bit: 9
+- model: scoreboard.achievement
+  fields:
+    name: "There Is No Spoon"
+    description: "Finish the task the devteam requires of you"
+    xlogfield: "tnntachieve0"
+    bit: 10
+- model: scoreboard.achievement
+  fields:
+    name: "Thunderdome"
+    description: "Defeat the NPC from the NPC Deathmatch quest"
+    xlogfield: "tnntachieve0"
+    bit: 11
+- model: scoreboard.achievement
+  fields:
+    name: "Asmodead"
+    description: "Kill Asmodeus"
+    xlogfield: "tnntachieve0"
+    bit: 12
+- model: scoreboard.achievement
+  fields:
+    name: "Baalzebust"
+    description: "Kill Baalzebub"
+    xlogfield: "tnntachieve0"
+    bit: 13
+- model: scoreboard.achievement
+  fields:
+    name: "Orcrushed"
+    description: "Kill Orcus"
+    xlogfield: "tnntachieve0"
+    bit: 14
+- model: scoreboard.achievement
+  fields:
+    name: "Juibl-X"
+    description: "Kill Juiblex"
+    xlogfield: "tnntachieve0"
+    bit: 15
+- model: scoreboard.achievement
+  fields:
+    name: "Demogorgone"
+    description: "Kill Demogorgon"
+    xlogfield: "tnntachieve0"
+    bit: 16
+- model: scoreboard.achievement
+  fields:
+    name: "Yee-No-Go"
+    description: "Kill Yeenoghu"
+    xlogfield: "tnntachieve0"
+    bit: 17
+- model: scoreboard.achievement
+  fields:
+    name: "Geryon-Be-Gone"
+    description: "Kill Geryon"
+    xlogfield: "tnntachieve0"
+    bit: 18
+- model: scoreboard.achievement
+  fields:
+    name: "Dispater-Dispatcher"
+    description: "Kill Dispater"
+    xlogfield: "tnntachieve0"
+    bit: 19
+- model: scoreboard.achievement
+  fields:
+    name: "Conqueror of Death"
+    description: "Kill Death"
+    xlogfield: "tnntachieve0"
+    bit: 20
+- model: scoreboard.achievement
+  fields:
+    name: "Curer of Pestilence"
+    description: "Kill Pestilence"
+    xlogfield: "tnntachieve0"
+    bit: 21
+- model: scoreboard.achievement
+  fields:
+    name: "Feeder of Famine"
+    description: "Kill Famine"
+    xlogfield: "tnntachieve0"
+    bit: 22
+- model: scoreboard.achievement
+  fields:
+    name: "Why Won't You DIE Already"
+    description: "Kill the Wizard of Yendor 20 or more times"
+    xlogfield: "tnntachieve0"
+    bit: 23
+- model: scoreboard.achievement
+  fields:
+    name: "Double Whammy"
+    description: "Kill the Wizard of Yendor twice in one action"
+    xlogfield: "tnntachieve0"
+    bit: 24
+- model: scoreboard.achievement
+  fields:
+    name: "I Did It For The Money"
+    description: "Kill Croesus"
+    xlogfield: "tnntachieve0"
+    bit: 25
 - model: scoreboard.achievement
   fields:
     name: "Holy War"
     description: "Kill a priest of Moloch"
     xlogfield: "tnntachieve0"
-    bit: 51
+    bit: 26
 - model: scoreboard.achievement
   fields:
-    name: "Movers and Shakers"
-    description: "Cause an earthquake"
+    name: "Nine for Mortal Men Doomed to Die ... Again"
+    description: "Kill all nine Nazgul"
     xlogfield: "tnntachieve0"
-    bit: 52
+    bit: 27
 - model: scoreboard.achievement
   fields:
-    name: "Snake Charmer"
-    description: "Pacify a snake with a flute"
+    name: "Furious"
+    description: "Kill all three erinyes"
     xlogfield: "tnntachieve0"
-    bit: 53
+    bit: 28
+- model: scoreboard.achievement
+  fields:
+    name: "Minetown Avenger"
+    description: "Kill every orc in Orctown"
+    xlogfield: "tnntachieve0"
+    bit: 29
+- model: scoreboard.achievement
+  fields:
+    name: "All Clear"
+    description: "Kill all hostiles in the Big Room"
+    xlogfield: "tnntachieve0"
+    bit: 30
+- model: scoreboard.achievement
+  fields:
+    name: "Master of the Four Elementals"
+    description: "Kill at least 4 elementals on their respective home planes"
+    xlogfield: "tnntachieve0"
+    bit: 31
+- model: scoreboard.achievement
+  fields:
+    name: "Kill it Twice"
+    description: "Destroy a ghost"
+    xlogfield: "tnntachieve0"
+    bit: 32
 - model: scoreboard.achievement
   fields:
     name: "Dragonslayer"
     description: "Kill a dragon"
     xlogfield: "tnntachieve0"
-    bit: 54
+    bit: 33
 - model: scoreboard.achievement
   fields:
-    name: "Tin Foil Hat"
-    description: "Dodge a brainsucking attack"
+    name: "Playerbanebane"
+    description: "Kill a soldier ant"
     xlogfield: "tnntachieve0"
-    bit: 55
+    bit: 34
 - model: scoreboard.achievement
   fields:
-    name: "Right Back at Ya"
-    description: "Hit an enemy with a thrown boomerang"
+    name: "How Much Wood?"
+    description: "Kill or tame a woodchuck"
     xlogfield: "tnntachieve0"
-    bit: 56
+    bit: 35
 - model: scoreboard.achievement
   fields:
-    name: "It Burnsss"
-    description: "Deal silver damage to a silver-hating monster"
+    name: "Storm the Gates of Heaven"
+    description: "Kill an Archon"
     xlogfield: "tnntachieve0"
-    bit: 57
+    bit: 36
 - model: scoreboard.achievement
   fields:
-    name: "Arrakis"
-    description: "Make a crysknife"
+    name: "Death onna Stick"
+    description: "Kill a member of 25 different monster species"
     xlogfield: "tnntachieve0"
-    bit: 58
+    bit: 37
+- model: scoreboard.achievement
+  fields:
+    name: "Bring out your Dead"
+    description: "Kill a member of 50 different monster species"
+    xlogfield: "tnntachieve0"
+    bit: 38
+- model: scoreboard.achievement
+  fields:
+    name: "Diverse Death-Dealer"
+    description: "Kill a member of 100 different monster species"
+    xlogfield: "tnntachieve0"
+    bit: 39
+- model: scoreboard.achievement
+  fields:
+    name: "Grim Reaper"
+    description: "Kill a member of 200 different monster species"
+    xlogfield: "tnntachieve0"
+    bit: 40
+- model: scoreboard.achievement
+  fields:
+    name: "Gotta Kill 'em All"
+    description: "Kill a member of all eligible monster species"
+    xlogfield: "tnntachieve0"
+    bit: 41
+- model: scoreboard.achievement
+  fields:
+    name: "Learn the Alphabet"
+    description: "Kill a monster of each class from a to z"
+    xlogfield: "tnntachieve0"
+    bit: 42
+- model: scoreboard.achievement
+  fields:
+    name: "LEARN THE ALPHABET"
+    description: "Kill a monster of each class from A to Z (except I)"
+    xlogfield: "tnntachieve0"
+    bit: 43
+- model: scoreboard.achievement
+  fields:
+    name: "What It Was Made For"
+    description: "Kill a appropriate monster with a Bane weapon"
+    xlogfield: "tnntachieve0"
+    bit: 44
 - model: scoreboard.achievement
   fields:
     name: "Kop Training Program"
     description: "Kill a monster with a rubber hose"
     xlogfield: "tnntachieve0"
+    bit: 45
+- model: scoreboard.achievement
+  fields:
+    name: "Buffy"
+    description: "Destroy an undead with #turn"
+    xlogfield: "tnntachieve0"
+    bit: 46
+- model: scoreboard.achievement
+  fields:
+    name: "Bright Light, Bright Light"
+    description: "Kill a gremlin with any light source"
+    xlogfield: "tnntachieve0"
+    bit: 47
+- model: scoreboard.achievement
+  fields:
+    name: "Get Your Gas Mask"
+    description: "Kill a monster with a stinking cloud"
+    xlogfield: "tnntachieve0"
+    bit: 48
+- model: scoreboard.achievement
+  fields:
+    name: "It's The Pits"
+    description: "Kill something while you are stuck in a pit"
+    xlogfield: "tnntachieve0"
+    bit: 49
+- model: scoreboard.achievement
+  fields:
+    name: "Never Saw It Coming"
+    description: "Kill an invisible monster without see invisible"
+    xlogfield: "tnntachieve0"
+    bit: 50
+- model: scoreboard.achievement
+  fields:
+    name: "Rope-a-Dope"
+    description: "Kill a monster with a thrown aklys"
+    xlogfield: "tnntachieve0"
+    bit: 51
+- model: scoreboard.achievement
+  fields:
+    name: "Hulk Smash"
+    description: "Kill a monster with a heavy iron ball"
+    xlogfield: "tnntachieve0"
+    bit: 52
+- model: scoreboard.achievement
+  fields:
+    name: "DIRGE"
+    description: "Instakill a monster with poison"
+    xlogfield: "tnntachieve0"
+    bit: 53
+- model: scoreboard.achievement
+  fields:
+    name: "Poseidon"
+    description: "Kill a sea monster with a trident"
+    xlogfield: "tnntachieve0"
+    bit: 54
+- model: scoreboard.achievement
+  fields:
+    name: "Touch It With A 10 Foot Pole"
+    description: "Kill a floating eye with a polearm"
+    xlogfield: "tnntachieve0"
+    bit: 55
+- model: scoreboard.achievement
+  fields:
+    name: "Bar Brawler"
+    description: "Kill a monster with HP damage by smashing a bottle on it"
+    xlogfield: "tnntachieve0"
+    bit: 56
+- model: scoreboard.achievement
+  fields:
+    name: "Rat Tail"
+    description: "Kill a monster with a wet towel"
+    xlogfield: "tnntachieve0"
+    bit: 57
+- model: scoreboard.achievement
+  fields:
+    name: "Hammer of the Gods"
+    description: "Kill a monster by throwing Mjollnir and having it return to your hand"
+    xlogfield: "tnntachieve0"
+    bit: 58
+- model: scoreboard.achievement
+  fields:
+    name: "Friendly Fire"
+    description: "Get a hostile monster killed by another hostile monster's projectile weapon"
+    xlogfield: "tnntachieve0"
     bit: 59
 - model: scoreboard.achievement
   fields:
-    name: "Obligatory Pointy Hat"
-    description: "Put on a cornuthaum as a wizard"
+    name: "It's 4:20 Somewhere"
+    description: "Stone a monster"
     xlogfield: "tnntachieve0"
     bit: 60
 - model: scoreboard.achievement
   fields:
-    name: "Hobbit Skin"
-    description: "Wear a mithril coat"
+    name: "Part-time Statue"
+    description: "Survive stoning"
     xlogfield: "tnntachieve0"
     bit: 61
 - model: scoreboard.achievement
   fields:
-    name: "The Words of the Prophets"
-    description: "Read 3 random graffiti"
+    name: "The Blob"
+    description: "Survive sliming"
     xlogfield: "tnntachieve0"
     bit: 62
 - model: scoreboard.achievement
   fields:
-    name: "Are You Still Pudding Farming"
-    description: "Split a pudding"
+    name: "Captain Ahab"
+    description: "Survive being grabbed by a sea monster"
     xlogfield: "tnntachieve0"
     bit: 63
 - model: scoreboard.achievement
   fields:
-    name: "Wearable Snack"
-    description: "Wear a meat ring"
+    name: "Furry Little Problem"
+    description: "Cure lycanthropy"
     xlogfield: "tnntachieve1"
     bit: 0
 - model: scoreboard.achievement
   fields:
-    name: "Frozen Treats"
-    description: "Loot an ice box"
+    name: "New Lease on Life"
+    description: "Cure deathly illness"
     xlogfield: "tnntachieve1"
     bit: 1
 - model: scoreboard.achievement
   fields:
-    name: "Pygmalion"
-    description: "Create a monster from a figurine"
+    name: "Diamond in the Rough"
+    description: "Identify a gem with a touchstone"
     xlogfield: "tnntachieve1"
     bit: 2
-- model: scoreboard.achievement
-  fields:
-    name: "Nerd"
-    description: "Read a spellbook while wearing lenses and a T-shirt"
-    xlogfield: "tnntachieve1"
-    bit: 3
-- model: scoreboard.achievement
-  fields:
-    name: "Recharged"
-    description: "Charge an object"
-    xlogfield: "tnntachieve1"
-    bit: 4
-- model: scoreboard.achievement
-  fields:
-    name: "Get Your Kicks"
-    description: "Kick an item embedded in a wall or rock"
-    xlogfield: "tnntachieve1"
-    bit: 5
-- model: scoreboard.achievement
-  fields:
-    name: "Spiderman"
-    description: "Grab an item with a grappling hook"
-    xlogfield: "tnntachieve1"
-    bit: 6
-- model: scoreboard.achievement
-  fields:
-    name: "More Light"
-    description: "Refill the Candelabrum after it burns out after the Invocation"
-    xlogfield: "tnntachieve1"
-    bit: 7
-- model: scoreboard.achievement
-  fields:
-    name: "Balanced Diet"
-    description: "Eat one of each type of produce in one game"
-    xlogfield: "tnntachieve1"
-    bit: 8
-- model: scoreboard.achievement
-  fields:
-    name: "Smorgasbord"
-    description: "Eat every type of food in the game"
-    xlogfield: "tnntachieve1"
-    bit: 9
-- model: scoreboard.achievement
-  fields:
-    name: "Fill 'Er Up"
-    description: "Fill an oil lamp with a potion of oil"
-    xlogfield: "tnntachieve1"
-    bit: 10
 - model: scoreboard.achievement
   fields:
     name: "Curse the Darkness"
     description: "Identify a potion of oil by applying it"
     xlogfield: "tnntachieve1"
+    bit: 3
+- model: scoreboard.achievement
+  fields:
+    name: "Michelin Guide"
+    description: "Identify both sources of food detection"
+    xlogfield: "tnntachieve1"
+    bit: 4
+- model: scoreboard.achievement
+  fields:
+    name: "Jeweler"
+    description: "Identify all rings"
+    xlogfield: "tnntachieve1"
+    bit: 5
+- model: scoreboard.achievement
+  fields:
+    name: "Mikado"
+    description: "Identify all wands"
+    xlogfield: "tnntachieve1"
+    bit: 6
+- model: scoreboard.achievement
+  fields:
+    name: "King of Bling"
+    description: "Identify all amulets"
+    xlogfield: "tnntachieve1"
+    bit: 7
+- model: scoreboard.achievement
+  fields:
+    name: "Bookworm"
+    description: "Identify all spellbooks"
+    xlogfield: "tnntachieve1"
+    bit: 8
+- model: scoreboard.achievement
+  fields:
+    name: "Scholar"
+    description: "Identify all scrolls"
+    xlogfield: "tnntachieve1"
+    bit: 9
+- model: scoreboard.achievement
+  fields:
+    name: "Alchemist"
+    description: "Identify all potions"
+    xlogfield: "tnntachieve1"
+    bit: 10
+- model: scoreboard.achievement
+  fields:
+    name: "Fashionista"
+    description: "Identify all non-obvious cloaks, helms, boots, and gloves"
+    xlogfield: "tnntachieve1"
     bit: 11
-- model: scoreboard.achievement
-  fields:
-    name: "Bright Light, Bright Light"
-    description: "Kill gremlin with any light source"
-    xlogfield: "tnntachieve1"
-    bit: 12
-- model: scoreboard.achievement
-  fields:
-    name: "Chemistry 101"
-    description: "Alchemize two potions in an established recipe"
-    xlogfield: "tnntachieve1"
-    bit: 13
-- model: scoreboard.achievement
-  fields:
-    name: "Get Your Gas Mask"
-    description: "Kill a monster with a stinking cloud"
-    xlogfield: "tnntachieve1"
-    bit: 14
-- model: scoreboard.achievement
-  fields:
-    name: "Escape to Discworld"
-    description: "Read a Terry Pratchett novel"
-    xlogfield: "tnntachieve1"
-    bit: 15
-- model: scoreboard.achievement
-  fields:
-    name: "Near Death Experience"
-    description: "#chat to Death while carrying a Terry Pratchett novel"
-    xlogfield: "tnntachieve1"
-    bit: 16
 - model: scoreboard.achievement
   fields:
     name: "Mineralogist"
     description: "Identify every type of valuable gemstone"
     xlogfield: "tnntachieve1"
+    bit: 12
+- model: scoreboard.achievement
+  fields:
+    name: "Geologist"
+    description: "Identify all gray stones"
+    xlogfield: "tnntachieve1"
+    bit: 13
+- model: scoreboard.achievement
+  fields:
+    name: "Glass Collector"
+    description: "Identify all worthless glass"
+    xlogfield: "tnntachieve1"
+    bit: 14
+- model: scoreboard.achievement
+  fields:
+    name: "Friends Not Food"
+    description: "Receive the Quest with vegetarian conduct intact"
+    xlogfield: "tnntachieve1"
+    bit: 15
+- model: scoreboard.achievement
+  fields:
+    name: "Animal Rights Activist"
+    description: "Receive the Quest with vegan conduct intact"
+    xlogfield: "tnntachieve1"
+    bit: 16
+- model: scoreboard.achievement
+  fields:
+    name: "Anti Gulp"
+    description: "Receive the Quest with foodless conduct intact"
+    xlogfield: "tnntachieve1"
     bit: 17
 - model: scoreboard.achievement
   fields:
-    name: "Prize Inside!"
-    description: "Get a spellbook by breaking a randomly-generated statue"
+    name: "No Help from Above"
+    description: "Receive the Quest with atheist conduct intact"
     xlogfield: "tnntachieve1"
     bit: 18
 - model: scoreboard.achievement
   fields:
-    name: "Ding-a-Ling"
-    description: "Summon a nymph by ringing a cursed bell"
+    name: "Wax On Wax Off"
+    description: "Receive the Quest with weaponless conduct intact"
     xlogfield: "tnntachieve1"
     bit: 19
 - model: scoreboard.achievement
   fields:
-    name: "Best Friends Forever"
-    description: "Take your starting pet to full adulthood"
+    name: "Thou Shalt Not Kill"
+    description: "Receive the Quest with pacifist conduct intact"
     xlogfield: "tnntachieve1"
     bit: 20
 - model: scoreboard.achievement
   fields:
-    name: "Diver"
-    description: "Dive into a moat or pool and retrieve an item from the bottom"
+    name: "Me No Do Words Good"
+    description: "Receive the Quest with illiterate conduct intact"
     xlogfield: "tnntachieve1"
     bit: 21
 - model: scoreboard.achievement
   fields:
-    name: "Ceiling Clinging Commute"
-    description: "Ride a wumpus over water"
+    name: "Lost My Transmutation License"
+    description: "Receive the Quest with polypileless conduct intact"
     xlogfield: "tnntachieve1"
     bit: 22
 - model: scoreboard.achievement
   fields:
-    name: "How Much Wood?"
-    description: "Kill or tame a woodchuck"
+    name: "True to Form"
+    description: "Receive the Quest with polyselfless conduct intact"
     xlogfield: "tnntachieve1"
     bit: 23
 - model: scoreboard.achievement
   fields:
-    name: "Storm the Gates of Heaven"
-    description: "Kill an Archon"
+    name: "Self Sufficient"
+    description: "Receive the Quest with wishless conduct intact"
     xlogfield: "tnntachieve1"
     bit: 24
 - model: scoreboard.achievement
   fields:
-    name: "Shifty"
-    description: "Tame a shapeshifter in any way"
+    name: "Leave the Artifacts to the Gods"
+    description: "Receive the Quest with artifact wishless conduct intact"
     xlogfield: "tnntachieve1"
     bit: 25
 - model: scoreboard.achievement
   fields:
-    name: "Cat Lady"
-    description: "Tame seven \"f\" in the course of one game"
+    name: "Feeling Your Way"
+    description: "Receive the Quest with zen (permablind) conduct intact"
     xlogfield: "tnntachieve1"
     bit: 26
 - model: scoreboard.achievement
   fields:
-    name: "Collapse the Wavefunction"
-    description: "Open the box containing Schroedinger's Cat"
+    name: "Going Commando"
+    description: "Receive the Quest with nudist conduct intact"
     xlogfield: "tnntachieve1"
     bit: 27
 - model: scoreboard.achievement
   fields:
-    name: "I'm Free! I'm Free!"
-    description: "Free a prisoner"
+    name: "Make Love, Not War"
+    description: "Receive the Quest with genocideless conduct intact"
     xlogfield: "tnntachieve1"
     bit: 28
 - model: scoreboard.achievement
   fields:
-    name: "Pet Rescue"
-    description: "Free a pet from a trap that you didn't create yourself"
+    name: "No Help From The Floor"
+    description: "Receive the Quest with Elberethless conduct intact"
     xlogfield: "tnntachieve1"
     bit: 29
 - model: scoreboard.achievement
   fields:
-    name: "Spam, Spam, Spam"
-    description: "Read a scroll of mail"
+    name: "It's A Wonderful Trip"
+    description: "Receive the Quest with permahallu conduct intact"
     xlogfield: "tnntachieve1"
     bit: 30
 - model: scoreboard.achievement
   fields:
-    name: "Superfood"
-    description: "Gain strength by eating royal jelly"
+    name: "Silent World"
+    description: "Receive the Quest with permadeaf conduct intact"
     xlogfield: "tnntachieve1"
     bit: 31
 - model: scoreboard.achievement
   fields:
-    name: "You Are What You Eat"
-    description: "Gain an intrinsic by eating a corpse (or tin or glob)"
+    name: "Keep Your Fancy Toys"
+    description: "Receive the Quest with artifactless conduct intact"
     xlogfield: "tnntachieve1"
     bit: 32
 - model: scoreboard.achievement
   fields:
-    name: "The Art of the Deal"
-    description: "Bankrupt a shopkeeper by getting all their money"
+    name: "New Dungeon, Never Occupied"
+    description: "Receive the Quest with bonesless conduct intact"
     xlogfield: "tnntachieve1"
     bit: 33
 - model: scoreboard.achievement
   fields:
-    name: "Distinction Without Difference"
-    description: "Polymorph a pet using a polytrap"
+    name: "Extradimensionally Challenged"
+    description: "Receive the Quest with swapchestless conduct intact"
     xlogfield: "tnntachieve1"
     bit: 34
 - model: scoreboard.achievement
   fields:
-    name: "Transgender"
-    description: "Put on an amulet of change"
+    name: "Fur Allergy"
+    description: "Receive the Quest with petless conduct intact"
     xlogfield: "tnntachieve1"
     bit: 35
 - model: scoreboard.achievement
   fields:
-    name: "Father Figure"
-    description: "Hatch an egg not laid by you and have it come out tame"
+    name: "Death Isn't So Cheap"
+    description: "Receive the Quest with survivor conduct intact"
     xlogfield: "tnntachieve1"
     bit: 36
-- model: scoreboard.achievement
-  fields:
-    name: "Hello, Nurse!"
-    description: "Get a nurse to heal you or raise your max HP"
-    xlogfield: "tnntachieve1"
-    bit: 37
-- model: scoreboard.achievement
-  fields:
-    name: "It's The Pits"
-    description: "Kill something while you are stuck in a pit"
-    xlogfield: "tnntachieve1"
-    bit: 38
-- model: scoreboard.achievement
-  fields:
-    name: "Never Saw It Coming"
-    description: "Kill invisible monster without see invisible"
-    xlogfield: "tnntachieve1"
-    bit: 39
-- model: scoreboard.achievement
-  fields:
-    name: "Shafted"
-    description: "Fall down a shaft"
-    xlogfield: "tnntachieve1"
-    bit: 40
-- model: scoreboard.achievement
-  fields:
-    name: "Potions of Booze Cost More Than That"
-    description: "Get two bits for an ale from a priest"
-    xlogfield: "tnntachieve1"
-    bit: 41
-- model: scoreboard.achievement
-  fields:
-    name: "Horatius at the Bridge"
-    description: "Extinct soldiers or Keystone Kops"
-    xlogfield: "tnntachieve1"
-    bit: 42
-- model: scoreboard.achievement
-  fields:
-    name: "Who's That Pretty Girl in the Mirror, There?"
-    description: "Deflect a nymph with a mirror"
-    xlogfield: "tnntachieve1"
-    bit: 43
-- model: scoreboard.achievement
-  fields:
-    name: "Money Talks"
-    description: "Bribe a demon lord with at least 25000 gold"
-    xlogfield: "tnntachieve1"
-    bit: 44
 - model: scoreboard.achievement
   fields:
     name: "Breaking and Entering"
     description: "Enter a vault"
     xlogfield: "tnntachieve1"
-    bit: 45
+    bit: 37
 - model: scoreboard.achievement
   fields:
     name: "Who Was That David Person Anyway?"
     description: "Enter a treasure zoo"
     xlogfield: "tnntachieve1"
-    bit: 46
+    bit: 38
 - model: scoreboard.achievement
   fields:
     name: "Absolute Monarchy"
     description: "Enter a throne room"
     xlogfield: "tnntachieve1"
-    bit: 47
+    bit: 39
 - model: scoreboard.achievement
   fields:
     name: "They're After Me Lucky Charms"
     description: "Enter a leprechaun hall"
     xlogfield: "tnntachieve1"
-    bit: 48
+    bit: 40
 - model: scoreboard.achievement
   fields:
     name: "Hive Mind"
     description: "Enter a beehive"
     xlogfield: "tnntachieve1"
-    bit: 49
+    bit: 41
 - model: scoreboard.achievement
   fields:
     name: "Day of the Dead"
     description: "Enter a graveyard"
     xlogfield: "tnntachieve1"
-    bit: 50
+    bit: 42
 - model: scoreboard.achievement
   fields:
     name: "Team a Headquarters"
     description: "Enter an anthole"
     xlogfield: "tnntachieve1"
-    bit: 51
+    bit: 43
 - model: scoreboard.achievement
   fields:
     name: "Halt, Who Goes There?"
     description: "Enter a barracks"
     xlogfield: "tnntachieve1"
-    bit: 52
+    bit: 44
 - model: scoreboard.achievement
   fields:
     name: "Dungeon Ecology"
     description: "Enter a swamp"
     xlogfield: "tnntachieve1"
-    bit: 53
+    bit: 45
 - model: scoreboard.achievement
   fields:
     name: "Statue Showcase"
     description: "Enter a cockatrice nest"
     xlogfield: "tnntachieve1"
-    bit: 54
-- model: scoreboard.achievement
-  fields:
-    name: "Asmodead"
-    description: "Kill Asmodeus"
-    xlogfield: "tnntachieve1"
-    bit: 55
-- model: scoreboard.achievement
-  fields:
-    name: "Fly Swatter"
-    description: "Kill Baalzebub"
-    xlogfield: "tnntachieve1"
-    bit: 56
-- model: scoreboard.achievement
-  fields:
-    name: "That Wand is Mine"
-    description: "Kill Orcus"
-    xlogfield: "tnntachieve1"
-    bit: 57
-- model: scoreboard.achievement
-  fields:
-    name: "Squish Squish"
-    description: "Kill Juiblex"
-    xlogfield: "tnntachieve1"
-    bit: 58
-- model: scoreboard.achievement
-  fields:
-    name: "Demogorgone"
-    description: "Kill Demogorgon"
-    xlogfield: "tnntachieve1"
-    bit: 59
-- model: scoreboard.achievement
-  fields:
-    name: "Yee-No-Go"
-    description: "Kill Yeenoghu"
-    xlogfield: "tnntachieve1"
-    bit: 60
-- model: scoreboard.achievement
-  fields:
-    name: "Geryon-Slayer"
-    description: "Kill Geryon"
-    xlogfield: "tnntachieve1"
-    bit: 61
-- model: scoreboard.achievement
-  fields:
-    name: "Dispater-Dispatcher"
-    description: "Kill Dispater"
-    xlogfield: "tnntachieve1"
-    bit: 62
-- model: scoreboard.achievement
-  fields:
-    name: "Conqueror of Death"
-    description: "Kill Death"
-    xlogfield: "tnntachieve1"
-    bit: 63
-- model: scoreboard.achievement
-  fields:
-    name: "Curer of Pestilence"
-    description: "Kill Pestilence"
-    xlogfield: "tnntachieve2"
-    bit: 0
-- model: scoreboard.achievement
-  fields:
-    name: "Feeder of Famine"
-    description: "Kill Famine"
-    xlogfield: "tnntachieve2"
-    bit: 1
-- model: scoreboard.achievement
-  fields:
-    name: "Under New Management"
-    description: "Change your alignment by any means"
-    xlogfield: "tnntachieve2"
-    bit: 2
-- model: scoreboard.achievement
-  fields:
-    name: "Heisenberg"
-    description: "Become uncertain about your position or velocity"
-    xlogfield: "tnntachieve2"
-    bit: 3
-- model: scoreboard.achievement
-  fields:
-    name: "Who You Gonna Call?"
-    description: "Get scared by a ghost"
-    xlogfield: "tnntachieve2"
-    bit: 4
-- model: scoreboard.achievement
-  fields:
-    name: "Groundhog Day"
-    description: "Return to a forgotten level"
-    xlogfield: "tnntachieve2"
-    bit: 5
-- model: scoreboard.achievement
-  fields:
-    name: "Tainted"
-    description: "Dip an item in unholy water"
-    xlogfield: "tnntachieve2"
-    bit: 6
-- model: scoreboard.achievement
-  fields:
-    name: "Hydrochloric"
-    description: "Dissolve iron bars with acid"
-    xlogfield: "tnntachieve2"
-    bit: 7
-- model: scoreboard.achievement
-  fields:
-    name: "Predictably, Nothing Happens"
-    description: "Break an identified wand of nothing"
-    xlogfield: "tnntachieve2"
-    bit: 8
-- model: scoreboard.achievement
-  fields:
-    name: "Neutralized"
-    description: "Cancel a monster"
-    xlogfield: "tnntachieve2"
-    bit: 9
-- model: scoreboard.achievement
-  fields:
-    name: "Magivore"
-    description: "Gain a magical intrinsic by eating a piece of jewelry"
-    xlogfield: "tnntachieve2"
-    bit: 10
-- model: scoreboard.achievement
-  fields:
-    name: "Rope-a-Dope"
-    description: "Kill a monster with a thrown aklys"
-    xlogfield: "tnntachieve2"
-    bit: 11
-- model: scoreboard.achievement
-  fields:
-    name: "Panacea"
-    description: "Neutralize a harmful potion with a unicorn horn"
-    xlogfield: "tnntachieve2"
-    bit: 12
-- model: scoreboard.achievement
-  fields:
-    name: "Hulk Smash"
-    description: "Kill a monster with a heavy iron ball"
-    xlogfield: "tnntachieve2"
-    bit: 13
-- model: scoreboard.achievement
-  fields:
-    name: "Croesus Competitor"
-    description: "Finish a game carrying at least 50000 gold"
-    xlogfield: "tnntachieve2"
-    bit: 14
-- model: scoreboard.achievement
-  fields:
-    name: "Croesus Buyout"
-    description: "Finish a game carrying at least 100000 gold"
-    xlogfield: "tnntachieve2"
-    bit: 15
-- model: scoreboard.achievement
-  fields:
-    name: "Palantir"
-    description: "Successfully apply a crystal ball"
-    xlogfield: "tnntachieve2"
-    bit: 16
-- model: scoreboard.achievement
-  fields:
-    name: "Peak Condition"
-    description: "Raise all attributes to at least 18"
-    xlogfield: "tnntachieve2"
-    bit: 17
-- model: scoreboard.achievement
-  fields:
-    name: "Those Who Came Before"
-    description: "Sight another player's bones pile"
-    xlogfield: "tnntachieve2"
-    bit: 18
-- model: scoreboard.achievement
-  fields:
-    name: "Imitation Bones"
-    description: "Step onto the Rogue level fake bones pile"
-    xlogfield: "tnntachieve2"
-    bit: 19
-- model: scoreboard.achievement
-  fields:
-    name: "Replacement Goldfish"
-    description: "Cast create familiar"
-    xlogfield: "tnntachieve2"
-    bit: 20
-- model: scoreboard.achievement
-  fields:
-    name: "Pop the Question"
-    description: "Give a ring of adornment to a succubus"
-    xlogfield: "tnntachieve2"
-    bit: 21
-- model: scoreboard.achievement
-  fields:
-    name: "No Soup For You!"
-    description: "Get permanently expelled from the Quest"
-    xlogfield: "tnntachieve2"
-    bit: 22
-- model: scoreboard.achievement
-  fields:
-    name: "Discerning Palate"
-    description: "Gain intrinsic food appraisal"
-    xlogfield: "tnntachieve2"
-    bit: 23
-- model: scoreboard.achievement
-  fields:
-    name: "Playerbanebane"
-    description: "Kill a soldier ant"
-    xlogfield: "tnntachieve2"
-    bit: 24
-- model: scoreboard.achievement
-  fields:
-    name: "Banishing Spells Not Included"
-    description: "Summon a demon lord"
-    xlogfield: "tnntachieve2"
-    bit: 25
-- model: scoreboard.achievement
-  fields:
-    name: "Tastes Like Chicken"
-    description: "Eat chickatrice or cockatrice meat"
-    xlogfield: "tnntachieve2"
-    bit: 26
-- model: scoreboard.achievement
-  fields:
-    name: "Dust to Dust"
-    description: "Wrest one last charge from a wand of wishing"
-    xlogfield: "tnntachieve2"
-    bit: 27
-- model: scoreboard.achievement
-  fields:
-    name: "Teetotaler"
-    description: "Neutralize a potion of booze with an amethyst"
-    xlogfield: "tnntachieve2"
-    bit: 28
-- model: scoreboard.achievement
-  fields:
-    name: "Spooky Scary Skeletons"
-    description: "Get scared by the rattling of a skeleton"
-    xlogfield: "tnntachieve2"
-    bit: 29
+    bit: 46
 - model: scoreboard.achievement
   fields:
     name: "Ocean's Eleven"
     description: "Enter Fort Ludios"
-    xlogfield: "tnntachieve2"
-    bit: 30
+    xlogfield: "tnntachieve1"
+    bit: 47
 - model: scoreboard.achievement
   fields:
-    name: "I Did It For The Money"
-    description: "Kill Croesus"
-    xlogfield: "tnntachieve2"
-    bit: 31
-- model: scoreboard.achievement
-  fields:
-    name: "Gullible"
-    description: "Lie to a vault guard about your name"
-    xlogfield: "tnntachieve2"
-    bit: 32
-- model: scoreboard.achievement
-  fields:
-    name: "Luck of the Grasshopper"
-    description: "Reach +13 Luck"
-    xlogfield: "tnntachieve2"
-    bit: 33
-- model: scoreboard.achievement
-  fields:
-    name: "Murphy's Law"
-    description: "Reach -13 Luck"
-    xlogfield: "tnntachieve2"
-    bit: 34
-- model: scoreboard.achievement
-  fields:
-    name: "Looking Slick"
-    description: "Grease a piece of armor"
-    xlogfield: "tnntachieve2"
-    bit: 35
-- model: scoreboard.achievement
-  fields:
-    name: "Watch Your Footing"
-    description: "Step onto the vibrating square"
-    xlogfield: "tnntachieve2"
-    bit: 36
+    name: "Pilgrim"
+    description: "Visit every type of aligned altar"
+    xlogfield: "tnntachieve1"
+    bit: 48
 - model: scoreboard.achievement
   fields:
     name: "The Grand Tour"
     description: "Visit each high altar on the Astral Plane"
+    xlogfield: "tnntachieve1"
+    bit: 49
+- model: scoreboard.achievement
+  fields:
+    name: "All You Ever Wanted"
+    description: "Get a wish from every wish source"
+    xlogfield: "tnntachieve1"
+    bit: 50
+- model: scoreboard.achievement
+  fields:
+    name: "Hyperliterate"
+    description: "Read every readable item in the game"
+    xlogfield: "tnntachieve1"
+    bit: 51
+- model: scoreboard.achievement
+  fields:
+    name: "Bomb Squad"
+    description: "Untrap all 8 types of traps that can be untrapped"
+    xlogfield: "tnntachieve1"
+    bit: 52
+- model: scoreboard.achievement
+  fields:
+    name: "Balanced Diet"
+    description: "Eat one of each type of produce in one game"
+    xlogfield: "tnntachieve1"
+    bit: 53
+- model: scoreboard.achievement
+  fields:
+    name: "Smorgasbord"
+    description: "Eat every type of food in the game"
+    xlogfield: "tnntachieve1"
+    bit: 54
+- model: scoreboard.achievement
+  fields:
+    name: "Extreme Omnivore"
+    description: "Eat an object from every common, edible object class"
+    xlogfield: "tnntachieve1"
+    bit: 55
+- model: scoreboard.achievement
+  fields:
+    name: "Go Forth and Smite"
+    description: "Receive an artifact gift from your deity"
+    xlogfield: "tnntachieve1"
+    bit: 56
+- model: scoreboard.achievement
+  fields:
+    name: "Too Little Too Late"
+    description: "Get a sacrifice gift on the Astral Plane"
+    xlogfield: "tnntachieve1"
+    bit: 57
+- model: scoreboard.achievement
+  fields:
+    name: "Some Watery Tart"
+    description: "Be gifted Excalibur"
+    xlogfield: "tnntachieve1"
+    bit: 58
+- model: scoreboard.achievement
+  fields:
+    name: "Superfood"
+    description: "Gain strength by eating royal jelly"
+    xlogfield: "tnntachieve1"
+    bit: 59
+- model: scoreboard.achievement
+  fields:
+    name: "You Are What You Eat"
+    description: "Gain an intrinsic by eating a corpse (or tin or glob)"
+    xlogfield: "tnntachieve1"
+    bit: 60
+- model: scoreboard.achievement
+  fields:
+    name: "Magivore"
+    description: "Gain a magical intrinsic by eating a piece of jewelry"
+    xlogfield: "tnntachieve1"
+    bit: 61
+- model: scoreboard.achievement
+  fields:
+    name: "Batty"
+    description: "Get stunned by eating bat meat"
+    xlogfield: "tnntachieve1"
+    bit: 62
+- model: scoreboard.achievement
+  fields:
+    name: "Pet Whisperer"
+    description: "Tame a monster by feeding it"
+    xlogfield: "tnntachieve1"
+    bit: 63
+- model: scoreboard.achievement
+  fields:
+    name: "Beast Master"
+    description: "Tame a monster without using food"
+    xlogfield: "tnntachieve2"
+    bit: 0
+- model: scoreboard.achievement
+  fields:
+    name: "Shifty"
+    description: "Tame a shapeshifter in any way"
+    xlogfield: "tnntachieve2"
+    bit: 1
+- model: scoreboard.achievement
+  fields:
+    name: "Cat Lady"
+    description: "Tame seven \"f\" in the course of one game"
+    xlogfield: "tnntachieve2"
+    bit: 2
+- model: scoreboard.achievement
+  fields:
+    name: "Best Friends Forever"
+    description: "Take your starting pet to full adulthood"
+    xlogfield: "tnntachieve2"
+    bit: 3
+- model: scoreboard.achievement
+  fields:
+    name: "Pet Rescue"
+    description: "Free a pet from a trap that you didn't create yourself"
+    xlogfield: "tnntachieve2"
+    bit: 4
+- model: scoreboard.achievement
+  fields:
+    name: "Distinction Without a Difference"
+    description: "Polymorph a pet using a polytrap"
+    xlogfield: "tnntachieve2"
+    bit: 5
+- model: scoreboard.achievement
+  fields:
+    name: "Well... Bye"
+    description: "Prevent a Rider from reviving"
+    xlogfield: "tnntachieve2"
+    bit: 6
+- model: scoreboard.achievement
+  fields:
+    name: "Indulgences"
+    description: "Buy protection from a priest"
+    xlogfield: "tnntachieve2"
+    bit: 7
+- model: scoreboard.achievement
+  fields:
+    name: "The Royal Treatment"
+    description: "Sit on a throne"
+    xlogfield: "tnntachieve2"
+    bit: 8
+- model: scoreboard.achievement
+  fields:
+    name: "It'll Turn Up Later"
+    description: "Drop a ring in a sink"
+    xlogfield: "tnntachieve2"
+    bit: 9
+- model: scoreboard.achievement
+  fields:
+    name: "Orthodoxy"
+    description: "Convert an altar"
+    xlogfield: "tnntachieve2"
+    bit: 10
+- model: scoreboard.achievement
+  fields:
+    name: "Always Talk to the Wise Old Man"
+    description: "Chat with Izchak"
+    xlogfield: "tnntachieve2"
+    bit: 11
+- model: scoreboard.achievement
+  fields:
+    name: "Isaac Newton"
+    description: "Get fruit by kicking a tree"
+    xlogfield: "tnntachieve2"
+    bit: 12
+- model: scoreboard.achievement
+  fields:
+    name: "Not The Bees"
+    description: "Get bees by kicking a tree"
+    xlogfield: "tnntachieve2"
+    bit: 13
+- model: scoreboard.achievement
+  fields:
+    name: "Dungeon Economics"
+    description: "Buy or sell something at a shop"
+    xlogfield: "tnntachieve2"
+    bit: 14
+- model: scoreboard.achievement
+  fields:
+    name: "Conspicuous Consumption"
+    description: "Buy an unidentified gem from a shop"
+    xlogfield: "tnntachieve2"
+    bit: 15
+- model: scoreboard.achievement
+  fields:
+    name: "The Art of the Deal"
+    description: "Bankrupt a shopkeeper by getting all their money"
+    xlogfield: "tnntachieve2"
+    bit: 16
+- model: scoreboard.achievement
+  fields:
+    name: "Stop, Thief!"
+    description: "Be chased by the Keystone Kops"
+    xlogfield: "tnntachieve2"
+    bit: 17
+- model: scoreboard.achievement
+  fields:
+    name: "Wash it Clean"
+    description: "Uncurse an item in a fountain"
+    xlogfield: "tnntachieve2"
+    bit: 18
+- model: scoreboard.achievement
+  fields:
+    name: "Well-Read"
+    description: "Learn a level 5+ spell"
+    xlogfield: "tnntachieve2"
+    bit: 19
+- model: scoreboard.achievement
+  fields:
+    name: "Hand Crafted"
+    description: "Make a dragon scale mail"
+    xlogfield: "tnntachieve2"
+    bit: 20
+- model: scoreboard.achievement
+  fields:
+    name: "A Little Light Larceny"
+    description: "Get robbed by a nymph"
+    xlogfield: "tnntachieve2"
+    bit: 21
+- model: scoreboard.achievement
+  fields:
+    name: "Pot of Greed"
+    description: "Have your purse lightened by a leprechaun"
+    xlogfield: "tnntachieve2"
+    bit: 22
+- model: scoreboard.achievement
+  fields:
+    name: "The Birds and the Bees"
+    description: "Dally with a foocubus"
+    xlogfield: "tnntachieve2"
+    bit: 23
+- model: scoreboard.achievement
+  fields:
+    name: "Hello, Nurse!"
+    description: "Get a nurse to heal you or raise your max HP"
+    xlogfield: "tnntachieve2"
+    bit: 24
+- model: scoreboard.achievement
+  fields:
+    name: "The Most Dangerous Game"
+    description: "Catch a monster in a trap set by you"
+    xlogfield: "tnntachieve2"
+    bit: 25
+- model: scoreboard.achievement
+  fields:
+    name: "Liberated"
+    description: "Get yourself unpunished"
+    xlogfield: "tnntachieve2"
+    bit: 26
+- model: scoreboard.achievement
+  fields:
+    name: "It's Called That For a Reason"
+    description: "Come to earth by levitating over a sink"
+    xlogfield: "tnntachieve2"
+    bit: 27
+- model: scoreboard.achievement
+  fields:
+    name: "Scribe"
+    description: "Write a scroll with a magic marker"
+    xlogfield: "tnntachieve2"
+    bit: 28
+- model: scoreboard.achievement
+  fields:
+    name: "First Edition"
+    description: "Write a book"
+    xlogfield: "tnntachieve2"
+    bit: 29
+- model: scoreboard.achievement
+  fields:
+    name: "Dragon Rider"
+    description: "Ride a dragon"
+    xlogfield: "tnntachieve2"
+    bit: 30
+- model: scoreboard.achievement
+  fields:
+    name: "Shimmer"
+    description: "Erosionproof an item"
+    xlogfield: "tnntachieve2"
+    bit: 31
+- model: scoreboard.achievement
+  fields:
+    name: "They Like Shiny Things"
+    description: "Throw a gem at a unicorn"
+    xlogfield: "tnntachieve2"
+    bit: 32
+- model: scoreboard.achievement
+  fields:
+    name: "Civilized Cooking"
+    description: "Open a tin with a tin opener"
+    xlogfield: "tnntachieve2"
+    bit: 33
+- model: scoreboard.achievement
+  fields:
+    name: "Reincarnation Cancelled"
+    description: "Tin a troll or get its corpse to rot"
+    xlogfield: "tnntachieve2"
+    bit: 34
+- model: scoreboard.achievement
+  fields:
+    name: "Exotic Meat"
+    description: "Tin a unique monster"
+    xlogfield: "tnntachieve2"
+    bit: 35
+- model: scoreboard.achievement
+  fields:
+    name: "Tinned Out"
+    description: "Use up a tinning kit"
+    xlogfield: "tnntachieve2"
+    bit: 36
+- model: scoreboard.achievement
+  fields:
+    name: "Only Mostly Dead"
+    description: "Resurrect a corpse"
     xlogfield: "tnntachieve2"
     bit: 37
 - model: scoreboard.achievement
   fields:
-    name: "Friends Not Food"
-    description: "Receive the Quest with vegetarian conduct intact"
+    name: "Necromancer"
+    description: "Resurrect a fallen pet and have it return tame"
     xlogfield: "tnntachieve2"
     bit: 38
 - model: scoreboard.achievement
   fields:
-    name: "Animal Rights Activist"
-    description: "Receive the Quest with vegan conduct intact"
+    name: "Asudem"
+    description: "Revive Perseus"
     xlogfield: "tnntachieve2"
     bit: 39
 - model: scoreboard.achievement
   fields:
-    name: "Anti Gulp"
-    description: "Receive the Quest with foodless conduct intact"
+    name: "So Thou Thought Thou Couldst Resurrect Me"
+    description: "Resurrect the Wizard of Yendor"
     xlogfield: "tnntachieve2"
     bit: 40
 - model: scoreboard.achievement
   fields:
-    name: "No Help from Above"
-    description: "Receive the Quest with atheist conduct intact"
+    name: "Wasn't a Meal, Wasn't Ready, And You Shouldn't Have Eaten It"
+    description: "Eat a military ration"
     xlogfield: "tnntachieve2"
     bit: 41
 - model: scoreboard.achievement
   fields:
-    name: "Wax On Wax Off"
-    description: "Receive the Quest with weaponless conduct intact"
+    name: "Insert Quarter to Continue"
+    description: "Get life-saved"
     xlogfield: "tnntachieve2"
     bit: 42
 - model: scoreboard.achievement
   fields:
-    name: "Thou Shalt Not Kill"
-    description: "Receive the Quest with pacifist conduct intact"
+    name: "Buried Treasure"
+    description: "Dig up a grave not in a graveyard"
     xlogfield: "tnntachieve2"
     bit: 43
 - model: scoreboard.achievement
   fields:
-    name: "Me No Do Words Good"
-    description: "Receive the Quest with illiterate conduct intact"
+    name: "Movers and Shakers"
+    description: "Cause an earthquake"
     xlogfield: "tnntachieve2"
     bit: 44
 - model: scoreboard.achievement
   fields:
-    name: "Lost My Transmutation License"
-    description: "Receive the Quest with polypileless conduct intact"
+    name: "Snake Charmer"
+    description: "Pacify a snake with a flute"
     xlogfield: "tnntachieve2"
     bit: 45
 - model: scoreboard.achievement
   fields:
-    name: "True to Form"
-    description: "Receive the Quest with polyselfless conduct intact"
+    name: "Tin Foil Hat"
+    description: "Dodge a brainsucking attack"
     xlogfield: "tnntachieve2"
     bit: 46
 - model: scoreboard.achievement
   fields:
-    name: "Self Sufficient"
-    description: "Receive the Quest with wishless conduct intact"
+    name: "Right Back at Ya"
+    description: "Hit an enemy with a thrown boomerang"
     xlogfield: "tnntachieve2"
     bit: 47
 - model: scoreboard.achievement
   fields:
-    name: "Leave the Artifacts to the Gods"
-    description: "Receive the Quest with artifact wishless conduct intact"
+    name: "It Burnsss"
+    description: "Deal silver damage to a silver-hating monster"
     xlogfield: "tnntachieve2"
     bit: 48
 - model: scoreboard.achievement
   fields:
-    name: "Feeling Your Way"
-    description: "Receive the Quest with zen (permablind) conduct intact"
+    name: "Arrakis"
+    description: "Make a crysknife"
     xlogfield: "tnntachieve2"
     bit: 49
 - model: scoreboard.achievement
   fields:
-    name: "Going Commando"
-    description: "Receive the Quest with nudist conduct intact"
+    name: "Obligatory Pointy Hat"
+    description: "Put on a cornuthaum as a wizard"
     xlogfield: "tnntachieve2"
     bit: 50
 - model: scoreboard.achievement
   fields:
-    name: "Make Love, Not War"
-    description: "Receive the Quest with genocideless conduct intact"
+    name: "Hobbit Skin"
+    description: "Wear a mithril coat"
     xlogfield: "tnntachieve2"
     bit: 51
 - model: scoreboard.achievement
   fields:
-    name: "No Help From The Floor"
-    description: "Receive the Quest with Elberethless conduct intact"
+    name: "The Words of the Prophets"
+    description: "Read 3 random graffiti"
     xlogfield: "tnntachieve2"
     bit: 52
 - model: scoreboard.achievement
   fields:
-    name: "It's A Wonderful Trip"
-    description: "Receive the Quest with permahallu conduct intact"
+    name: "Are You Still Pudding Farming"
+    description: "Split a pudding"
     xlogfield: "tnntachieve2"
     bit: 53
 - model: scoreboard.achievement
   fields:
-    name: "Silent World"
-    description: "Receive the Quest with permadeaf conduct intact"
+    name: "Wearable Snack"
+    description: "Wear a meat ring"
     xlogfield: "tnntachieve2"
     bit: 54
 - model: scoreboard.achievement
   fields:
-    name: "Keep Your Fancy Toys"
-    description: "Receive the Quest with artifactless conduct intact"
+    name: "Frozen Treats"
+    description: "Loot an ice box"
     xlogfield: "tnntachieve2"
     bit: 55
 - model: scoreboard.achievement
   fields:
-    name: "New Dungeon, Never Occupied"
-    description: "Receive the Quest with bonesless conduct intact"
+    name: "Six Pack"
+    description: "Stock an ice box with 6 or more potions of booze"
     xlogfield: "tnntachieve2"
     bit: 56
 - model: scoreboard.achievement
   fields:
-    name: "Extradimensionally Challenged"
-    description: "Receive the Quest with swapchestless conduct intact"
+    name: "Pygmalion"
+    description: "Create a monster from a figurine"
     xlogfield: "tnntachieve2"
     bit: 57
 - model: scoreboard.achievement
   fields:
-    name: "Fur Allergy"
-    description: "Receive the Quest with petless conduct intact"
+    name: "Nerd"
+    description: "Read a spellbook while wearing lenses and a T-shirt"
     xlogfield: "tnntachieve2"
     bit: 58
 - model: scoreboard.achievement
   fields:
-    name: "Death Isn't So Cheap"
-    description: "Receive the Quest with survivor conduct intact"
+    name: "Recharged"
+    description: "Charge an object"
     xlogfield: "tnntachieve2"
     bit: 59
 - model: scoreboard.achievement
   fields:
-    name: "It's Dangerous To Go Alone! Take This"
-    description: "Put an item into a swap chest"
+    name: "Get Your Kicks"
+    description: "Kick an item embedded in a wall or rock"
     xlogfield: "tnntachieve2"
     bit: 60
 - model: scoreboard.achievement
   fields:
-    name: "The True Dungeon Masters"
-    description: "Chat with an active devteam member"
+    name: "Spiderman"
+    description: "Grab an item with a grappling hook"
     xlogfield: "tnntachieve2"
     bit: 61
 - model: scoreboard.achievement
   fields:
-    name: "There Is No Spoon"
-    description: "Finish the task the devteam requires of you"
+    name: "More Light"
+    description: "Refill the Candelabrum after it burns out after the Invocation"
     xlogfield: "tnntachieve2"
     bit: 62
 - model: scoreboard.achievement
   fields:
-    name: "DIRGE"
-    description: "Instakill an enemy with poison"
+    name: "Fill 'Er Up"
+    description: "Fill an oil lamp with a potion of oil"
     xlogfield: "tnntachieve2"
     bit: 63
+- model: scoreboard.achievement
+  fields:
+    name: "Chemistry 101"
+    description: "Alchemize two potions in an established recipe"
+    xlogfield: "tnntachieve3"
+    bit: 0
+- model: scoreboard.achievement
+  fields:
+    name: "Escape to Discworld"
+    description: "Read a Terry Pratchett novel"
+    xlogfield: "tnntachieve3"
+    bit: 1
+- model: scoreboard.achievement
+  fields:
+    name: "Near Death Experience"
+    description: "#chat to Death while carrying a Terry Pratchett novel"
+    xlogfield: "tnntachieve3"
+    bit: 2
+- model: scoreboard.achievement
+  fields:
+    name: "Prize Inside!"
+    description: "Get a spellbook by breaking a randomly-generated statue"
+    xlogfield: "tnntachieve3"
+    bit: 3
+- model: scoreboard.achievement
+  fields:
+    name: "Ding-a-Ling"
+    description: "Summon a nymph by ringing a cursed bell"
+    xlogfield: "tnntachieve3"
+    bit: 4
+- model: scoreboard.achievement
+  fields:
+    name: "Diver"
+    description: "Dive into a moat or pool and retrieve an item from the bottom"
+    xlogfield: "tnntachieve3"
+    bit: 5
+- model: scoreboard.achievement
+  fields:
+    name: "Ceiling Clinging Commute"
+    description: "Ride a wumpus over water"
+    xlogfield: "tnntachieve3"
+    bit: 6
+- model: scoreboard.achievement
+  fields:
+    name: "Collapse the Wavefunction"
+    description: "Open the box containing Schroedinger's Cat"
+    xlogfield: "tnntachieve3"
+    bit: 7
+- model: scoreboard.achievement
+  fields:
+    name: "I'm Free! I'm Free!"
+    description: "Free a prisoner"
+    xlogfield: "tnntachieve3"
+    bit: 8
+- model: scoreboard.achievement
+  fields:
+    name: "Spam, Spam, Spam"
+    description: "Read a scroll of mail"
+    xlogfield: "tnntachieve3"
+    bit: 9
+- model: scoreboard.achievement
+  fields:
+    name: "Gender Swap"
+    description: "Put on an amulet of change"
+    xlogfield: "tnntachieve3"
+    bit: 10
 - model: scoreboard.achievement
   fields:
     name: "Gender Bender"
     description: "Change gender two or more times"
     xlogfield: "tnntachieve3"
-    bit: 0
-- model: scoreboard.achievement
-  fields:
-    name: "The Deathly Hallows"
-    description: "Wield a wand of death while wearing an invisibility cloak and amulet of life saving"
-    xlogfield: "tnntachieve3"
-    bit: 1
-- model: scoreboard.achievement
-  fields:
-    name: "Indiana Jones"
-    description: "Disarm a monster with a bullwhip"
-    xlogfield: "tnntachieve3"
-    bit: 2
-- model: scoreboard.achievement
-  fields:
-    name: "Pilgrim"
-    description: "Visit every type of aligned altar"
-    xlogfield: "tnntachieve3"
-    bit: 3
-- model: scoreboard.achievement
-  fields:
-    name: "Wanton Waste"
-    description: "Break an identified wand of wishing with at least 1 charge"
-    xlogfield: "tnntachieve3"
-    bit: 4
-- model: scoreboard.achievement
-  fields:
-    name: "Poseidon"
-    description: "Kill a sea monster with a trident"
-    xlogfield: "tnntachieve3"
-    bit: 5
-- model: scoreboard.achievement
-  fields:
-    name: "It's 4:20 Somewhere"
-    description: "Stone a monster"
-    xlogfield: "tnntachieve3"
-    bit: 6
-- model: scoreboard.achievement
-  fields:
-    name: "Orpheus"
-    description: "Activate a drawbridge with the passtune"
-    xlogfield: "tnntachieve3"
-    bit: 7
-- model: scoreboard.achievement
-  fields:
-    name: "Michelin Guide"
-    description: "Identify both sources of food detection"
-    xlogfield: "tnntachieve3"
-    bit: 8
-- model: scoreboard.achievement
-  fields:
-    name: "All You Ever Wanted"
-    description: "Get a wish from every wish source"
-    xlogfield: "tnntachieve3"
-    bit: 9
-- model: scoreboard.achievement
-  fields:
-    name: "Touch It With A 10 Foot Pole"
-    description: "Kill a floating eye with a polearm"
-    xlogfield: "tnntachieve3"
-    bit: 10
-- model: scoreboard.achievement
-  fields:
-    name: "Jeweler"
-    description: "Identify all rings"
-    xlogfield: "tnntachieve3"
     bit: 11
 - model: scoreboard.achievement
   fields:
-    name: "Mikado"
-    description: "Identify all wands"
+    name: "Motherhood"
+    description: "Lay an egg"
     xlogfield: "tnntachieve3"
     bit: 12
 - model: scoreboard.achievement
   fields:
-    name: "King of Bling"
-    description: "Identify all amulets"
+    name: "Father Figure"
+    description: "Hatch an egg not laid by you and have it come out tame"
     xlogfield: "tnntachieve3"
     bit: 13
 - model: scoreboard.achievement
   fields:
-    name: "Bookworm"
-    description: "Identify all spellbooks"
+    name: "Shafted"
+    description: "Fall down a shaft"
     xlogfield: "tnntachieve3"
     bit: 14
 - model: scoreboard.achievement
   fields:
-    name: "Scholar"
-    description: "Identify all scrolls"
+    name: "Potions of Booze Cost More Than That"
+    description: "Get two bits for an ale from a priest"
     xlogfield: "tnntachieve3"
     bit: 15
 - model: scoreboard.achievement
   fields:
-    name: "Alchemist"
-    description: "Identify all potions"
+    name: "Horatius at the Bridge"
+    description: "Extinct soldiers or Keystone Kops"
     xlogfield: "tnntachieve3"
     bit: 16
 - model: scoreboard.achievement
   fields:
-    name: "Fashionista"
-    description: "Identify all non-obvious cloaks, helms, boots, and gloves"
+    name: "Who's That Pretty Girl in the Mirror, There?"
+    description: "Deflect a nymph with a mirror"
     xlogfield: "tnntachieve3"
     bit: 17
 - model: scoreboard.achievement
   fields:
-    name: "Minesweeper"
-    description: "Disarm all land mines in Fort Ludios without blowing any up"
+    name: "Money Talks"
+    description: "Bribe a demon lord with at least 25000 gold"
     xlogfield: "tnntachieve3"
     bit: 18
-- model: scoreboard.achievement
-  fields:
-    name: "Hyperliterate"
-    description: "Read every readable item in the game"
-    xlogfield: "tnntachieve3"
-    bit: 19
-- model: scoreboard.achievement
-  fields:
-    name: "Civilized Cooking"
-    description: "Open a tin with a tin opener"
-    xlogfield: "tnntachieve3"
-    bit: 20
-- model: scoreboard.achievement
-  fields:
-    name: "007"
-    description: "Unlock something with a credit card"
-    xlogfield: "tnntachieve3"
-    bit: 21
-- model: scoreboard.achievement
-  fields:
-    name: "Bob Ross"
-    description: "Release a picture-painting demon from a camera"
-    xlogfield: "tnntachieve3"
-    bit: 22
-- model: scoreboard.achievement
-  fields:
-    name: "Got No Talent"
-    description: "Scare something by playing music"
-    xlogfield: "tnntachieve3"
-    bit: 23
-- model: scoreboard.achievement
-  fields:
-    name: "Cookie Monster"
-    description: "Read a fortune without eating its cookie"
-    xlogfield: "tnntachieve3"
-    bit: 24
-- model: scoreboard.achievement
-  fields:
-    name: "Say Hello To My Evil Friend"
-    description: "Have a non-guaranteed demon lord gated in or summoned"
-    xlogfield: "tnntachieve3"
-    bit: 25
-- model: scoreboard.achievement
-  fields:
-    name: "Death onna Stick"
-    description: "Kill a member of 25 different monster species"
-    xlogfield: "tnntachieve3"
-    bit: 26
-- model: scoreboard.achievement
-  fields:
-    name: "Bring out your Dead"
-    description: "Kill a member of 50 different monster species"
-    xlogfield: "tnntachieve3"
-    bit: 27
-- model: scoreboard.achievement
-  fields:
-    name: "Diverse Death-Dealer"
-    description: "Kill a member of 100 different monster species"
-    xlogfield: "tnntachieve3"
-    bit: 28
-- model: scoreboard.achievement
-  fields:
-    name: "Grim Reaper"
-    description: "Kill a member of 200 different monster species"
-    xlogfield: "tnntachieve3"
-    bit: 29
-- model: scoreboard.achievement
-  fields:
-    name: "Gotta Kill 'em All"
-    description: "Kill a member of all eligible monster species"
-    xlogfield: "tnntachieve3"
-    bit: 30
-- model: scoreboard.achievement
-  fields:
-    name: "Learn the Alphabet"
-    description: "Kill a member of each species from a to z"
-    xlogfield: "tnntachieve3"
-    bit: 31
-- model: scoreboard.achievement
-  fields:
-    name: "Make your Mark"
-    description: "Engrave with an athame"
-    xlogfield: "tnntachieve3"
-    bit: 32
-- model: scoreboard.achievement
-  fields:
-    name: "One Hit KO"
-    description: "Deal a monster its maximum HP or more of damage (minimum 20)"
-    xlogfield: "tnntachieve3"
-    bit: 33
-- model: scoreboard.achievement
-  fields:
-    name: "Drink It To The Next Level"
-    description: "Level up by drinking from a sink"
-    xlogfield: "tnntachieve3"
-    bit: 34
-- model: scoreboard.achievement
-  fields:
-    name: "Why Won't You DIE Already"
-    description: "Kill the Wizard of Yendor 20 or more times"
-    xlogfield: "tnntachieve3"
-    bit: 35
-- model: scoreboard.achievement
-  fields:
-    name: "You're About To Die, You Scrub"
-    description: "Get a special message saying you're about to die, you scrub"
-    xlogfield: "tnntachieve3"
-    bit: 36
-- model: scoreboard.achievement
-  fields:
-    name: "Six Pack"
-    description: "Stock an ice box with 6 or more potions of booze"
-    xlogfield: "tnntachieve3"
-    bit: 37
-- model: scoreboard.achievement
-  fields:
-    name: "Bar Brawler"
-    description: "Kill a monster with HP damage by smashing a bottle on it"
-    xlogfield: "tnntachieve3"
-    bit: 38
-- model: scoreboard.achievement
-  fields:
-    name: "Extreme Omnivore"
-    description: "Eat an object from every common, edible object class"
-    xlogfield: "tnntachieve3"
-    bit: 39
-- model: scoreboard.achievement
-  fields:
-    name: "Extinctionist Lite"
-    description: "Genocide 20 or more monster species"
-    xlogfield: "tnntachieve3"
-    bit: 40
-- model: scoreboard.achievement
-  fields:
-    name: "Dudley's Hero"
-    description: "Extinct newts"
-    xlogfield: "tnntachieve3"
-    bit: 41
-- model: scoreboard.achievement
-  fields:
-    name: "Ice Jesus"
-    description: "Walk on top of lava unharmed"
-    xlogfield: "tnntachieve3"
-    bit: 42
-- model: scoreboard.achievement
-  fields:
-    name: "Rare Loot"
-    description: "Acquire an athame that was generated in the inventory of a lich"
-    xlogfield: "tnntachieve3"
-    bit: 43
-- model: scoreboard.achievement
-  fields:
-    name: "Boy Scout"
-    description: "Complete Sokoban without incurring any penalties for rule-breaking"
-    xlogfield: "tnntachieve3"
-    bit: 44
-- model: scoreboard.achievement
-  fields:
-    name: "Sounds Hollow"
-    description: "Reveal a secret door with a stethoscope"
-    xlogfield: "tnntachieve3"
-    bit: 45
-- model: scoreboard.achievement
-  fields:
-    name: "DO YOU WANT TO DO THIS BRO? BECAUSE IT'S THUNDERDOME TIME!"
-    description: "Defeat the NPC from the NPC Deathmatch quest"
-    xlogfield: "tnntachieve3"
-    bit: 46
-- model: scoreboard.achievement
-  fields:
-    name: "Unorthodox Exit"
-    description: "Reach the Planes via quaffing"
-    xlogfield: "tnntachieve3"
-    bit: 47
-- model: scoreboard.achievement
-  fields:
-    name: "Paddling Pool"
-    description: "Create pools from a fountain"
-    xlogfield: "tnntachieve3"
-    bit: 48
-- model: scoreboard.achievement
-  fields:
-    name: "Geologist"
-    description: "Identify all gray stones"
-    xlogfield: "tnntachieve3"
-    bit: 49
-- model: scoreboard.achievement
-  fields:
-    name: "Glass Collector"
-    description: "Identify all worthless glass"
-    xlogfield: "tnntachieve3"
-    bit: 50
-- model: scoreboard.achievement
-  fields:
-    name: "Purple Rain"
-    description: "Get at least 20 enemies eaten by purple worms on the Astral Plane"
-    xlogfield: "tnntachieve3"
-    bit: 51
-- model: scoreboard.achievement
-  fields:
-    name: "Batty"
-    description: "Get stunned by eating bat meat"
-    xlogfield: "tnntachieve3"
-    bit: 52
-- model: scoreboard.achievement
-  fields:
-    name: "Heroes' Feast"
-    description: "Eat at least 3 artifacts"
-    xlogfield: "tnntachieve3"
-    bit: 53
-- model: scoreboard.achievement
-  fields:
-    name: "Practical Joke"
-    description: "Have a tin blow up in your face"
-    xlogfield: "tnntachieve3"
-    bit: 54
-- model: scoreboard.achievement
-  fields:
-    name: "Master of the Four Elementals"
-    description: "Kill at least 4 elementals on their respective home planes"
-    xlogfield: "tnntachieve3"
-    bit: 55
-- model: scoreboard.achievement
-  fields:
-    name: "Amon Hen"
-    description: "Get either of the two \"vision\" effects from sitting on a throne"
-    xlogfield: "tnntachieve3"
-    bit: 56
-- model: scoreboard.achievement
-  fields:
-    name: "Off With Her Head!"
-    description: "Decapitate an enemy with Vorpal Blade"
-    xlogfield: "tnntachieve3"
-    bit: 57
-- model: scoreboard.achievement
-  fields:
-    name: "Detonator"
-    description: "Explode a large box"
-    xlogfield: "tnntachieve3"
-    bit: 58
-- model: scoreboard.achievement
-  fields:
-    name: "Conspicuous Consumption"
-    description: "Buy an unidentified gem from a shop"
-    xlogfield: "tnntachieve3"
-    bit: 59
-- model: scoreboard.achievement
-  fields:
-    name: "??? UNKNOWN TITLE 1 ???"
-    description: "Resurrect the Wizard of Yendor"
-    xlogfield: "tnntachieve3"
-    bit: 60
-- model: scoreboard.achievement
-  fields:
-    name: "??? UNKNOWN TITLE 2 ???"
-    description: "Kill a Rider permanently"
-    xlogfield: "tnntachieve3"
-    bit: 61
-- model: scoreboard.achievement
-  fields:
-    name: "Too Little Too Late"
-    description: "Get a sacrifice gift on the Astral Plane"
-    xlogfield: "tnntachieve3"
-    bit: 62
 - model: scoreboard.achievement
   fields:
     name: "The Negotiator"
     description: "Successfully bribe a demon lord with 1 zorkmid"
     xlogfield: "tnntachieve3"
+    bit: 19
+- model: scoreboard.achievement
+  fields:
+    name: "Under New Management"
+    description: "Change your alignment by any means"
+    xlogfield: "tnntachieve3"
+    bit: 20
+- model: scoreboard.achievement
+  fields:
+    name: "Heisenberg"
+    description: "Become uncertain about your position or velocity"
+    xlogfield: "tnntachieve3"
+    bit: 21
+- model: scoreboard.achievement
+  fields:
+    name: "Who You Gonna Call?"
+    description: "Get scared by a ghost"
+    xlogfield: "tnntachieve3"
+    bit: 22
+- model: scoreboard.achievement
+  fields:
+    name: "Groundhog Day"
+    description: "Return to a forgotten level"
+    xlogfield: "tnntachieve3"
+    bit: 23
+- model: scoreboard.achievement
+  fields:
+    name: "Tainted"
+    description: "Dip an item in unholy water"
+    xlogfield: "tnntachieve3"
+    bit: 24
+- model: scoreboard.achievement
+  fields:
+    name: "Hydrochloric"
+    description: "Dissolve iron bars with acid"
+    xlogfield: "tnntachieve3"
+    bit: 25
+- model: scoreboard.achievement
+  fields:
+    name: "Predictably, Nothing Happens"
+    description: "Break an identified wand of nothing"
+    xlogfield: "tnntachieve3"
+    bit: 26
+- model: scoreboard.achievement
+  fields:
+    name: "Wanton Waste"
+    description: "Break an identified wand of wishing with at least 1 charge"
+    xlogfield: "tnntachieve3"
+    bit: 27
+- model: scoreboard.achievement
+  fields:
+    name: "Neutralized"
+    description: "Cancel a monster"
+    xlogfield: "tnntachieve3"
+    bit: 28
+- model: scoreboard.achievement
+  fields:
+    name: "Panacea"
+    description: "Neutralize a harmful potion with a unicorn horn"
+    xlogfield: "tnntachieve3"
+    bit: 29
+- model: scoreboard.achievement
+  fields:
+    name: "Croesus Competitor"
+    description: "Finish a game carrying at least 50000 gold"
+    xlogfield: "tnntachieve3"
+    bit: 30
+- model: scoreboard.achievement
+  fields:
+    name: "Croesus Buyout"
+    description: "Finish a game carrying at least 100000 gold"
+    xlogfield: "tnntachieve3"
+    bit: 31
+- model: scoreboard.achievement
+  fields:
+    name: "Palantir"
+    description: "Successfully apply a crystal ball"
+    xlogfield: "tnntachieve3"
+    bit: 32
+- model: scoreboard.achievement
+  fields:
+    name: "Peak Condition"
+    description: "Raise all attributes to at least 18"
+    xlogfield: "tnntachieve3"
+    bit: 33
+- model: scoreboard.achievement
+  fields:
+    name: "Those Who Came Before"
+    description: "Sight another player's bones pile"
+    xlogfield: "tnntachieve3"
+    bit: 34
+- model: scoreboard.achievement
+  fields:
+    name: "Imitation Bones"
+    description: "Step onto the Rogue level fake bones pile"
+    xlogfield: "tnntachieve3"
+    bit: 35
+- model: scoreboard.achievement
+  fields:
+    name: "Replacement Goldfish"
+    description: "Cast create familiar"
+    xlogfield: "tnntachieve3"
+    bit: 36
+- model: scoreboard.achievement
+  fields:
+    name: "Pop the Question"
+    description: "Give a ring of adornment to a succubus"
+    xlogfield: "tnntachieve3"
+    bit: 37
+- model: scoreboard.achievement
+  fields:
+    name: "No Soup For You!"
+    description: "Get permanently expelled from the Quest"
+    xlogfield: "tnntachieve3"
+    bit: 38
+- model: scoreboard.achievement
+  fields:
+    name: "Discerning Palate"
+    description: "Gain intrinsic food appraisal"
+    xlogfield: "tnntachieve3"
+    bit: 39
+- model: scoreboard.achievement
+  fields:
+    name: "Banishing Spells Not Included"
+    description: "Summon a demon lord"
+    xlogfield: "tnntachieve3"
+    bit: 40
+- model: scoreboard.achievement
+  fields:
+    name: "Tastes Like Chicken"
+    description: "Eat chickatrice or cockatrice meat"
+    xlogfield: "tnntachieve3"
+    bit: 41
+- model: scoreboard.achievement
+  fields:
+    name: "Dust to Dust"
+    description: "Wrest one last charge from a wand of wishing"
+    xlogfield: "tnntachieve3"
+    bit: 42
+- model: scoreboard.achievement
+  fields:
+    name: "Teetotaler"
+    description: "Neutralize a potion of booze with an amethyst"
+    xlogfield: "tnntachieve3"
+    bit: 43
+- model: scoreboard.achievement
+  fields:
+    name: "Spooky Scary Skeletons"
+    description: "Get scared by the rattling of a skeleton"
+    xlogfield: "tnntachieve3"
+    bit: 44
+- model: scoreboard.achievement
+  fields:
+    name: "Gullible"
+    description: "Lie to a vault guard about your name"
+    xlogfield: "tnntachieve3"
+    bit: 45
+- model: scoreboard.achievement
+  fields:
+    name: "Luck of the Grasshopper"
+    description: "Reach +13 Luck"
+    xlogfield: "tnntachieve3"
+    bit: 46
+- model: scoreboard.achievement
+  fields:
+    name: "Murphy's Law"
+    description: "Reach -13 Luck"
+    xlogfield: "tnntachieve3"
+    bit: 47
+- model: scoreboard.achievement
+  fields:
+    name: "Looking Slick"
+    description: "Grease a piece of armor"
+    xlogfield: "tnntachieve3"
+    bit: 48
+- model: scoreboard.achievement
+  fields:
+    name: "The Deathly Hallows"
+    description: "Wield a wand of death while wearing an invisibility cloak and amulet of life saving"
+    xlogfield: "tnntachieve3"
+    bit: 49
+- model: scoreboard.achievement
+  fields:
+    name: "Indiana Jones"
+    description: "Disarm a monster with a bullwhip"
+    xlogfield: "tnntachieve3"
+    bit: 50
+- model: scoreboard.achievement
+  fields:
+    name: "Minesweeper"
+    description: "Disarm all land mines in Fort Ludios without blowing any up"
+    xlogfield: "tnntachieve3"
+    bit: 51
+- model: scoreboard.achievement
+  fields:
+    name: "007"
+    description: "Unlock something with a credit card"
+    xlogfield: "tnntachieve3"
+    bit: 52
+- model: scoreboard.achievement
+  fields:
+    name: "Bob Ross"
+    description: "Release a picture-painting demon from a camera"
+    xlogfield: "tnntachieve3"
+    bit: 53
+- model: scoreboard.achievement
+  fields:
+    name: "Got No Talent"
+    description: "Scare something by playing music"
+    xlogfield: "tnntachieve3"
+    bit: 54
+- model: scoreboard.achievement
+  fields:
+    name: "Cookie Monster"
+    description: "Read a fortune without eating its cookie"
+    xlogfield: "tnntachieve3"
+    bit: 55
+- model: scoreboard.achievement
+  fields:
+    name: "Say Hello To My Evil Friend"
+    description: "Have a non-guaranteed demon lord gated in or summoned"
+    xlogfield: "tnntachieve3"
+    bit: 56
+- model: scoreboard.achievement
+  fields:
+    name: "Make your Mark"
+    description: "Engrave with an athame"
+    xlogfield: "tnntachieve3"
+    bit: 57
+- model: scoreboard.achievement
+  fields:
+    name: "One Hit KO"
+    description: "Deal a monster its maximum HP or more of damage (minimum 20)"
+    xlogfield: "tnntachieve3"
+    bit: 58
+- model: scoreboard.achievement
+  fields:
+    name: "Drink It To The Next Level"
+    description: "Level up by drinking from a sink"
+    xlogfield: "tnntachieve3"
+    bit: 59
+- model: scoreboard.achievement
+  fields:
+    name: "You're About To Die, You Scrub"
+    description: "Get a special message saying you're about to die, you scrub"
+    xlogfield: "tnntachieve3"
+    bit: 60
+- model: scoreboard.achievement
+  fields:
+    name: "Extinctionist Lite"
+    description: "Genocide 20 or more monster species"
+    xlogfield: "tnntachieve3"
+    bit: 61
+- model: scoreboard.achievement
+  fields:
+    name: "Dudley's Hero"
+    description: "Extinct newts"
+    xlogfield: "tnntachieve3"
+    bit: 62
+- model: scoreboard.achievement
+  fields:
+    name: "Ice Jesus"
+    description: "Walk on top of lava unharmed"
+    xlogfield: "tnntachieve3"
     bit: 63
 - model: scoreboard.achievement
   fields:
-    name: "The Heist"
-    description: "Steal directly from a shop"
+    name: "Rare Loot"
+    description: "Acquire an athame that was generated in the inventory of a lich"
     xlogfield: "tnntachieve4"
     bit: 0
 - model: scoreboard.achievement
   fields:
-    name: "Asudem"
-    description: "Revive Perseus"
+    name: "Boy Scout"
+    description: "Complete Sokoban without incurring any penalties for rule-breaking"
     xlogfield: "tnntachieve4"
     bit: 1
+- model: scoreboard.achievement
+  fields:
+    name: "Sounds Hollow"
+    description: "Reveal a secret door with a stethoscope"
+    xlogfield: "tnntachieve4"
+    bit: 2
+- model: scoreboard.achievement
+  fields:
+    name: "Unorthodox Exit"
+    description: "Reach the Planes via quaffing"
+    xlogfield: "tnntachieve4"
+    bit: 3
+- model: scoreboard.achievement
+  fields:
+    name: "Paddling Pool"
+    description: "Create pools from a fountain"
+    xlogfield: "tnntachieve4"
+    bit: 4
+- model: scoreboard.achievement
+  fields:
+    name: "Purple Rain"
+    description: "Get at least 20 enemies eaten by purple worms on the Astral Plane"
+    xlogfield: "tnntachieve4"
+    bit: 5
+- model: scoreboard.achievement
+  fields:
+    name: "Heroes' Feast"
+    description: "Eat at least 3 artifacts"
+    xlogfield: "tnntachieve4"
+    bit: 6
+- model: scoreboard.achievement
+  fields:
+    name: "Practical Joke"
+    description: "Have a tin blow up in your face"
+    xlogfield: "tnntachieve4"
+    bit: 7
+- model: scoreboard.achievement
+  fields:
+    name: "Amon Hen"
+    description: "Get either of the two \"vision\" effects from sitting on a throne"
+    xlogfield: "tnntachieve4"
+    bit: 8
+- model: scoreboard.achievement
+  fields:
+    name: "Off With Her Head!"
+    description: "Decapitate an enemy with Vorpal Blade"
+    xlogfield: "tnntachieve4"
+    bit: 9
+- model: scoreboard.achievement
+  fields:
+    name: "Detonator"
+    description: "Explode a large box or chest"
+    xlogfield: "tnntachieve4"
+    bit: 10
 - model: scoreboard.achievement
   fields:
     name: "Lightbringer"
     description: "Light up at least 20 dark rooms in the Dungeons of Doom"
     xlogfield: "tnntachieve4"
-    bit: 2
-- model: scoreboard.achievement
-  fields:
-    name: "LEARN THE ALPHABET"
-    description: "Kill a monster of each species from A to Z (except I)"
-    xlogfield: "tnntachieve4"
-    bit: 3
+    bit: 11
 - model: scoreboard.achievement
   fields:
     name: "Cosmic Bungee Cord"
     description: "Get sent back a total of 15 or more levels by the mysterious force"
     xlogfield: "tnntachieve4"
-    bit: 4
+    bit: 12
 - model: scoreboard.achievement
   fields:
     name: "Tenacious Companion"
     description: "Have a pet survive all the way to the Astral Plane that you brought into the Plane of Earth"
     xlogfield: "tnntachieve4"
-    bit: 5
-- model: scoreboard.achievement
-  fields:
-    name: "Rat Tail"
-    description: "Kill a monster with a wet towel"
-    xlogfield: "tnntachieve4"
-    bit: 6
+    bit: 13
 - model: scoreboard.achievement
   fields:
     name: "No Rulez"
     description: "Remove all watchmen from Minetown"
     xlogfield: "tnntachieve4"
-    bit: 7
+    bit: 14
 - model: scoreboard.achievement
   fields:
     name: "Packing Light"
     description: "Successfully store a bag of holding inside another bag of holding"
     xlogfield: "tnntachieve4"
-    bit: 8
-- model: scoreboard.achievement
-  fields:
-    name: "Bomb Squad"
-    description: "Untrap all types of traps that can be untrapped"
-    xlogfield: "tnntachieve4"
-    bit: 9
-- model: scoreboard.achievement
-  fields:
-    name: "The Alchemist"
-    description: "Alchemize 8 or more different recipes"
-    xlogfield: "tnntachieve4"
-    bit: 10
+    bit: 15
 - model: scoreboard.achievement
   fields:
     name: "Shoo Off"
     description: "Make a monster of difficulty 5 or more escape the dungeon"
     xlogfield: "tnntachieve4"
-    bit: 11
-- model: scoreboard.achievement
-  fields:
-    name: "??? UNKNOWN TITLE 4 ???"
-    description: "Make a demon lord escape the dungeon"
-    xlogfield: "tnntachieve4"
-    bit: 12
-- model: scoreboard.achievement
-  fields:
-    name: "Double Whammy"
-    description: "Kill the Wizard of Yendor twice in one action"
-    xlogfield: "tnntachieve4"
-    bit: 13
-- model: scoreboard.achievement
-  fields:
-    name: "Hammer of the Gods"
-    description: "Kill a monster by throwing Mjollnir at them and having it return to your hand"
-    xlogfield: "tnntachieve4"
-    bit: 14
-- model: scoreboard.achievement
-  fields:
-    name: "Necromancer"
-    description: "Resurrect a fallen pet and have it return tame"
-    xlogfield: "tnntachieve4"
-    bit: 15
-- model: scoreboard.achievement
-  fields:
-    name: "Walking Bullseye"
-    description: "Have +30 AC"
-    xlogfield: "tnntachieve4"
     bit: 16
 - model: scoreboard.achievement
   fields:
-    name: "Not The Bees"
-    description: "Get bees by kicking a tree"
+    name: "What Have I Unleashed"
+    description: "Make a demon lord escape the dungeon"
     xlogfield: "tnntachieve4"
     bit: 17
 - model: scoreboard.achievement
   fields:
-    name: "Friendly Fire"
-    description: "Get a hostile monster killed by another hostile monster's projectile weapon"
+    name: "Walking Bullseye"
+    description: "Have +30 AC"
     xlogfield: "tnntachieve4"
     bit: 18
 - model: scoreboard.achievement
@@ -1722,15 +1722,3 @@
     description: "Have a door resist 8 consecutive times when trying to open or close it"
     xlogfield: "tnntachieve4"
     bit: 19
-- model: scoreboard.achievement
-  fields:
-    name: "Tinned Out"
-    description: "Use up a tinning kit"
-    xlogfield: "tnntachieve4"
-    bit: 20
-- model: scoreboard.achievement
-  fields:
-    name: "Exotic Meat"
-    description: "Tin a unique monster"
-    xlogfield: "tnntachieve4"
-    bit: 21

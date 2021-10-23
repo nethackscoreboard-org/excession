@@ -31,8 +31,10 @@ cat vanilla_achievements.yaml
 # achievement names
 # First line: grab the relevant part of decl.c and chop off the start and end
 # lines which aren't actually data values.
-# Second line: strip C syntax and transform into tab-separated strings.
-# Third line: apply awk script to turn it into YAML.
+# Second line: exclude lines (e.g. comments) which aren't describing achievements.
+# Third line: strip C syntax and transform into tab-separated strings.
+# Fourth line: apply awk script to turn it into YAML.
 sed -n '/tnnt_achievements\[/,/^};$/ p' $1/src/decl.c | head -n -1 | tail -n +2 \
-    | sed -e 's/^ *{//' -e 's/", \?/"\t/' -e 's/\([^\]\)"/\1/g' -e 's/^"//' -e 's/\}.*//' \
+    | sed -e '/^ *[^ {]/ d' \
+          -e 's/^ *{//' -e 's/", \?/"\t/' -e 's/\([^\]\)"/\1/g' -e 's/^"//' -e 's/\}.*//' \
     | awk -F'\t' -f ach_to_yaml.awk
