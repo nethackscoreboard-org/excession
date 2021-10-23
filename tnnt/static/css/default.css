@@ -188,27 +188,36 @@ div.achieve-top {
   margin-bottom: 2em;
 }
 
+div.achieve-top table tbody tr {
+  border-bottom: 0.1em solid #224;
+}
+
+div.achieve-top table tbody tr:last-child {
+  border-bottom: none;
+}
+
 /* style for the attained achievements */
 
 .achieved {
-  background: #c90;
-  color: #000;
-  font-weight: 600;
-  /* optional; I could go either way on this */
-  /* border: 0.3em solid #960;  */
+  color: green;
+  font-weight: 900;
+}
+
+.not-achieved {
+  color: red;
+  font-weight: 900;
 }
 
 /* style for the achievement summary with in-laid progress bar */
 
 div.achieve-summary {
-  grid-column-start: 1;
-  grid-column-end: 5;
   text-align: center;
   color: #f2f5ff;
   position: relative;
   width: 100%;
   background-color: #224;
   border-radius: 5px;
+  margin-top: 0.6em;
 }
 
 div.achieve-bar {

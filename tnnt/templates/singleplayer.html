@@ -172,13 +172,19 @@
   <table>
     <thead>
       <tr class="framed">
+        <th></th>
         <th>Achievement</th>
         <th>Description</th>
       </tr>
     </thead>
     <tbody>
       {% for ach in achievements %}
-        <tr {% if ach.obtained %}class="achieved"{% endif %}>
+        <tr>
+          {% if ach.obtained %}
+            <td class="achieved">&check;</td>
+          {% else %}
+            <td class="not-achieved">&cross;</td>
+          {% endif %}
           <td>{{ ach.name }}</td>
           <td>{{ ach.description }}</td>
         </tr>
