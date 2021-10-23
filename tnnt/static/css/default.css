@@ -61,7 +61,7 @@ a {
   text-decoration: underline;
 }
 
-a:hover {
+a:not(#titlelink):hover {
   color: #fd0;
 }
 
@@ -331,6 +331,10 @@ header {
   margin: auto;
   padding: 0.2em 0 0.2em 0;
   text-shadow: 0.1em 0.1em black;
+}
+
+a#titlelink {
+  text-decoration: none;
 }
 
 a.menu {
