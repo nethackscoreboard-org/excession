@@ -34,6 +34,13 @@ def aggregatePlayerData():
         # module, so just get the set of unique deaths and take the length.
         plr.unique_deaths = len(uniqdeaths.compile_unique_deaths(gamesby_plr))
 
+        # Streaks are computed on their own as well.
+        streak_lengths = list(map(lambda s: len(s.games), plr.get_streaks()))
+        if len(streak_lengths) == 0:
+            plr.longest_streak = 0
+        else:
+            plr.longest_streak = max(streak_lengths)
+
         # From here on, this is less about aggregating into one result, and more
         # about taking the game which is the player's best in some statistic.
         # Skip this if the player has no games, and for most of them, if the
@@ -57,8 +64,6 @@ def aggregatePlayerData():
                 plr.max_conducts_asc = \
                     winsby_plr.annotate(ncond=Count('conducts__id', distinct=True)) \
                     .order_by('-ncond')[0]
-
-        # TODO: longest_streak is NOT calculated yet!
 
         plr.save()
 

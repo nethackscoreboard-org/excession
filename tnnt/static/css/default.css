@@ -65,12 +65,6 @@ a:hover {
   color: #fd0;
 }
 
-span.streak {
-  display: inline-block;
-  background: #336;
-  padding: 0 0.3em;
-}
-
 div.row {
   display: flex;
   flex-direction: row;
@@ -230,6 +224,16 @@ div.achieve-msg {
   left: 50%;
   transform: translateX(-50%);
   top: 0.35rem;
+}
+
+span.streak {
+  display: inline-block;
+  background: #336;
+  padding: 0 0.3em;
+}
+
+.streak-continuable {
+  text-align: center;
 }
 
 /* style for ascension breakdown data */

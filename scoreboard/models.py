@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime, timedelta, timezone
 from tnnt import settings
+from collections import namedtuple
 
 class Trophy(models.Model):
     # The "perma-trophy" structure. Loaded from config.
@@ -76,6 +77,15 @@ class Clan(LeaderboardBaseFields):
     # admins = models.ManyToManyField(Player)
     # instead of Player having a clan_admin field
 
+class Streak:
+    # This is NOT a database model!
+    # It is a simple storage class for streak information that can be used in
+    # aggregation and relayed to the frontend.
+
+    def __init__(self, singlegame):
+        self.games       = [ singlegame ] # list of Games in the streak
+        self.continuable = True           # whether it can be continued
+
 class AscendingPlayersManager(models.Manager):
     # Manager that returns only Players with at least one ascension, which is a
     # pretty common request.
@@ -98,6 +108,47 @@ class Player(LeaderboardBaseFields):
     # This can assume that total_games > 0, but wins could be 0.
     def ratio(self):
         return '{:.2f}%'.format(self.wins * 100 / self.total_games)
+
+    # Compute this player's streaks, and return them as a list of Streaks
+    # containing the games in the streak and whether they can be continued.
+    def get_streaks(self):
+        # Due to multiple servers, start and end times can overlap. The
+        # candidate game for continuing a streak is the first one started after
+        # an ascension.
+        # If a game is eligible to continue MULTIPLE streaks at once (possible
+        # with server shenanigans), it will continue only the oldest of those
+        # streaks (i.e. the one that comes first in streaks), and kill the rest
+        # (TODO: write this explicitly in the rules.)
+        # ASSUMPTION: No two Games of the same player will ever have the same
+        # starttime. If they did, it would be possible to have two candidate
+        # games for continuing the streak and not know which one to count.
+
+        streaks = []
+        for g in Game.objects.filter(player=self).order_by('starttime').all():
+            extended_or_killed_streak = False
+            # first: will this game extend/kill a streak?
+            for strk in streaks:
+                if strk.continuable == False:
+                    # this streak is dead, ignore it
+                    continue
+                if strk.games[-1].endtime < g.starttime:
+                    extended_or_killed_streak = True
+                    if g.won == False:
+                        # streak is killed
+                        strk.continuable = False
+                        continue # it could still kill other streaks
+                    else:
+                        # streak is extended
+                        strk.games.append(g)
+                        # and stop looking for other streaks to extend
+                        break
+
+            # if we didn't extend or kill a streak, and the game is a win, we start one
+            if (not extended_or_killed_streak) and g.won:
+                streaks.append(Streak(g))
+
+        # filter out "streaks" of only 1 game, which are not streaks yet
+        return [ strk for strk in streaks if len(strk.games) >= 2 ]
 
 class Source(models.Model):
     # Information about a source of aggregate game data (e.g. an xlogfile).
