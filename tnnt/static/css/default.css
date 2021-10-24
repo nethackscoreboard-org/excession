@@ -97,6 +97,12 @@ table.clans {
   max-width: 70%;
 }
 
+/* guard against other sorts of tables directly in the page body and not in any
+ * containing div overflowing wildly */
+body > table {
+  max-width: 70%;
+}
+
 td, th {
   padding: 0.3em 0.6em;
 }

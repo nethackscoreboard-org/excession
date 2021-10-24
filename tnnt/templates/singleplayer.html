@@ -68,17 +68,17 @@
     <!-- [% END %] -->
   </tbody>
 </table>
-</div>
+</div> <!-- class="row" -->
 
 <!-- TODO: possibly show leaderboard ranks (stretch goal, not necessary for 2021) -->
 
 <!-- == ASCENSIONS & RECENT GAMES ========================================= -->
 
 {% if player.total_games > 0 %}
-  <table>
-    {% if player.wins > 0 %}
+  {% if player.wins > 0 %}
+    <h2>ASCENSIONS</h2>
+    <table>
       <thead>
-        <tr><td colspan=8><h2>ASCENSIONS</h2></td></tr>
         <!-- TODO: old backend had this as a template, likely move the whole
              table? to a template -->
         <!-- [% INCLUDE game.tt head=1 aswon=1 class="framed" %] -->
@@ -98,10 +98,11 @@
           {% include "gamerow.html" with ascview=True %}
         {% endfor %}
       </tbody>
-    {% endif %} <!-- wins > 0 -->
-
+    </table>
+  {% endif %} <!-- wins > 0 -->
+  <h2>RECENT GAMES</h2>
+  <table>
     <thead>
-      <tr><td colspan=8><h2>RECENT GAMES</h2></td></tr>
       <tr class="framed">
         <th>name</th>
         <th>character</th>
