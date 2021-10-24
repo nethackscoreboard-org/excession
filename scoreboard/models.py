@@ -173,6 +173,8 @@ class Source(models.Model):
     # website     = models.URLField(null=True)
 
 class GameManager(models.Manager):
+    # TODO: why do we need this as a manager? Couldn't this logic just live in pollxlogs?
+    # Post 2021 concern, unless this proves slow for some reason
     simple_fields = ['version', 'role', 'race', 'gender', 'align', 'points', 'turns', 'realtime', 'maxlvl', 'death',
                      'align0', 'gender0']
 
@@ -192,6 +194,11 @@ class GameManager(models.Manager):
         # TODO: do something about magic numbers in this method
         if xlog_dict['achieve'] & 0x100:
             kwargs['won'] = True
+
+        # ditto for mines/soko
+        # TODO: do something about magic numbers in this method
+        if xlog_dict['achieve'] & 0x600:
+            kwargs['mines_soko'] = True
 
         # time/duration information
         kwargs['starttime'] = datetime.fromtimestamp(xlog_dict['starttime'], timezone.utc)
@@ -246,7 +253,12 @@ class Game(models.Model):
     death        = models.CharField(max_length=256)
     align0       = models.CharField(max_length=16, null=True)
     gender0      = models.CharField(max_length=16, null=True)
+
+    # These are a bit of denormalization, because it'd be expensive to reach
+    # into the achievements every time we want to check if a game is won or has
+    # finished Mines/Sokoban.
     won          = models.BooleanField(default=False)
+    mines_soko   = models.BooleanField(default=False)
 
     # not necessary for tnnt but may re-introduce for NHS
     # deathlev     = models.IntegerField(null=True)
