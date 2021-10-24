@@ -2,7 +2,9 @@ from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime, timedelta, timezone
 from tnnt import settings
-from collections import namedtuple
+
+# If adding any more models to this file, be sure to add a deletion for them in
+# wipe_db.py.
 
 class Trophy(models.Model):
     # The "perma-trophy" structure. Loaded from config.
