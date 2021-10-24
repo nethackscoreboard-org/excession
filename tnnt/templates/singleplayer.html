@@ -152,9 +152,7 @@
             <td>
               {% for g in streak.games %}
                 <span class="streak">
-                  <a href="{{ g.get_dumplog }}">
-                    {{ g.role }}-{{ g.race }}-{{ g.gender }}-{{ g.align }}
-                  </a>
+                  <a href="{{ g.get_dumplog }}">{{ g.rrga }}</a>
                 </span>
               {% endfor %}
             </td>

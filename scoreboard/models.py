@@ -279,3 +279,9 @@ class Game(models.Model):
     def conducts_as_str(self):
         return ' '.join(c.shortname for c in self.conducts.all())
 
+    # Return a string of the form "Rol-Rac-Gen-Aln" typical in nethack parlance.
+    # Importantly, this uses gender0 and align0.
+    def rrga(self):
+        return '-'.join([self.role, self.race, self.gender0, self.align0])
+
+
