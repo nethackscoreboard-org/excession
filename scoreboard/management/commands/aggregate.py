@@ -1,10 +1,167 @@
-from django.core.management.base import BaseCommand, CommandError
-from scoreboard.models import Source, Game, Player, Clan
+from django.core.management.base import BaseCommand
+from scoreboard.models import Source, Game, Player, Clan, Trophy, Achievement, Conduct
 from scoreboard.parsers import XlogParser
 from django.db import transaction
 from django.db.models import Sum, Min, Max, Count
 from tnnt import uniqdeaths
 import urllib
+
+# Optimizations: these don't change over the lifetime of the tournament. Run
+# these queries once when this module is loaded so that they don't have to be
+# hit multiple times in loops.
+TOTAL_ACHIEVEMENTS = Achievement.objects.count()
+TOTAL_CONDUCTS = Conduct.objects.count()
+TROPHIES = { tr.name: tr for tr in Trophy.objects.all() }
+
+# These are determined by NetHack and there's no expectation that TNNT would
+# ever change them. However, they may need to change if changes are made to
+# vanilla NetHack which are then incorporated into TNNT (for instance, if the
+# DevTeam adds a new role).
+TOTAL_GENDERS = 2
+TOTAL_ALIGNMENTS = 3
+TOTAL_RACES = 5
+TOTAL_ROLES = 13
+TOTAL_POSSIBLE_COMBOS = 73
+great_lesser_race = {
+    'Dwarf': { 'race': 'Dwa', 'req_roles': set(['Arc','Cav','Val']) },
+    'Orc'  : { 'race': 'Orc', 'req_roles': set(['Bar','Ran','Rog','Wiz']) },
+    'Elf'  : { 'race': 'Elf', 'req_roles': set(['Pri','Ran','Wiz']) },
+    'Gnome': { 'race': 'Gno', 'req_roles': set(['Arc','Cav','Hea','Ran','Wiz']) },
+    'Human': { 'race': 'Hum', 'req_roles': set(['Kni','Mon','Sam','Tou']) }
+}
+great_lesser_role = {
+    'Archeologist': {
+        'role': 'Arc',
+        'req_race_algn': set(['Dwa-Law','Hum-Law','Hum-Neu','Gno-Neu'])
+    },
+    'Barbarian': {
+        'role': 'Bar',
+        'req_race_algn': set(['Hum-Neu','Hum-Cha','Orc-Cha'])
+    },
+    'Caveperson': {
+        'role': 'Cav',
+        'req_race_algn': set(['Dwa-Law','Hum-Law','Hum-Neu','Gno-Neu'])
+    },
+    'Healer': {
+        'role': 'Hea',
+        'req_race_algn': set(['Hum-Neu','Gno-Neu'])
+    },
+    'Monk': {
+        'role': 'Mon',
+        'req_race_algn': set(['Hum-Law','Hum-Neu','Hum-Cha'])
+    },
+    'Priest': {
+        'role': 'Pri',
+        'req_race_algn': set(['Hum-Law','Hum-Neu','Hum-Cha','Elf-Cha'])
+    },
+    'Ranger': {
+        'role': 'Ran',
+        'req_race_algn': set(['Hum-Neu','Gno-Neu','Hum-Cha','Elf-Cha','Orc-Cha'])
+    },
+    'Rogue': {
+        'role': 'Rog',
+        'req_race_algn': set(['Hum-Cha','Orc-Cha'])
+    },
+    'Valkyrie': {
+        'role': 'Val',
+        'req_race_algn': set(['Dwa-Law','Hum-Law','Hum-Neu'])
+    },
+    'Wizard': {
+        'role': 'Wiz',
+        'req_race_algn': set(['Hum-Neu','Gno-Neu','Hum-Cha','Elf-Cha','Orc-Cha'])
+    },
+}
+
+# Determine and award trophies to a player or clan.
+# ASSUMPTION: The player's LeaderboardBaseFields are already computed.
+# allgames_qs is a QuerySet of all Games by this player/clan. For most
+# operations, we convert this to a list to avoid thrashing the database too
+# much, while keeping the queryset around for the few things that need it. (I'm
+# not totally sure if this would actually do that with repeated queries, but I
+# suspect it would.)
+# IMPORTANT: Nothing in here should use gender or align! gender0 and align0 only!
+def awardTrophies(player_or_clan, allgames_qs):
+    # First, a small optimization: exclude all games that are neither ascensions
+    # nor have mines/soko complete. These won't contribute to any trophies.
+    # (Never Scum a Game is based off the precomputed games_scummed.)
+    allgames = [ g for g in allgames_qs.all() if g.won or g.mines_soko ]
+
+    # It might be possible to optimize some of this by doing a big, single pass
+    # through allgames and storing various bits of data in sets, but there
+    # currently isn't a demonstrated need for this.
+
+    # Great Race
+    for fullrace, details in great_lesser_race.items():
+        # Compute all distinct roles for which there exists a winning game
+        # that has this race. If it matches the trophy required set, award it.
+        if details['req_roles'] == set(g.role for g in allgames
+                                       if g.won and g.race == details['race']):
+            player_or_clan.trophies.add(TROPHIES['Great %s' % fullrace])
+
+        # Then the same for mines_soko games.
+        if details['req_roles'] == set(g.role for g in allgames
+                                       if g.mines_soko and g.race == details['race']):
+            player_or_clan.trophies.add(TROPHIES['Lesser %s' % fullrace])
+
+    # Great Role
+    for fullrole, details in great_lesser_role.items():
+        # Similar to above. Compute distinct race-align combos.
+        if details['req_race_algn'] == set('%s-%s' % (g.race, g.align0) for g in allgames
+                                           if g.won and g.role == details['role']):
+            player_or_clan.trophies.add(TROPHIES['Great %s' % fullrole])
+
+        # And the same for mines_soko.
+        if details['req_race_algn'] == set('%s-%s' % (g.race, g.align0) for g in allgames
+                                           if g.mines_soko and g.role == details['role']):
+            player_or_clan.trophies.add(TROPHIES['Lesser %s' % fullrole])
+
+    # All Foo
+    if len(set(g.gender0 for g in allgames if g.won)) == TOTAL_GENDERS:
+        player_or_clan.trophies.add(TROPHIES['Both Genders'])
+    if len(set(g.align0 for g in allgames if g.won)) == TOTAL_ALIGNMENTS:
+        player_or_clan.trophies.add(TROPHIES['All Alignments'])
+    if len(set(g.race for g in allgames if g.won)) == TOTAL_RACES:
+        player_or_clan.trophies.add(TROPHIES['All Races'])
+    if len(set(g.role for g in allgames if g.won)) == TOTAL_ROLES:
+        player_or_clan.trophies.add(TROPHIES['All Roles'])
+    if player_or_clan.unique_achievements == TOTAL_ACHIEVEMENTS:
+        player_or_clan.trophies.add(TROPHIES['All Achievements'])
+    # All Conducts kind of has to be a query, since we don't track "number of
+    # discrete conducts across all games" on a leaderboard.
+    unique_conducts = allgames_qs.filter(won=True) \
+        .aggregate(Count('conducts__id', distinct=True)) \
+        ['conducts__id__count']
+    if unique_conducts == TOTAL_CONDUCTS:
+        player_or_clan.trophies.add(TROPHIES['All Conducts'])
+    if len(set(g.rrga() for g in allgames if g.won)) == TOTAL_POSSIBLE_COMBOS:
+        player_or_clan.trophies.add(TROPHIES['NetHack Master'])
+        if unique_conducts == TOTAL_CONDUCTS:
+            player_or_clan.trophies.add(TROPHIES['NetHack Dominator'])
+
+    # Never Scum a Game is a weird trophy in that a player has it by default,
+    # and can lose it at a later point.
+    try:
+        nsag = player_or_clan.trophies.get(name='Never Scum a Game')
+        if player_or_clan.games_scummed > 0:
+            player_or_clan.trophies.remove(nsag)
+    except Trophy.DoesNotExist:
+        if player_or_clan.total_games > 0 and player_or_clan.games_scummed == 0:
+            player_or_clan.trophies.add(TROPHIES['Never Scum a Game'])
+
+    # Never Kill Foo
+    for g in allgames_qs.filter(won=True).prefetch_related('conducts'):
+        for c in g.conducts.all():
+            if c.shortname == 'neme':
+                player_or_clan.trophies.add(TROPHIES['Never Kill the Quest Nemesis'])
+            elif c.shortname == 'vlad':
+                player_or_clan.trophies.add(TROPHIES['Never Kill Vlad'])
+            elif c.shortname == 'wiz':
+                player_or_clan.trophies.add(TROPHIES['Never Kill Rodney'])
+            elif c.shortname == 'prst':
+                player_or_clan.trophies.add(TROPHIES['Never Kill the High Priest of Moloch'])
+            elif c.shortname == 'ride':
+                player_or_clan.trophies.add(TROPHIES['Never Kill a Rider'])
+
 
 # Compute LeaderboardBaseFields data on all Players, and write it back.
 def aggregatePlayerData():
@@ -66,8 +223,7 @@ def aggregatePlayerData():
                     .order_by('-ncond')[0]
 
         plr.save()
-
-    # TODO: Trophies
+        awardTrophies(plr, gamesby_plr)
 
 # Compute LeaderboardBaseFields data on all Clans, and write it back.
 # ASSUMPTION: It is run after aggregatePlayerData is run, and that each Player
@@ -158,12 +314,17 @@ def aggregateClanData():
                 [0].max_conducts_asc
 
         clan.save()
-
-        # TODO: clan trophies
+        # For clans, we have to remove all trophies before re-awarding them.
+        # This is because a member who provided some of the effort towards a
+        # trophy may have left since the last aggregation.
+        clan.trophies.remove()
+        awardTrophies(clan, gamesby_clan)
 
 class Command(BaseCommand):
     help = 'Compute aggregate data from the set of all games'
 
+    # TODO: move most of this file's logic to tnnt/aggregate.py so that it can
+    # be called on clan-membership-change events
     def handle(self, *args, **options):
         # This will end up doing a bunch of writes. Force them to happen all at
         # once with atomic().

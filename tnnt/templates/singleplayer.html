@@ -59,13 +59,12 @@
     <tr class="framed"><th colspan="2">trophies</th></tr>
   </thead>
   <tbody>
-    <!-- [% FOREACH tr IN plr.trophies %] -->
-    <tr>
-      <td>[% tr.title %]</td>
-      <!-- <td>[% tr.when %]</td> -->
-      <!-- TODO: show when a trophy was attained (stretch goal) -->
-    </tr>
-    <!-- [% END %] -->
+    {% for tr in player.trophies.all %}
+      <tr>
+        <td>{{ tr.name }}</td>
+        <!-- TODO: show when a trophy was attained (stretch goal) -->
+      </tr>
+    {% endfor %}
   </tbody>
 </table>
 </div> <!-- class="row" -->
