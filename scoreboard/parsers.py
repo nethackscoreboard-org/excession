@@ -31,7 +31,7 @@ class XlogParser(BaseParser):
                 k: self.__convert__(v)
                 for k, v in [
                     i.split(self.separator)
-                    for i in line.decode('utf-8').rstrip().split(self.delimiter)
+                    for i in line.rstrip().split(self.delimiter)
                 ]
             }
             for line in stream.readlines()

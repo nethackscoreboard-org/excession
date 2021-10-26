@@ -2,5 +2,6 @@ secrets.sh
 db.sqlite3
 *__pycache__*
 scoreboard/migrations/*
+xlog/*
 tnnt.log
 .idea
