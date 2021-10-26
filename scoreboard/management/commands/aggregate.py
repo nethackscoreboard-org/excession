@@ -248,7 +248,7 @@ def aggregateClanData():
         clan.total_games = aggrs_dict['total_games__sum']
         clan.wins = aggrs_dict['wins__sum']
         clan.games_over_1000_turns = aggrs_dict['games_over_1000_turns__sum']
-        clan.games_scummed = aggrs_dict['games_scummed']
+        clan.games_scummed = aggrs_dict['games_scummed__sum']
         clan.longest_streak = aggrs_dict['longest_streak__max']
 
         # Unfortunately, we have to do a rather nasty multiple join to get the
