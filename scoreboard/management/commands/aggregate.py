@@ -5,6 +5,9 @@ from django.db import transaction
 from django.db.models import Sum, Min, Max, Count
 from tnnt import uniqdeaths
 import urllib
+import logging
+
+logger = logging.getLogger() # root logger
 
 # Optimizations: these don't change over the lifetime of the tournament. Run
 # these queries once when this module is loaded so that they don't have to be
@@ -227,6 +230,7 @@ def aggregatePlayerData():
 
         plr.save()
         awardTrophies(plr, gamesby_plr)
+    logging.info('aggregatePlayerData complete')
 
 # Compute LeaderboardBaseFields data on all Clans, and write it back.
 # ASSUMPTION: It is run after aggregatePlayerData is run, and that each Player
@@ -321,6 +325,7 @@ def aggregateClanData():
         # trophy may have left since the last aggregation.
         clan.trophies.remove()
         awardTrophies(clan, gamesby_clan)
+    logging.info('aggregateClanData complete')
 
 class Command(BaseCommand):
     help = 'Compute aggregate data from the set of all games'
