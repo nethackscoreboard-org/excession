@@ -38,3 +38,5 @@ sed -n '/tnnt_achievements\[/,/^};$/ p' $1/src/decl.c | head -n -1 | tail -n +2 
     | sed -e '/^ *[^ {]/ d' \
           -e 's/^ *{//' -e 's/", \?/"\t/' -e 's/\([^\]\)"/\1/g' -e 's/^"//' -e 's/\}.*//' \
     | awk -F'\t' -f ach_to_yaml.awk
+
+# TODO: This does not work on Hardfought.
