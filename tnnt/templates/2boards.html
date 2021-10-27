@@ -1,0 +1,81 @@
+{% comment %}
+This template shows the player and clan leaderboards for one statistic side by
+side. Parameters:
+  identifier  - Unique string describing leaderboard, e.g. "mostasc". Hooks into
+                Javascript to identify the element.
+  title       - Human readable title.
+  columntitle - Human readable title of the stat column.
+  field       - The LeaderboardBaseField to look up.
+  subfield    - Either None, or the name of a subfield in that
+                LeaderboardBaseField (for instance, on the fastest turncount
+                board, if field is "lowest_turncount_asc" then subfield will be
+                "turns").
+
+  Expects the larger context to provide a dictionary "allboards" with
+  identifier as one of its keys; the value for identifier will in turn be a
+  dictionary with keys "player" and "clan".
+{% endcomment %}
+{% load get_lb_field %} <!-- TODO: change this filename -->
+
+<div class="leaderboard-container" id="leaderboard-{{identifier}}">
+  <h2>{{title}}</h2>
+  <div class="row leaderboard">
+    <table>
+      <thead>
+        <tr class="framed">
+          <th colspan=2>player</th>
+          <th>clan</th>
+          <th>{{columntitle}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for player in allboards|get_dict_field:identifier|get_dict_field:"players" %}
+          <tr>
+            <td class="num dim">{{ forloop.counter }}</td>
+            <td>{% include "plink.html" with name=player.name %}</td>
+            <td>{% include "clink.html" with name=player.clan.name %}</td>
+            <td class="rjust">
+              {% if subfield is None %}
+                {{ player|get_model_field:field }}
+              {% else %}
+                {% with game=player|get_game_field:field %}
+                  <a href="{{ game.get_dumplog }}">
+                    {{ game|get_model_field:subfield }}
+                  </a>
+                {% endwith %}
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {# TODO: Maybe at some point unify these two very similar tables. Not a priority currently. #}
+    <table>
+      <thead>
+        <tr class="framed">
+          <th colspan=2>clan</th>
+          <th>{{columntitle}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for clan in allboards|get_dict_field:identifier|get_dict_field:"clans" %}
+          <tr>
+            <td class="num dim">{{ forloop.counter }}</td>
+            <td>{{ clan.name }}</td>
+            <td class="rjust">
+              {% if subfield is None %}
+                {{ clan|get_model_field:field }}
+              {% else %}
+                {% with game=clan|get_game_field:field %}
+                  <a href="{{ game.get_dumplog }}">
+                    {{ game|get_model_field:subfield }}
+                  </a>
+                {% endwith %}
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div> {# .leaderboard #}
+</div> {# .leaderboard-container #}

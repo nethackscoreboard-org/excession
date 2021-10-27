@@ -11,6 +11,7 @@
 
 {% include "header.html" with page='players' %}
 
+<h2>All Players</h2>
 <table>
   <thead>
     <tr class="framed">
@@ -33,7 +34,7 @@
         </td>
         <td>
           {% if plr.clan %}
-            {% include "clink.html" with clan=plr.clan.name %}
+            {% include "clink.html" with name=plr.clan.name %}
           {% endif %}
         </td>
         <td class="num">

@@ -1,7 +1,7 @@
 from django.views.generic import TemplateView
 from django.views import View
 from django.shortcuts import render, get_object_or_404
-from django.db.models import Exists, OuterRef
+from django.db.models import Exists, OuterRef, F, Count
 from scoreboard.models import Player, Clan, Game, Achievement
 from tnnt.forms import CreateClanForm, InviteMemberForm
 from django.http import HttpResponse, HttpResponseRedirect
@@ -9,6 +9,7 @@ from . import hardfought_utils # find_player
 from . import settings
 from datetime import datetime
 import logging
+from django.db import connection # TODO: for debugging only
 
 logger = logging.getLogger() # use root logger
 
@@ -28,14 +29,124 @@ class LeaderboardsView(TemplateView):
     template_name = 'leaderboards.html'
 
     def get_context_data(self, **kwargs):
-        kwargs['mostasc'] = Player.ascenders.order_by('-wins')
-        kwargs['firstasc'] = Player.ascenders.order_by('first_asc__endtime')
-        kwargs['minturns'] = Player.ascenders.order_by('lowest_turncount_asc__turns')
-        # TODO: this function is incomplete and more leaderboard data sources
-        # will need to be added.
+        # Due to TNNT 2021 deadlines, this may need to be optimized more, or
+        # possibly it will never put too much strain on the database and it's
+        # fine. Time will tell.
 
-        kwargs['players'] = Player.objects.all() # TODO: What is this needed for?
+        # These kwargs for annotate are exactly the same between Player and Clan
+        annotate_kwargs = {
+        #     'firstasc': F('first_asc__endtime'),
+        #     'minturns': F('lowest_turncount_asc__turns'),
+        #     'mintime': F('fastest_realtime_asc__wallclock'),
+        #     'maxcond': Count('max_conducts_asc__conducts'),
+        #     'mostachgame': Count('max_achieves_game__achievements'),
+        #     'minscore': F('min_score_asc__points'),
+        #     'maxscore': F('max_score_asc__points'),
+        }
+        # Similarly these are the exact same. (All LeaderboardBaseFields that
+        # are foreign keys to Game go here.) This saves a number of database
+        # accesses to get the Game objects and their data when we use them
+        # in the template, but it will NOT prevent each Game from making a
+        # further two queries to Source and back to Player when get_dumplog is
+        # called on them.
+        select_related_args = [
+            'first_asc',
+            'lowest_turncount_asc',
+            'fastest_realtime_asc',
+            'max_conducts_asc',
+            'max_achieves_game',
+            'min_score_asc',
+            'max_score_asc'
+        ]
+        # TODO: We may want to come back to [the approach of putting the data in
+        # lists]... problem with putting it in lists is that you lose the
+        # ability to go into related models like Game
+        norm_playerdata = Player.objects.select_related(*select_related_args) \
+            .annotate(**annotate_kwargs).all()
+        norm_clandata = Clan.objects.select_related(*select_related_args) \
+            .annotate(**annotate_kwargs).all()
+        asc_playerdata = [ P for P in norm_playerdata if P.wins > 0 ]
+        asc_clandata = [ C for C in norm_clandata if C.wins > 0 ]
+
+        kwargs['allboards'] = {
+            'mostasc': {
+                # Note: all this sorting will put players with the same amount
+                # of wins (or whatever metric) in arbitrary order.
+                'players': sorted(asc_playerdata, key=lambda P: P.wins, reverse=True),
+                'clans': sorted(asc_clandata, key=lambda C: C.wins, reverse=True)
+            },
+            'firstasc': {
+                'players': sorted(asc_playerdata, key=lambda P: P.first_asc.endtime),
+                'clans': sorted(asc_clandata, key=lambda C: C.first_asc.endtime)
+            },
+            'minturns': {
+                'players': sorted(asc_playerdata, key=lambda P: P.lowest_turncount_asc.turns),
+                'clans': sorted(asc_clandata, key=lambda C: C.lowest_turncount_asc.turns)
+            },
+            'mintime': {
+                'players': sorted(asc_playerdata, key=lambda P: P.fastest_realtime_asc.wallclock),
+                'clans': sorted(asc_clandata, key=lambda C: C.fastest_realtime_asc.wallclock)
+            },
+            'maxcond': {
+                # These two are ripe for some optimization as well. For one, by
+                # using a predefined function and not a lambda it could bulk
+                # count the conducts. But this may still be possible to do as
+                # part of the large query.
+                'players': sorted(asc_playerdata,
+                                  key=lambda P: P.max_conducts_asc.conducts.count(),
+                                  reverse=True),
+                'clans': sorted(asc_clandata,
+                                key=lambda C: C.max_conducts_asc.conducts.count(),
+                                reverse=True)
+            },
+            'mostachgame': {
+                'players': sorted(norm_playerdata,
+                                  key=lambda P: 0 if P.max_achieves_game is None
+                                                else P.max_achieves_game.achievements.count(),
+                                  reverse=True),
+                'clans': sorted(norm_clandata,
+                                key=lambda C: 0 if C.max_achieves_game is None
+                                              else C.max_achieves_game.achievements.count(),
+                                reverse=True)
+            },
+            'mostach': {
+                'players': sorted(norm_playerdata, key=lambda P: P.unique_achievements, reverse=True),
+                'clans': sorted(norm_clandata, key=lambda C: C.unique_achievements, reverse=True)
+            },
+            'minscore': {
+                'players': sorted(asc_playerdata, key=lambda P: P.min_score_asc.points),
+                'clans': sorted(asc_clandata, key=lambda C: C.min_score_asc.points)
+            },
+            'maxscore': {
+                'players': sorted(asc_playerdata, key=lambda P: P.max_score_asc.points, reverse=True),
+                'clans': sorted(asc_clandata, key=lambda C: C.max_score_asc, reverse=True)
+            },
+            'longstreak': {
+                'players': sorted(asc_playerdata, key=lambda P: P.longest_streak, reverse=True),
+                'clans': sorted(asc_clandata, key=lambda C: C.longest_streak, reverse=True)
+            },
+            'uniquedeaths': {
+                'players': sorted(norm_playerdata, key=lambda P: P.unique_deaths, reverse=True),
+                'clans': sorted(norm_clandata, key=lambda C: C.unique_deaths, reverse=True)
+            },
+            'uniqueasc': {
+                'players': sorted(asc_playerdata, key=lambda P: P.unique_ascs, reverse=True),
+                'clans': sorted(asc_clandata, key=lambda C: C.unique_ascs, reverse=True)
+            },
+            'mostgames': {
+                'players': sorted(norm_playerdata, key=lambda P: P.games_over_1000_turns, reverse=True),
+                'clans': sorted(norm_clandata, key=lambda C: C.games_over_1000_turns, reverse=True)
+            },
+        }
         return kwargs
+
+    # TODO: for debugging and db stats tracking only. Delete this later.
+    def get(self, request, *args, **kwargs):
+        strt_q = len(connection.queries)
+        rendered = render(request, self.template_name, self.get_context_data(**kwargs))
+        end_q = len(connection.queries)
+        logger.debug('metrics: leaderboards executed %s queries', end_q - strt_q)
+        return rendered
 
 class PlayersView(TemplateView):
     template_name = 'players.html'
@@ -94,11 +205,10 @@ class ClanMgmtView(View):
 
     def get_context_data(self, **kwargs):
         user = self.request.user
-        # look up their clan
-        try:
-            player = self.get_player(user)
-        except Player.DoesNotExist:
-            return HttpResponse(status=500)
+        # we assume the player is already known to exist since both get() and
+        # post() check for it
+        # TODO (lowish priority): player should be passed in as kwargs already.
+        player = self.get_player(user)
 
         kwargs['me'] = player
         kwargs['clan'] = None
@@ -124,6 +234,14 @@ class ClanMgmtView(View):
     def get(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             return HttpResponseRedirect('/login')
+
+        # TODO: This case is duplicated from the POST below. Ideally they should
+        # be unified.
+        try:
+            self.get_player(request.user)
+        except Player.DoesNotExist:
+            return HttpResponse(status=500)
+
         return render(request, self.template_name, self.get_context_data(**kwargs))
 
     # FUTURE TODO:

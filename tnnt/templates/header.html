@@ -2,7 +2,7 @@
 {% load static %}
 <header>
   <div id="headerbar">
-    <h1>The November Nethack Tournament</h1>
+    <a id="titlelink" href="/"><h1>The November Nethack Tournament</h1></a>
   </div>
   <table id="navlogo">
       <tr>
@@ -17,14 +17,13 @@
       </tr>
       <tr>
           <td class="leftmenu">
-              <a href="/" class="menu {% if page == 'index' %} menusel {% endif %}">HOME</a>
-              <!-- TODO: this should likely become "Results" -->
-              <a href="/leaderboards" class="menu {% if page == 'leaderboards' %} menusel {% endif %}">LEADERBOARDS</a>
-              <a href="/clans" class="menu {% if page == 'clans' %} menusel {% endif %}">CLANS</a>
+              <a href="/rules" class="menu {% if page == 'rules' %} menusel {% endif %}">RULES</a>
               <a href="/players" class="menu {% if page == 'players' %} menusel {% endif %}">PLAYERS</a>
+              <a href="/clans" class="menu {% if page == 'clans' %} menusel {% endif %}">CLANS</a>
+              <a href="/leaderboards" class="menu {% if page == 'leaderboards' %} menusel {% endif %}">LEADERBOARDS</a>
           </td>
           <td class="rightmenu">
-              <a href="/rules" class="menu {% if page == 'rules' %} menusel {% endif %}">RULES</a>
+              <a href="/trophies" class="menu {% if page == 'index' %} menusel {% endif %}">TROPHIES</a>
               <a href="/about" class="menu {% if page == 'about' %} menusel {% endif %}">ABOUT</a>
               <a href="/archives" class="menu {% if page == 'archive' %} menusel {% endif %}">ARCHIVES</a>
               {% if user.is_authenticated %}

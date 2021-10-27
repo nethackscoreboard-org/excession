@@ -59,46 +59,27 @@
     <tr class="framed"><th colspan="2">trophies</th></tr>
   </thead>
   <tbody>
-    <!-- [% FOREACH tr IN plr.trophies %] -->
-    <tr>
-      <td>[% tr.title %]</td>
-      <!-- <td>[% tr.when %]</td> -->
-      <!-- TODO: show when a trophy was attained (stretch goal) -->
-    </tr>
-    <!-- [% END %] -->
+    {% for tr in player.trophies.all %}
+      <tr>
+        <td>{{ tr.name }}</td>
+        <!-- TODO: show when a trophy was attained (stretch goal) -->
+      </tr>
+    {% endfor %}
   </tbody>
 </table>
-</div>
+</div> <!-- class="row" -->
 
 <!-- TODO: possibly show leaderboard ranks (stretch goal, not necessary for 2021) -->
-
-<!-- == STREAKS =========================================================== -->
-
-[% IF plr.streaks.size %]
-
-<h2>STREAKS</h2>
-<table>
-  <thead>
-    [% INCLUDE streak.tt head=1 class="framed" %]
-  </thead>
-  <tbody>
-    [% SET i = plr.streaks.size %]
-    [% FOREACH streak IN plr.streaks.reverse %]
-      [% INCLUDE streak.tt %]
-      [% SET i = i - 1 %]
-    [% END %]
-  </tbody>
-</table>
-[% END %]
 
 <!-- == ASCENSIONS & RECENT GAMES ========================================= -->
 
 {% if player.total_games > 0 %}
-  <table>
-    {% if player.wins > 0 %}
+  {% if player.wins > 0 %}
+    <h2>ASCENSIONS</h2>
+    <table>
       <thead>
-        <tr><td colspan=8><h2>ASCENSIONS</h2></td></tr>
-        <!-- TODO: old backend had this as a template, likely move this to a template -->
+        <!-- TODO: old backend had this as a template, likely move the whole
+             table? to a template -->
         <!-- [% INCLUDE game.tt head=1 aswon=1 class="framed" %] -->
         <tr class="won framed">
           <!-- there used to be a counter td here, which has been removed -->
@@ -116,10 +97,11 @@
           {% include "gamerow.html" with ascview=True %}
         {% endfor %}
       </tbody>
-    {% endif %} <!-- wins > 0 -->
-
+    </table>
+  {% endif %} <!-- wins > 0 -->
+  <h2>RECENT GAMES</h2>
+  <table>
     <thead>
-      <tr><td colspan=8><h2>RECENT GAMES</h2></td></tr>
       <tr class="framed">
         <th>name</th>
         <th>character</th>
@@ -138,6 +120,49 @@
   </table>
 {% endif %} <!-- games > 0 -->
 
+<!-- == STREAKS =========================================================== -->
+
+{% if player.longest_streak > 0 %}
+  <h2>STREAKS</h2>
+  <table>
+    <thead>
+      <tr class="framed">
+        <th>&nbsp;</th>
+        <th>len</th>
+        <th>start</th>
+        <th>end</th>
+        <th>continuable</th>
+        <th>streak games</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% with streaks=player.get_streaks %}
+        {% for streak in streaks %}
+          <tr>
+            <td class="num dim">{{ forloop.counter }}</td>
+            <td class="num">{{ streak.games | length }}</td>
+            <td class="num">{{ streak.games.0.starttime }}</td>
+            <td class="num">
+              <!-- annoying construction -->
+              {% with lastgame=streak.games|last %}{{ lastgame.endtime }}{% endwith %}
+            </td>
+            <td class="num streak-continuable">
+              {% if streak.continuable %} &check; {% else %} &cross; {% endif %}
+            </td>
+            <td>
+              {% for g in streak.games %}
+                <span class="streak">
+                  <a href="{{ g.get_dumplog }}">{{ g.rrga }}</a>
+                </span>
+              {% endfor %}
+            </td>
+          </tr>
+        {% endfor %}
+      {% endwith %}
+    </tbody>
+  </table>
+{% endif %}
+
 <!-- == ACHIEVEMENTS ====================================================== -->
 
 <h2 id="achievements">Achievements</h2>
@@ -145,13 +170,19 @@
   <table>
     <thead>
       <tr class="framed">
+        <th></th>
         <th>Achievement</th>
         <th>Description</th>
       </tr>
     </thead>
     <tbody>
       {% for ach in achievements %}
-        <tr {% if ach.obtained %}class="achieved"{% endif %}>
+        <tr>
+          {% if ach.obtained %}
+            <td class="achieved">&check;</td>
+          {% else %}
+            <td class="not-achieved">&cross;</td>
+          {% endif %}
           <td>{{ ach.name }}</td>
           <td>{{ ach.description }}</td>
         </tr>

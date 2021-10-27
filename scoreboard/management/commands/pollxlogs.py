@@ -33,6 +33,9 @@ class Command(BaseCommand):
     help = "Poll Sources (xlogfiles) for new game data"
 
     def handle(self, *args, **options):
-        for src in Source.objects.all():
+        sources = Source.objects.all()
+        if len(sources) == 0:
+            raise RuntimeError('There are no sources in the database to poll!')
+        for src in sources:
             sync_local_file(src.location, src.local_file)
             import_records(src)

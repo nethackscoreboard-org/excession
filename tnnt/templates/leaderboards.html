@@ -4,7 +4,7 @@
 <html>
 
 <head>
-  <title>TNNT::Players</title>
+  <title>TNNT::Leaderboards</title>
   {% include "headlinks.html" %}
   <script type="text/javascript" src="{% static 'js/leaderboard-select.js' %}"></script>
 </head>
@@ -13,127 +13,51 @@
 
 {% include "header.html" with page='leaderboards' %}
 
-<div id="leaderboard-select">
-  <label for="boards">Select leaderboard: </label>
-  <select name="boards" id="boards-combobox">
-    <option value="mostasc">Most Ascensions</option>
-    <option value="firstasc">Earliest Ascension</option>
-    <option value="minturns">Lowest Turn Count</option>
-    <option value="mintime">Fastest Realtime</option>
-    <option value="maxcond">Most Conducts in One Ascension</option>
-    <option value="mostachgame">Most Achievements in One Game</option>
-    <option value="mostach">Most Achievements Overall</option>
-    <option value="minscore">Lowest Score</option>
-    <option value="maxscore">Highest Score</option>
-    <option value="longstreak">Longest Streak</option>
-    <option value="uniquedeaths">Most Unique Deaths</option>
-    <option value="uniqueasc">Most Unique Ascension Combos</option>
-    <option value="mostgames">Most Games over 1000 Turns</option>
-  </select>
+<div id="leaderboard-select" class="row">
+  <div id="prev-board" class="board-lr-move">&laquo;</div>
+  <div id="leaderboard-combobox">
+    <label for="boards">Select leaderboard: </label>
+    <select name="boards" id="boards-combobox">
+      <option value="mostasc">Most Ascensions</option>
+      <option value="firstasc">Earliest Ascension</option>
+      <option value="minturns">Lowest Turn Count</option>
+      <option value="mintime">Fastest Realtime</option>
+      <option value="maxcond">Most Conducts in One Ascension</option>
+      <option value="mostachgame">Most Achievements in One Game</option>
+      <option value="mostach">Most Achievements Overall</option>
+      <option value="minscore">Lowest Score</option>
+      <option value="maxscore">Highest Score</option>
+      <option value="longstreak">Longest Streak</option>
+      <option value="uniquedeaths">Most Unique Deaths</option>
+      <option value="uniqueasc">Most Unique Ascension Combos</option>
+      <option value="mostgames">Most Games over 1000 Turns</option>
+    </select>
+    {# <button id="player-clan-switch">Switch to Clans</button> #}
+  </div>
+  <div id="next-board" class="board-lr-move">&raquo;</div> <!--TODO this doesn't do anything yet-->
 </div>
 <hr>
 
-<!--
+{% comment %}
   Leaderboard id is "leaderboard-" + the value of the option in the
   leaderboard-select. This is used by the javascript that switches them.
--->
-<!-- TODO? if the number of leaderboards on this page gets unwieldy, hand them
-off to included templates -->
-<div class="leaderboard" id="leaderboard-mostasc">
-  <h3>Most Ascensions</h3>
-  <table>
-    <thead>
-      <tr class="framed">
-        <th></th>
-        <th>player</th>
-        <th>clan</th>
-        <th>wins</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for plr in mostasc %}
-        <tr>
-          <td class="num dim">{{ forloop.counter }}</td>
-          <td>{{ plr.name }}</td>
-          <td>{{ plr.clan.name }}</td>
-          <td class="rjust">{{ plr.wins }}</td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-</div>
+  The leaderboards should appear in the same order they appear in the switch
+  above. It'll work fine if not, but that's bad UX.
+{% endcomment %}
 
-<div class="leaderboard" id="leaderboard-firstasc" hidden="true">
-  <h3>Earliest Ascension</h3>
-  <table>
-    <thead>
-      <tr class="framed">
-        <th></th>
-        <th>player</th>
-        <th>clan</th>
-        <th>ascension time</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for plr in firstasc %}
-        <tr>
-          <td class="num dim">{{ forloop.counter }}</td>
-          <td>{{ plr.name }}</td>
-          <td>{{ plr.clan.name }}</td>
-          <td class="rjust">{{ plr.first_asc.endtime }}</td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-</div>
-
-<div class="leaderboard" id="leaderboard-minturns" hidden="true">
-  <h3>Lowest Turn Count</h3>
-  <table>
-    <thead>
-      <tr class="framed">
-        <th></th>
-        <th>player</th>
-        <th>clan</th>
-        <th>ascension time</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for plr in minturns %}
-        <tr>
-          <td class="num dim">{{ forloop.counter }}</td>
-          <td>{{ plr.name }}</td>
-          <td>{{ plr.clan.name }}</td>
-          <td class="rjust">{{ plr.lowest_turncount_asc.turns }}</td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-</div>
-
-<div class="leaderboard" id="leaderboard-mintime" hidden="true">
-  <h3>Fastest Realtime</h3>
-  <table>
-    <thead>
-      <tr class="framed">
-        <th></th>
-        <th>player</th>
-        <th>clan</th>
-        <th>ascension duration</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for plr in mintime %}
-        <tr>
-          <td class="num dim">{{ forloop.counter }}</td>
-          <td>{{ plr.name }}</td>
-          <td>{{ plr.clan.name }}</td>
-          <td class="rjust">{{ plr.fastest_realtime_asc.wallclock }}</td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-</div>
+{% include "2boards.html" with identifier="mostasc" title="Most Ascensions" field="wins" subfield=None columntitle="wins" %}
+{% include "2boards.html" with identifier="firstasc" title="Earliest Ascension" field="first_asc" subfield="endtime" columntitle="time" %}
+{% include "2boards.html" with identifier="minturns" title="Lowest Turncount" field="lowest_turncount_asc" subfield="turns" columntitle="turns" %}
+{% include "2boards.html" with identifier="mintime" title="Fastest Realtime" field="fastest_realtime_asc" subfield="wallclock" columntitle="wallclock" %}
+{% include "2boards.html" with identifier="maxcond" title="Most Conducts in One Ascension" field="max_conducts_asc" subfield="maxcond" columntitle="conducts" %}
+{% include "2boards.html" with identifier="mostachgame" title="Most Achievements in One Game" field="max_achieves_game" subfield="mostach" columntitle="achievements" %}
+{% include "2boards.html" with identifier="mostach" title="Most Achievements Overall" field="unique_achievements" subfield=None columntitle="achievements" %}
+{% include "2boards.html" with identifier="minscore" title="Lowest Score" field="min_score_asc" subfield="points" columntitle="points" %}
+{% include "2boards.html" with identifier="maxscore" title="Highest Score" field="max_score_asc" subfield="points" columntitle="points" %}
+{% include "2boards.html" with identifier="longstreak" title="Longest Streak" field="longest_streak" subfield=None columntitle="streak length" %}
+{% include "2boards.html" with identifier="uniquedeaths" title="Most Unique Deaths" field="unique_deaths" subfield=None columntitle="deaths" %}
+{% include "2boards.html" with identifier="uniqueasc" title="Most Unique Ascension Combos" field="unique_ascs" subfield=None columntitle="combos" %}
+{% include "2boards.html" with identifier="mostgames" title="Most Games over 1000 Turns" field="games_over_1000_turns" subfield=None columntitle="games" %}
 
 </body>
 

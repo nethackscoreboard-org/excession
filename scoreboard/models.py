@@ -3,6 +3,9 @@ from django.contrib.auth.models import User
 from datetime import datetime, timedelta, timezone
 from tnnt import settings
 
+# If adding any more models to this file, be sure to add a deletion for them in
+# wipe_db.py.
+
 class Trophy(models.Model):
     # The "perma-trophy" structure. Loaded from config.
     name        = models.CharField(max_length=64, unique=True)
@@ -76,11 +79,14 @@ class Clan(LeaderboardBaseFields):
     # admins = models.ManyToManyField(Player)
     # instead of Player having a clan_admin field
 
-class AscendingPlayersManager(models.Manager):
-    # Manager that returns only Players with at least one ascension, which is a
-    # pretty common request.
-    def get_queryset(self):
-        return super().get_queryset().filter(wins__gt=0)
+class Streak:
+    # This is NOT a database model!
+    # It is a simple storage class for streak information that can be used in
+    # aggregation and relayed to the frontend.
+
+    def __init__(self, singlegame):
+        self.games       = [ singlegame ] # list of Games in the streak
+        self.continuable = True           # whether it can be continued
 
 class Player(LeaderboardBaseFields):
     name       = models.CharField(max_length=32, unique=True)
@@ -91,13 +97,51 @@ class Player(LeaderboardBaseFields):
     # link to User model for web logins
     user       = models.OneToOneField(User, on_delete=models.PROTECT, null=True)
 
-    objects   = models.Manager() # default
-    ascenders = AscendingPlayersManager()
-
     # Return a string denoting the ascension ratio of this player.
     # This can assume that total_games > 0, but wins could be 0.
     def ratio(self):
         return '{:.2f}%'.format(self.wins * 100 / self.total_games)
+
+    # Compute this player's streaks, and return them as a list of Streaks
+    # containing the games in the streak and whether they can be continued.
+    def get_streaks(self):
+        # Due to multiple servers, start and end times can overlap. The
+        # candidate game for continuing a streak is the first one started after
+        # an ascension.
+        # If a game is eligible to continue MULTIPLE streaks at once (possible
+        # with server shenanigans), it will continue only the oldest of those
+        # streaks (i.e. the one that comes first in streaks), and kill the rest
+        # (TODO: write this explicitly in the rules.)
+        # ASSUMPTION: No two Games of the same player will ever have the same
+        # starttime. If they did, it would be possible to have two candidate
+        # games for continuing the streak and not know which one to count.
+
+        streaks = []
+        for g in Game.objects.filter(player=self).order_by('starttime').all():
+            extended_or_killed_streak = False
+            # first: will this game extend/kill a streak?
+            for strk in streaks:
+                if strk.continuable == False:
+                    # this streak is dead, ignore it
+                    continue
+                if strk.games[-1].endtime < g.starttime:
+                    extended_or_killed_streak = True
+                    if g.won == False:
+                        # streak is killed
+                        strk.continuable = False
+                        continue # it could still kill other streaks
+                    else:
+                        # streak is extended
+                        strk.games.append(g)
+                        # and stop looking for other streaks to extend
+                        break
+
+            # if we didn't extend or kill a streak, and the game is a win, we start one
+            if (not extended_or_killed_streak) and g.won:
+                streaks.append(Streak(g))
+
+        # filter out "streaks" of only 1 game, which are not streaks yet
+        return [ strk for strk in streaks if len(strk.games) >= 2 ]
 
 class Source(models.Model):
     # Information about a source of aggregate game data (e.g. an xlogfile).
@@ -120,6 +164,8 @@ class Source(models.Model):
     # website     = models.URLField(null=True)
 
 class GameManager(models.Manager):
+    # TODO: why do we need this as a manager? Couldn't this logic just live in pollxlogs?
+    # Post 2021 concern, unless this proves slow for some reason
     simple_fields = ['version', 'role', 'race', 'gender', 'align', 'points', 'turns', 'realtime', 'maxlvl', 'death',
                      'align0', 'gender0']
 
@@ -139,6 +185,11 @@ class GameManager(models.Manager):
         # TODO: do something about magic numbers in this method
         if xlog_dict['achieve'] & 0x100:
             kwargs['won'] = True
+
+        # ditto for mines/soko
+        # TODO: do something about magic numbers in this method
+        if xlog_dict['achieve'] & 0x600:
+            kwargs['mines_soko'] = True
 
         # time/duration information
         kwargs['starttime'] = datetime.fromtimestamp(xlog_dict['starttime'], timezone.utc)
@@ -193,7 +244,12 @@ class Game(models.Model):
     death        = models.CharField(max_length=256)
     align0       = models.CharField(max_length=16, null=True)
     gender0      = models.CharField(max_length=16, null=True)
+
+    # These are a bit of denormalization, because it'd be expensive to reach
+    # into the achievements every time we want to check if a game is won or has
+    # finished Mines/Sokoban.
     won          = models.BooleanField(default=False)
+    mines_soko   = models.BooleanField(default=False)
 
     # not necessary for tnnt but may re-introduce for NHS
     # deathlev     = models.IntegerField(null=True)
@@ -225,4 +281,10 @@ class Game(models.Model):
     # e.g. "poly wish veg"
     def conducts_as_str(self):
         return ' '.join(c.shortname for c in self.conducts.all())
+
+    # Return a string of the form "Rol-Rac-Gen-Aln" typical in nethack parlance.
+    # Importantly, this uses gender0 and align0.
+    def rrga(self):
+        return '-'.join([self.role, self.race, self.gender0, self.align0])
+
 
