@@ -87,6 +87,8 @@ span.clan-unique {
 table {
   border-collapse: collapse;
   padding: 1em;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 table.trophies {
@@ -537,3 +539,29 @@ form.disguised-button button:hover {
 /*====================================================================
   === LEADERBOARDS ===================================================
   ====================================================================*/
+
+div.row.leaderboard table {
+    display:block;
+}
+
+#leaderboard-select {
+    margin-bottom: 0.5em;
+}
+
+#leaderboard-select > div {
+  display: inline-block;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.board-lr-move {
+    font-size:2em;
+    padding: 0 1em 0 1em;
+}
+
+.board-lr-move:hover {
+  cursor: pointer;
+  color: #fd0;
+}
+
+/* TODO: Inspect this css file for rules that are no longer in use. */
