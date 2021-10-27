@@ -94,11 +94,10 @@ class ClanMgmtView(View):
 
     def get_context_data(self, **kwargs):
         user = self.request.user
-        # look up their clan
-        try:
-            player = self.get_player(user)
-        except Player.DoesNotExist:
-            return HttpResponse(status=500)
+        # we assume the player is already known to exist since both get() and
+        # post() check for it
+        # TODO (lowish priority): player should be passed in as kwargs already.
+        player = self.get_player(user)
 
         kwargs['me'] = player
         kwargs['clan'] = None
@@ -124,6 +123,14 @@ class ClanMgmtView(View):
     def get(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             return HttpResponseRedirect('/login')
+
+        # TODO: This case is duplicated from the POST below. Ideally they should
+        # be unified.
+        try:
+            self.get_player(request.user)
+        except Player.DoesNotExist:
+            return HttpResponse(status=500)
+
         return render(request, self.template_name, self.get_context_data(**kwargs))
 
     # FUTURE TODO:
