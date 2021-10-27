@@ -21,6 +21,7 @@ class Command(BaseCommand):
         with transaction.atomic():
             Clan.objects.all().delete()
             Player.objects.all().delete()
+            User.objects.all().delete()
             Game.objects.all().delete()
             Achievement.objects.all().delete()
             Conduct.objects.all().delete()
