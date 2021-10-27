@@ -133,7 +133,7 @@ def awardTrophies(player_or_clan, allgames_qs):
         ['conducts__id__count']
     if unique_conducts == TOTAL_CONDUCTS:
         player_or_clan.trophies.add(TROPHIES['All Conducts'])
-    if len(set(g.rrga() for g in allgames if g.won)) == TOTAL_POSSIBLE_COMBOS:
+    if player_or_clan.unique_ascs == TOTAL_POSSIBLE_COMBOS:
         player_or_clan.trophies.add(TROPHIES['NetHack Master'])
         if unique_conducts == TOTAL_CONDUCTS:
             player_or_clan.trophies.add(TROPHIES['NetHack Dominator'])
@@ -191,6 +191,9 @@ def aggregatePlayerData():
         # module, so just get the set of unique deaths and take the length.
         plr.unique_deaths = len(uniqdeaths.compile_unique_deaths(gamesby_plr))
 
+        # Unique ascs are a one-liner.
+        plr.unique_ascs = len(set(g.rrga() for g in winsby_plr))
+
         # Streaks are computed on their own as well.
         streak_lengths = list(map(lambda s: len(s.games), plr.get_streaks()))
         if len(streak_lengths) == 0:
@@ -230,10 +233,6 @@ def aggregatePlayerData():
 # has had its leaderboard base fields updated.
 def aggregateClanData():
     for clan in Clan.objects.all():
-        # all of the below only consider games done by members of this clan
-        # gamesby_clan = Game.objects.filter('player__clan'=clan)
-        # # and a number of them only consider *ascended* games
-        # winsby_clan = gamesby_clan.filter(won=True)
         clan_plrs = Player.objects.filter(clan=clan)
 
         # Basic aggregations can be computed pretty easily from the Players.
@@ -263,6 +262,9 @@ def aggregateClanData():
         # games played by clan members.
         gamesby_clan = Game.objects.filter(player__clan=clan)
         clan.unique_deaths = len(uniqdeaths.compile_unique_deaths(gamesby_clan))
+
+        # Unique ascs are still a one-liner.
+        clan.unique_ascs = len(set(g.rrga() for g in gamesby_clan if g.won))
 
         # And then back to a (somewhat) simpler model, in which the clan can
         # just pick fields off its precomputed members.
