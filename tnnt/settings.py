@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
 from pathlib import Path
+from datetime import datetime, timezone
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -170,10 +171,13 @@ DGL_DATABASE_PATH = './dgamelaunch_test.db'
 MAX_CLAN_PLAYERS = 12
 
 # Clan freeze (no new clan creation / joining clans)
-# This is intentionally timezone-less, because it's compared against a
-# datetime.now() that is also timezone-less ("naive" in datetime parlance).
 
-CLAN_FREEZE_TIME = '2021-11-10T00:00:00'
+CLAN_FREEZE_TIME = datetime.fromisoformat('2021-11-10T00:00:00+00:00')
+
+# Tournament start/end times
+
+TOURNAMENT_START = datetime.fromisoformat('2021-11-01T00:00:00+00:00')
+TOURNAMENT_END   = datetime.fromisoformat('2021-12-01T00:00:00+00:00')
 
 # Main log file
 

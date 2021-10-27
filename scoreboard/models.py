@@ -199,6 +199,9 @@ class GameManager(models.Manager):
 
         # TODO: filter games here based on starttime and endtime being outside
         # of the configured starttime and endtime for the tournament
+        if (kwargs['starttime'] < settings.TOURNAMENT_START
+            or kwargs['endtime'] > settings.TOURNAMENT_END):
+            return
 
         # find/create player
         try:

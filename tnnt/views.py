@@ -7,7 +7,7 @@ from tnnt.forms import CreateClanForm, InviteMemberForm
 from django.http import HttpResponse, HttpResponseRedirect
 from . import hardfought_utils # find_player
 from . import settings
-from datetime import datetime
+from datetime import datetime, timezone
 import logging
 from django.db import connection # TODO: for debugging only
 
@@ -229,7 +229,7 @@ class ClanMgmtView(View):
         return kwargs
 
     def clan_freeze_in_effect(self):
-        return datetime.fromisoformat(settings.CLAN_FREEZE_TIME) <= datetime.now()
+        return settings.CLAN_FREEZE_TIME <= datetime.now(tz=timezone.utc)
 
     def get(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
