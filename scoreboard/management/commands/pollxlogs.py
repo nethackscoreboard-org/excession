@@ -13,7 +13,11 @@ def import_records(src):
     with xlog_path.open("r") as xlog_file:
         xlog_file.seek(src.file_pos)
         for xlog_entry in XlogParser().parse(xlog_file):
-            Game.objects.from_xlog(src, xlog_entry).save()
+            game = Game.objects.from_xlog(src, xlog_entry)
+            # check None because a game may not have been produced
+            # (explore/wizmode game, outside tournament time, etc)
+            if game is not None:
+                game.save()
         src.file_pos = xlog_file.tell()
         src.save()
 

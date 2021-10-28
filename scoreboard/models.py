@@ -179,7 +179,7 @@ class GameManager(models.Manager):
         # filter explore/wizmode games
         # TODO: do something about magic numbers in this method
         if xlog_dict['flags'] & 0x1 or xlog_dict['flags'] & 0x2:
-            return
+            return None
 
         # assign 'won' boolean
         # TODO: do something about magic numbers in this method
@@ -201,7 +201,7 @@ class GameManager(models.Manager):
         # of the configured starttime and endtime for the tournament
         if (kwargs['starttime'] < settings.TOURNAMENT_START
             or kwargs['endtime'] > settings.TOURNAMENT_END):
-            return
+            return None
 
         # find/create player
         try:
