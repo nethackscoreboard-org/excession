@@ -55,7 +55,7 @@ $ mysql.server start
 ### OS-independent steps
 #### Optional: enter python virtual environment before installing dependencies
 ```shell
-$ virtualenv env -p python3 --no-site-packages
+$ virtualenv env --no-site-packages
 $ source env/bin/activate
 ```
 
@@ -108,14 +108,11 @@ $ ./manage.py aggregate
 ```
 
 #### Optional: point DGL\_DATABASE\_PATH at real database
-This is in `tnnt/settings.py-sample`. By default, it points at
-`dgamelaunch_test.db`, which provides several "registered dgamelaunch
-accounts" (alice, bob, chuck, david, eve, fred, and gimli; each password
-is the same as the username) for dev and testing purposes. For production,
-you will want to point this to the full path of the real dgamelaunch sqlite
-database.
+This is in `tnnt/settings.py`. By default, it points at `dgamelaunch_test.db`,
+which provides several "registered dgamelaunch accounts" (alice, bob, chuck,
+david, eve, fred, and gimli; each password is the same as the username) for
+dev and testing purposes. For production, you will want to point this to the
+full path of the real dgamelaunch sqlite database.
 
 ### Run dev server
-`$ cp tnnt\settings.py-sample tnnt\settings.py` and make any necessary edits
-to `tnnt\settings.py` for your production environment.
 `$ python manage.py runserver`
