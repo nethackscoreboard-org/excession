@@ -61,9 +61,11 @@ class LeaderboardsView(TemplateView):
         # TODO: We may want to come back to [the approach of putting the data in
         # lists]... problem with putting it in lists is that you lose the
         # ability to go into related models like Game
-        norm_playerdata = Player.objects.select_related(*select_related_args) \
+        norm_playerdata = Player.objects.filter(total_games__gt=0) \
+            .select_related(*select_related_args) \
             .annotate(**annotate_kwargs).all()
-        norm_clandata = Clan.objects.select_related(*select_related_args) \
+        norm_clandata = Clan.objects.filter(total_games__gt=0) \
+            .select_related(*select_related_args) \
             .annotate(**annotate_kwargs).all()
         asc_playerdata = [ P for P in norm_playerdata if P.wins > 0 ]
         asc_clandata = [ C for C in norm_clandata if C.wins > 0 ]
