@@ -91,10 +91,6 @@ table {
   margin-right: auto;
 }
 
-table.trophies {
-  max-width: 70%;
-}
-
 /* guard against other sorts of tables directly in the page body and not in any
  * containing div overflowing wildly */
 body > table {
@@ -299,12 +295,6 @@ td.trophy-name {
   font-size: 166%;
   text-transform: uppercase;
   padding-right: 2em;
-  font-weight: 300;
-  width: 30%;
-}
-
-td.trophy-single {
-  font-size: 200%;
   font-weight: 300;
   width: 30%;
 }

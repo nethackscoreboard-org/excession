@@ -1,8 +1,8 @@
 from django.views.generic import TemplateView
 from django.views import View
 from django.shortcuts import render, get_object_or_404
-from django.db.models import Exists, OuterRef, F, Count
-from scoreboard.models import Player, Clan, Game, Achievement
+from django.db.models import Exists, OuterRef, F, Count, Value
+from scoreboard.models import Player, Clan, Game, Achievement, Trophy
 from tnnt.forms import CreateClanForm, InviteMemberForm
 from django.http import HttpResponse, HttpResponseRedirect
 from . import hardfought_utils # find_player
@@ -242,8 +242,49 @@ class SinglePlayerOrClanView(TemplateView):
 
         return kwargs
 
+class TrophiesView(TemplateView):
+    template_name = 'trophies.html'
+
+    def get_context_data(self, **kwargs):
+        # only do 3 queries!
+        trophies_def = list(Trophy.objects.values('name','description'))
+        clan2troph = list(Clan.objects
+                              .annotate(field=Value('clans'),
+                                        numtroph=Count('trophies__id'))
+                              .filter(numtroph__gt=0)
+                              .values('name','trophies__name','field'))
+        plr2troph = list(Player.objects
+                               .annotate(field=Value('players'),
+                                         numtroph=Count('trophies__id'))
+                               .filter(numtroph__gt=0)
+                               .values('name','trophies__name','field'))
+        alltroph = clan2troph + plr2troph
+
+        # we need to show all trophies regardless of anyone having them, so
+        # first populate the basic structure we need to send to the template
+        trophies = {}
+        for t in trophies_def:
+            trophies[t['name']] = {
+                'description' : t['description'],
+                'players': [],
+                'clans': []
+            }
+
+        # lists are [{'name': <player/clan name>, 'trophies__name': 'Both Genders', 'trophies__description': '<desc>', 'field': 'players'}, ...]
+        # convert to { 'Both Genders': { 'players': [...], 'clans': [...], 'description': '...' }, ...}
+        for a in alltroph:
+            plr_or_clan_name = a['name']
+            tname            = a['trophies__name']
+            field            = a['field'] # either "players" or "clans"
+            trophies[tname][field].append(plr_or_clan_name)
+
+        kwargs['trophies'] = trophies
+        return kwargs
+
 class ClanMgmtView(View):
     template_name = 'clanmgmt.html'
+    # TODO: Clan interactions should maybe force a re-aggregation?
+    # Or if not, clan management page should say that data will be stale for up to X minutes
 
     def get_player(self, request_user):
         # Attempt to get the player linked with this user ID. Contains some

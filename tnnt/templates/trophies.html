@@ -1,0 +1,49 @@
+<!doctype html>
+
+<html>
+
+<head>
+  <title>TNNT::Trophies</title>
+  {% include "headlinks.html" %}
+</head>
+
+<body>
+
+{% include "header.html" with page='trophies' %}
+
+<table class="trophies">
+  <thead>
+    <tr class="framed">
+      <th>trophy</th>
+      <th>players</th>
+      <th>clans</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for trophyname, trophydata in trophies.items %}
+      <tr>
+        <td class="trophy-name" title="{{ trophydata.description }}">
+          {{ trophyname }}
+        </td>
+        <td class="trophy-multi">
+          {% for plrname in trophydata.players %}
+            {% include "plink.html" with name=plrname %}
+            {% if not forloop.last %}&middot;{% endif %}
+          {% endfor %}
+        </td>
+        <td class="trophy-multi">
+          {% for clanname in trophydata.clans %}
+            {% include "clink.html" with name=clanname %}
+            {# TODO: Never Scum a Game used to be a player-only trophy but now is awarded to clans. #}
+            {# If brought back, we'd want to insert a N/A here with the "trophy-na" class. #}
+          {% endfor %}
+        </td>
+      </tr>
+      {# {{ trophyname }}{{trophydata.description}}{{trophydata.players}}{{trophydata.clans}}<br> #}
+    {% endfor %}
+  </tbody>
+</table>
+
+</body>
+
+</html>
