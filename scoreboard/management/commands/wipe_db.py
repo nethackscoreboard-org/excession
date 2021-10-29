@@ -82,11 +82,11 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         # Further TODO: print statements should reflect which models got wiped
-        if options['all']:
+        if 'all' in options:
             wipe_all()
-        elif options['all-but-clans']:
+        elif 'all-but-clans' in options:
             wipe_all_but_clans()
-        elif options['non-fixtures']:
+        elif 'non-fixtures' in options:
             wipe_non_fixtures()
         else:
             wipe_games()
