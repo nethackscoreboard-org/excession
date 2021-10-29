@@ -229,5 +229,28 @@
   </div>
 </div>
 
+<!-- == UNIQUE DEATHS ===================================================== -->
+
+{% if uniquedeaths|length > 0 %}
+  {# post 2021 TODO: show time of achievement and possibly dumplog; for clans, show player #}
+  <h2 id="">Unique Deaths</h2>
+  <table>
+    <thead>
+      <tr class="framed">
+        <th></th>
+        <th>Death</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for death in uniquedeaths %}
+        <tr>
+          <td class="num dim">{{ forloop.counter }}</td>
+          <td>{{ death }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endif %}
+
 </body>
 </html>
