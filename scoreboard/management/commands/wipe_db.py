@@ -93,13 +93,13 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        if 'all' in options:
+        if options['all']:
             wipe_all()
             print('wiped everything')
-        elif 'all-but-clans' in options:
+        elif options['all_but_clans']:
             wipe_all_but_clans()
             print('wiped all except player/clan relationships')
-        elif 'non-fixtures' in options:
+        elif options['non_fixtures']:
             wipe_non_fixtures()
             print('wiped all non-static data')
         else:
