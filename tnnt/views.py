@@ -10,6 +10,7 @@ from . import settings
 from datetime import datetime, timezone
 import logging
 from django.db import connection # TODO: for debugging only
+from tnnt import uniqdeaths
 
 logger = logging.getLogger() # use root logger
 
@@ -195,23 +196,50 @@ class ClansView(TemplateView):
         kwargs['clans'] = clanlist
         return kwargs
 
-class SinglePlayerView(TemplateView):
-    template_name = 'singleplayer.html'
+class SinglePlayerOrClanView(TemplateView):
+    template_name = 'singleplayerorclan.html'
 
     def get_context_data(self, **kwargs):
-        kwargs['player'] = get_object_or_404(Player, name=kwargs['playername'])
+        if 'clanname' in kwargs:
+            kwargs['isClan'] = True
+            kwargs['header_key'] = 'clans'
+            clan = get_object_or_404(Clan, name=kwargs['clanname'])
+            kwargs['player_or_clan'] = clan
+            members = Player.objects.filter(clan=clan).order_by('-clan_admin', 'name') \
+                            .values('id', 'name','clan_admin')
+            kwargs['members'] = members
 
-        gameswith_ach = Game.objects \
-            .filter(player=kwargs['player'],
-                    achievements__pk=OuterRef('pk'))
+            # flatten members' names into a list for Game filterings
+            member_ids = [ m['id'] for m in members ]
+
+            # for a clan, we want to filter games from any of its members
+            base_game_qs = Game.objects.filter(player__in=member_ids)
+
+        elif 'playername' in kwargs:
+            kwargs['isClan'] = False
+            kwargs['header_key'] = 'players'
+            player = get_object_or_404(Player, name=kwargs['playername'])
+            kwargs['player_or_clan'] = player
+            base_game_qs = Game.objects.filter(player=player.id)
+
+        else:
+            logger.error('single player/clan view without clan or player name')
+            raise ValueError
+
+        kwargs['ascensions'] = \
+            base_game_qs.filter(won=True).order_by('-endtime')
+        # 10 most recent games
+        kwargs['recentgames'] = \
+            base_game_qs.order_by('-endtime')[:10]
+
+        # post 2021 TODO: this currently only gets the deaths, no other details
+        kwargs['uniquedeaths'] = sorted(list(uniqdeaths.compile_unique_deaths(base_game_qs)))
+
+        # a little subquerying for achievements...
+        gameswith_ach = base_game_qs.filter(achievements__pk=OuterRef('pk'))
         achievements = Achievement.objects.annotate(obtained=Exists(gameswith_ach))
         kwargs['achievements'] = achievements
 
-        kwargs['ascensions'] = \
-            Game.objects.filter(player=kwargs['player'], won=True).order_by('-endtime')
-        # 10 most recent games
-        kwargs['recentgames'] = \
-            Game.objects.filter(player=kwargs['player']).order_by('-endtime')[:10]
         return kwargs
 
 class ClanMgmtView(View):

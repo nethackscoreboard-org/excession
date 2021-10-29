@@ -1,6 +1,12 @@
-<!-- Expects "player", "game", "ascview" to be present in context -->
+{# Expects "playername", "game", "ascview", "isClan" to be present in context #}
 <tr class="{% if game.won %} won {% else %} lost {% endif %}">
-  <td>{{ player.name }}</td>
+  <td>
+    {% if isClan %}
+      {% include "plink.html" with name=playername %}
+    {% else %}
+      {{ playername }}
+    {% endif %}
+  </td>
   <td class="nowrap">
     {{ game.rrga }}
     <!-- TODO: old scoreboard had something here for marking clan-unique
