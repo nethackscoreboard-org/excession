@@ -61,7 +61,7 @@ side. Parameters:
         {% for clan in allboards|get_dict_field:identifier|get_dict_field:"clans" %}
           <tr>
             <td class="num dim">{{ forloop.counter }}</td>
-            <td>{{ clan.name }}</td>
+            <td>{% include "clink.html" with name=clan.name %}</td>
             <td class="rjust">
               {% if subfield is None %}
                 {{ clan|get_model_field:field }}
