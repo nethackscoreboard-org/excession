@@ -19,6 +19,13 @@ def wipe_leaderboard_fields(entity):
 
 
 @transaction.atomic
+def reset_source_file_positions():
+    for src in Source.objects.all():
+        src.file_pos = 0
+        src.save()
+
+
+@transaction.atomic
 def clear_player_and_clan_fields():
     for player in Player.objects.all():
         wipe_leaderboard_fields(player)
@@ -30,14 +37,19 @@ def clear_player_and_clan_fields():
 def wipe_games():
     Game.objects.all().delete()
     clear_player_and_clan_fields()
+    reset_source_file_positions()
 
 
 @transaction.atomic
 def wipe_all_but_clans():
-    Clan.objects.all().delete()
-    Player.objects.all().delete()
+    Achievement.objects.all().delete()
+    Conduct.objects.all().delete()
+    Trophy.objects.all().delete()
+    Source.objects.all().delete()
     User.objects.all().delete()
+    Game.objects.all().delete()
     clear_player_and_clan_fields()
+    reset_source_file_positions()
 
 
 @transaction.atomic
@@ -81,12 +93,15 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        # Further TODO: print statements should reflect which models got wiped
         if 'all' in options:
             wipe_all()
+            print('wiped everything')
         elif 'all-but-clans' in options:
             wipe_all_but_clans()
+            print('wiped all except player/clan relationships')
         elif 'non-fixtures' in options:
             wipe_non_fixtures()
+            print('wiped all non-static data')
         else:
             wipe_games()
+            print('wiped all games')
