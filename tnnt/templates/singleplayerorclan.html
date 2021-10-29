@@ -1,8 +1,10 @@
+{% load static %}
 <!doctype html>
 <html>
 <head>
   <title>TNNT::{{ player_or_clan.name }}</title>
   {% include "headlinks.html" %}
+  <script type="text/javascript" src="{% static 'js/ach-collapse.js' %}"></script>
 </head>
 
 <body>
@@ -189,9 +191,10 @@
 
 <!-- == ACHIEVEMENTS ====================================================== -->
 
-<h2 id="achievements">Achievements</h2>
+<h2>Achievements</h2>
 <div class="achieve-top">
-  <table>
+  <p id="ach-hide">[hide table]</p>
+  <table id="achievements-table">
     <thead>
       <tr class="framed">
         <th></th>

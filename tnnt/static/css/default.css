@@ -205,6 +205,16 @@ div.achieve-top table tbody tr:last-child {
   border-bottom: none;
 }
 
+#ach-hide {
+  text-align: center;
+  margin-top: 0;
+  cursor: pointer;
+}
+
+#ach-hide:hover {
+  color: #fd0;
+}
+
 /* style for the attained achievements */
 
 .achieved {
@@ -224,6 +234,7 @@ div.achieve-summary {
   color: #f2f5ff;
   position: relative;
   width: 100%;
+  min-width: 35em;
   background-color: #224;
   border-radius: 5px;
   margin-top: 0.6em;
