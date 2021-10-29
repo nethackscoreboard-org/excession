@@ -68,6 +68,12 @@ class LeaderboardBaseFields(models.Model):
     max_score_asc          = models.ForeignKey('Game', null=True, on_delete=models.SET_NULL, related_name='+')
     first_asc              = models.ForeignKey('Game', null=True, on_delete=models.SET_NULL, related_name='+')
 
+    # Return a string denoting the ascension ratio of this player or clan.
+    def ratio(self):
+        if self.total_games < 1:
+            return "N/A"
+        return '{:.2f}%'.format(self.wins * 100 / self.total_games)
+
 class Clan(LeaderboardBaseFields):
     name     = models.CharField(max_length=128, unique=True)
     # clan admin can configure message
@@ -96,11 +102,6 @@ class Player(LeaderboardBaseFields):
     invites    = models.ManyToManyField(Clan, related_name='invitees')
     # link to User model for web logins
     user       = models.OneToOneField(User, on_delete=models.PROTECT, null=True)
-
-    # Return a string denoting the ascension ratio of this player.
-    # This can assume that total_games > 0, but wins could be 0.
-    def ratio(self):
-        return '{:.2f}%'.format(self.wins * 100 / self.total_games)
 
     # Compute this player's streaks, and return them as a list of Streaks
     # containing the games in the streak and whether they can be continued.
