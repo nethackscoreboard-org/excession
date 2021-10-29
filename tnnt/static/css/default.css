@@ -95,10 +95,6 @@ table.trophies {
   max-width: 70%;
 }
 
-table.clans {
-  max-width: 70%;
-}
-
 /* guard against other sorts of tables directly in the page body and not in any
  * containing div overflowing wildly */
 body > table {
@@ -156,6 +152,11 @@ td.nowrap {
 span.clan {
   font-size: 200%;
   font-weight: 400;
+  display: block;
+}
+
+span.clan a {
+  text-decoration: none;
 }
 
 /* Non-breakable text box with dimmed additional information, used for

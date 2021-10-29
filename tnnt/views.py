@@ -157,6 +157,44 @@ class PlayersView(TemplateView):
         kwargs['players'] = Player.objects.order_by('-wins', 'name')
         return kwargs
 
+class ClansView(TemplateView):
+    template_name = 'clans.html'
+
+    def get_context_data(self, **kwargs):
+        # Query for player-clan relationships.
+        plr2clan = list(Player.objects.filter(clan__isnull=False)
+                        .annotate(clan_name=F('clan__name'))
+                        .order_by('name')
+                        .values('name','clan_name','clan_admin'))
+
+        # convert:
+        # [{'name': 'bob', 'clan_name': 'foo', 'clan_admin': True}, ...]
+        #   => { 'foo': [{ 'name': 'bob', 'admin': True}, ...] }
+        clan_members = {}
+        for plr in plr2clan:
+            pname, cname = plr['name'], plr['clan_name']
+            if not cname in clan_members:
+                # new clan, add it as new list
+                clan_members[cname] = []
+            clan_members[cname].append({
+                'name': pname,
+                'admin': plr['clan_admin']
+            })
+
+        # All clans list, convert to list to only query db once.
+        clanlist = list(Clan.objects.order_by('-wins', 'name').values())
+
+        # Now insert the lists of members.
+        for clan in clanlist:
+            if not clan['name'] in clan_members:
+                logging.error('Clan %s exists in db but has no members!', clan['name'])
+                continue
+            clan['members'] = clan_members[clan['name']]
+
+        # Pass on to template.
+        kwargs['clans'] = clanlist
+        return kwargs
+
 class SinglePlayerView(TemplateView):
     template_name = 'singleplayer.html'
 

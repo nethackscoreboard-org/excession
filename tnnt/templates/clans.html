@@ -1,0 +1,76 @@
+<!doctype html>
+
+<html>
+
+<head>
+  <title>TNNT::Clans</title>
+  {% include "headlinks.html" %}
+</head>
+
+<body>
+
+{% include "header.html" with page='clans' %}
+
+<h2>All Clans</h2>
+<table class="clans">
+  <thead>
+    <tr class="framed">
+      <th>clan</th>
+      <th>wins</th>
+      <th>combos</th>
+      <th>achieve</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for clan in clans %}
+      <tr>
+
+        {# === clan name / members ===================================== #}
+        <td>
+          <span class="clan">
+            {% include "clink.html" with name=clan.name %}
+          </span>
+
+          {% for plr in clan.members %}
+            <span {% if plr.admin %}class="plradmin"{% endif %}>
+              {% include "plink.html" with name=plr.name %}
+            </span>
+          {% endfor %}
+          <span class="subinfo">
+            {{ clan.members|length }}
+            {% if clan.members|length > 1 %}
+              players
+            {% else %}
+              player
+            {% endif %}
+          </span>
+        </td>
+
+        {# === clan ascension count ==================================== #}
+        <td class="num">
+          <span class="clan">{{ clan.wins }}</span>
+        </td>
+
+        {# === clan unique ascension combo count ======================= #}
+        <td class="num">
+          <span class="clan">{{ clan.unique_ascs }}</span>
+        </td>
+
+        {# === clan achievements count ================================= #}
+        <td class="num">
+          <span class="clan">{{ clan.unique_achievements }}</span>
+        </td>
+
+      </tr>
+    {% empty %}
+      <tr>
+        <td colspan=5 class="noclans">no clans exist at the moment</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+</body>
+
+</html>
+
