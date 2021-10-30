@@ -178,14 +178,6 @@ class LeaderboardsView(TemplateView):
         kwargs['leaderboards'] = leaderboards
         return kwargs
 
-    # TODO: for debugging and db stats tracking only. Delete this later.
-    def get(self, request, *args, **kwargs):
-        strt_q = len(connection.queries)
-        rendered = render(request, self.template_name, self.get_context_data(**kwargs))
-        end_q = len(connection.queries)
-        logger.debug('metrics: leaderboards executed %s queries', end_q - strt_q)
-        return rendered
-
 class PlayersView(TemplateView):
     template_name = 'players.html'
 
