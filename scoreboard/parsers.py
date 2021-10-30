@@ -1,19 +1,23 @@
-from django.db.models import fields
 from rest_framework.parsers import BaseParser
-from rest_framework import serializers
-from datetime import date, datetime, timedelta, timezone
-from scoreboard.models import Game
-import re
+
+dec_fields = ['points', 'turns', 'realtime', 'maxlvl', 'starttime', 'endtime']
+hex_fields = [
+    'flags', 'achieve', 'conduct', 'tnntachieve0', 'tnntachieve1', 'tnntachieve2', 'tnntachieve3', 'tnntachieve4'
+]
+
+
+def convert_if_numeric(key, value):
+    if key in dec_fields:
+        return int(value, 10)
+    elif key in hex_fields:
+        return int(value, 16)
+    else:
+        return value
+
 
 class XlogParser(BaseParser):
     delimiter = '\t'
     separator = '='
-
-    def __convert__(self, value):
-        if re.match('^[0-9]+$', value) or re.match('^0x[0-9a-fA-F]+$', value):
-            return int(value, 0)
-        else:
-            return value
 
     def parse(self, stream, media_type=None, parser_context=None):
         """
@@ -28,7 +32,7 @@ class XlogParser(BaseParser):
         """
         return [
             {
-                k: self.__convert__(v)
+                k: convert_if_numeric(k, v)
                 for k, v in [
                     i.split(self.separator)
                     for i in line.rstrip().split(self.delimiter)
