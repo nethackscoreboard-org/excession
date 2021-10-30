@@ -42,14 +42,13 @@ def wipe_games():
 
 @transaction.atomic
 def wipe_all_but_clans():
+    Game.objects.all().delete()
+    clear_player_and_clan_fields()
+    reset_source_file_positions()
     Achievement.objects.all().delete()
     Conduct.objects.all().delete()
     Trophy.objects.all().delete()
     Source.objects.all().delete()
-    User.objects.all().delete()
-    Game.objects.all().delete()
-    clear_player_and_clan_fields()
-    reset_source_file_positions()
 
 
 @transaction.atomic
