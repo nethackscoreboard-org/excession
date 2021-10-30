@@ -4,6 +4,9 @@ from scoreboard.models import Player
 from .settings import DGL_DATABASE_PATH
 import sqlite3
 import crypt
+import logging
+
+logger = logging.getLogger() # use root logger
 
 def get_dgl_cursor():
     # open in read-only mode
@@ -23,30 +26,36 @@ def find_player(findname):
             uname = dgl_curs.execute('SELECT username FROM dglusers WHERE username = ?',
                                      (findname,)).fetchone()
         except sqlite3.Error as sqlite_e:
-            print('ERROR connecting to or executing SQL on sqlite database')
-            print('  db path:', DGL_DATABASE_PATH)
-            print('  username:', username)
+            logger.error('ERROR connecting to or executing SQL on sqlite database (get username)')
+            logger.error('  db path:', DGL_DATABASE_PATH)
+            logger.error('  username:', username)
         if uname is None:
             # not found in dgl, doesn't apparently exist
+            logger.info("find_player attempted but '%s' doesn't exist either in dgl db or backend db",
+                        findname)
             raise e
         else:
             player = Player(name=findname, clan=None, clan_admin=False)
             player.save()
+            logger.info('find_player created a new player who exists in dgl db with name "%s"',
+                        findname)
             return player
 
 class HdfAuthBackend(BaseBackend):
 
     def authenticate(self, request, username=None, password=None):
+        logger.info('Attempting to authenticate username %s', username)
         try:
             dgl_curs = get_dgl_cursor()
             # get hashed salted password from dgl
             pwd_hash = dgl_curs.execute('SELECT password FROM dglusers WHERE username = ?', (username,)).fetchone()
         except sqlite3.Error as e:
-            print('ERROR connecting to or executing SQL on sqlite database')
-            print('  db path:', DGL_DATABASE_PATH)
-            print('  username:', username)
+            logger.error('ERROR connecting to or executing SQL on sqlite database (get password)')
+            logger.error('  db path:', DGL_DATABASE_PATH)
+            logger.error('  username:', username)
             return None
         if pwd_hash is None:
+            logger.info("%s tried to log in but doesn't exist in dgl db", username)
             # doesn't exist in dgl, can't join site
             return None
         else:
@@ -54,11 +63,13 @@ class HdfAuthBackend(BaseBackend):
             pwd_hash = pwd_hash[0]
         # compare it against submitted password with crypt
         if crypt.crypt(password, pwd_hash) != pwd_hash:
-            print('failed login attempt by', username)
+            logger.info('%s tried to login but failed due to bad password',
+                        username)
             return None
 
         # success! this is the correct dgl password. look up the user or create
         # if doesn't exist (TNNT login and registration are one and the same)
+        logger.info('%s authenticated against dgl password', username)
         try:
             user = User.objects.get(username=username)
         except User.DoesNotExist:
@@ -66,10 +77,12 @@ class HdfAuthBackend(BaseBackend):
             user.is_staff = False
             user.is_superuser = False
             user.save()
+            logger.info('saved new User with name = %s', username)
             player = find_player(username)
             # link to the User record
             player.user = user
             player.save()
+            logger.info('linked new User to its Player with name = %s', username)
         return user
 
     def get_user(self, user_id):
