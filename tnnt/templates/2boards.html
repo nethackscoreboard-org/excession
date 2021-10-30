@@ -1,23 +1,15 @@
 {% comment %}
-This template shows the player and clan leaderboards for one statistic side by
-side. Parameters:
-  identifier  - Unique string describing leaderboard, e.g. "mostasc". Hooks into
-                Javascript to identify the element.
-  title       - Human readable title.
-  columntitle - Human readable title of the stat column.
-  field       - The LeaderboardBaseField to look up.
-  subfield    - Either None, or the name of a subfield in that
-                LeaderboardBaseField (for instance, on the fastest turncount
-                board, if field is "lowest_turncount_asc" then subfield will be
-                "turns").
-
-  Expects the larger context to provide a dictionary "allboards" with
-  identifier as one of its keys; the value for identifier will in turn be a
-  dictionary with keys "player" and "clan".
+  This template shows the player and clan leaderboards for one statistic side by
+  side.
+  Expects the larger context to provide a dictionary "board" containing an "id"
+  and a list of player and clan dictionaries.
 {% endcomment %}
-{% load get_lb_field %} <!-- TODO: change this filename -->
 
-<div class="leaderboard-container" id="leaderboard-{{identifier}}">
+{% comment %}
+  Leaderboard id is "leaderboard-" + the value of the option in the
+  leaderboard-select. This is used by the javascript that switches them.
+{% endcomment %}
+<div class="leaderboard-container" id="leaderboard-{{ board.id }}">
   <h2>{{title}}</h2>
   <div class="row leaderboard">
     <table>
@@ -25,24 +17,30 @@ side. Parameters:
         <tr class="framed">
           <th colspan=2>player</th>
           <th>clan</th>
-          <th>{{columntitle}}</th>
+          <th>{{ board.columntitle }}</th>
         </tr>
       </thead>
       <tbody>
-        {% for player in allboards|get_dict_field:identifier|get_dict_field:"players" %}
+        {% for player in board.players %}
+          {% comment %}
+            player is not a Player object - it is a dict containing 'name',
+            'clan', 'stat', and optionally 'dumplog'
+          {% endcomment %}
           <tr>
             <td class="num dim">{{ forloop.counter }}</td>
             <td>{% include "plink.html" with name=player.name %}</td>
-            <td>{% include "clink.html" with name=player.clan.name %}</td>
+            <td>
+              {% if "clan" in player %}
+                {% include "clink.html" with name=player.clan %}
+              {% endif %}
+            </td>
             <td class="rjust">
-              {% if subfield is None %}
-                {{ player|get_model_field:field }}
+              {% if "dumplog" in player %}
+                <a href="{{ player.dumplog }}">
+                  {{ player.stat }}
+                </a>
               {% else %}
-                {% with game=player|get_game_field:field %}
-                  <a href="{{ game.get_dumplog }}">
-                    {{ game|get_model_field:subfield }}
-                  </a>
-                {% endwith %}
+                {{ player.stat }}
               {% endif %}
             </td>
           </tr>
@@ -54,23 +52,21 @@ side. Parameters:
       <thead>
         <tr class="framed">
           <th colspan=2>clan</th>
-          <th>{{columntitle}}</th>
+          <th>{{ board.columntitle }}</th>
         </tr>
       </thead>
       <tbody>
-        {% for clan in allboards|get_dict_field:identifier|get_dict_field:"clans" %}
+        {% for clan in board.clans %}
           <tr>
             <td class="num dim">{{ forloop.counter }}</td>
             <td>{% include "clink.html" with name=clan.name %}</td>
             <td class="rjust">
-              {% if subfield is None %}
-                {{ clan|get_model_field:field }}
+              {% if "dumplog" in clan %}
+                <a href="{{ clan.dumplog }}">
+                  {{ clan.stat }}
+                </a>
               {% else %}
-                {% with game=clan|get_game_field:field %}
-                  <a href="{{ game.get_dumplog }}">
-                    {{ game|get_model_field:subfield }}
-                  </a>
-                {% endwith %}
+                {{ clan.stat }}
               {% endif %}
             </td>
           </tr>
