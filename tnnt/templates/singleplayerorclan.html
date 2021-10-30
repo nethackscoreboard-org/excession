@@ -53,7 +53,10 @@
     <td>distinct achievements</td>
     <td class="num">{{ player_or_clan.unique_achievements }}</td>
   </tr>
-
+  <tr>
+    <td>unique deaths</td>
+    <td class="num">{{ player_or_clan.unique_deaths }}</td>
+  </tr>
 </table>
 
 <!-- == TROPHIES ========================================================== -->
@@ -233,7 +236,7 @@
 
 {% if uniquedeaths|length > 0 %}
   {# post 2021 TODO: show time of achievement and possibly dumplog; for clans, show player #}
-  <h2 id="">Unique Deaths</h2>
+  <h2>Unique Deaths</h2>
   <table>
     <thead>
       <tr class="framed">
