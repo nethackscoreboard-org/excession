@@ -15,6 +15,13 @@ def wipe_leaderboard_fields(entity):
     entity.total_games = 0
     entity.wins = 0
     entity.trophies.clear()
+    entity.lowest_turncount_asc = None
+    entity.fastest_realtime_asc = None
+    entity.max_conducts_asc = None
+    entity.max_achieves_game = None
+    entity.min_score_asc = None
+    entity.max_score_asc = None
+    entity.first_asc = None
     entity.save()
 
 
@@ -90,6 +97,11 @@ class Command(BaseCommand):
             action='store_true',
             help='Delete all objects from all models, except those that come from static fixtures.',
         )
+        parser.add_argument(
+            '--games',
+            action='store_true',
+            help='Delete every Game, clear leaderboard data aggregate from Player/Clan.',
+        )
 
     def handle(self, *args, **options):
         if options['all']:
@@ -101,6 +113,8 @@ class Command(BaseCommand):
         elif options['non_fixtures']:
             wipe_non_fixtures()
             print('wiped all non-static data')
-        else:
+        elif options['games']:
             wipe_games()
             print('wiped all games')
+        else:
+            print('please choose one of: `--all`, `--all-but-clans`, `--non-fixtures` or `--games`')
