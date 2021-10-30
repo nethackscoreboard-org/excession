@@ -18,46 +18,19 @@
   <div id="leaderboard-combobox">
     <label for="boards">Select leaderboard: </label>
     <select name="boards" id="boards-combobox">
-      <option value="mostasc">Most Ascensions</option>
-      <option value="firstasc">Earliest Ascension</option>
-      <option value="minturns">Lowest Turn Count</option>
-      <option value="mintime">Fastest Realtime</option>
-      <option value="maxcond">Most Conducts in One Ascension</option>
-      <option value="mostachgame">Most Achievements in One Game</option>
-      <option value="mostach">Most Achievements Overall</option>
-      <option value="minscore">Lowest Score</option>
-      <option value="maxscore">Highest Score</option>
-      <option value="longstreak">Longest Streak</option>
-      <option value="uniquedeaths">Most Unique Deaths</option>
-      <option value="uniqueasc">Most Unique Ascension Combos</option>
-      <option value="mostgames">Most Games over 1000 Turns</option>
+      {% for board in leaderboards %}
+        <option value="{{ board.id }}">{{ board.title }}</option>
+      {% endfor %}
     </select>
     {# <button id="player-clan-switch">Switch to Clans</button> #}
   </div>
-  <div id="next-board" class="board-lr-move">&raquo;</div> <!--TODO this doesn't do anything yet-->
+  <div id="next-board" class="board-lr-move">&raquo;</div>
 </div>
 <hr>
 
-{% comment %}
-  Leaderboard id is "leaderboard-" + the value of the option in the
-  leaderboard-select. This is used by the javascript that switches them.
-  The leaderboards should appear in the same order they appear in the switch
-  above. It'll work fine if not, but that's bad UX.
-{% endcomment %}
-
-{% include "2boards.html" with identifier="mostasc" title="Most Ascensions" field="wins" subfield=None columntitle="wins" %}
-{% include "2boards.html" with identifier="firstasc" title="Earliest Ascension" field="first_asc" subfield="endtime" columntitle="time" %}
-{% include "2boards.html" with identifier="minturns" title="Lowest Turncount" field="lowest_turncount_asc" subfield="turns" columntitle="turns" %}
-{% include "2boards.html" with identifier="mintime" title="Fastest Realtime" field="fastest_realtime_asc" subfield="wallclock" columntitle="wallclock" %}
-{% include "2boards.html" with identifier="maxcond" title="Most Conducts in One Ascension" field="max_conducts_asc" subfield="maxcond" columntitle="conducts" %}
-{% include "2boards.html" with identifier="mostachgame" title="Most Achievements in One Game" field="max_achieves_game" subfield="mostach" columntitle="achievements" %}
-{% include "2boards.html" with identifier="mostach" title="Most Achievements Overall" field="unique_achievements" subfield=None columntitle="achievements" %}
-{% include "2boards.html" with identifier="minscore" title="Lowest Score" field="min_score_asc" subfield="points" columntitle="points" %}
-{% include "2boards.html" with identifier="maxscore" title="Highest Score" field="max_score_asc" subfield="points" columntitle="points" %}
-{% include "2boards.html" with identifier="longstreak" title="Longest Streak" field="longest_streak" subfield=None columntitle="streak length" %}
-{% include "2boards.html" with identifier="uniquedeaths" title="Most Unique Deaths" field="unique_deaths" subfield=None columntitle="deaths" %}
-{% include "2boards.html" with identifier="uniqueasc" title="Most Unique Ascension Combos" field="unique_ascs" subfield=None columntitle="combos" %}
-{% include "2boards.html" with identifier="mostgames" title="Most Games over 1000 Turns" field="games_over_1000_turns" subfield=None columntitle="games" %}
+{% for board in leaderboards %}
+  {% include "2boards.html" %}
+{% endfor %}
 
 </body>
 

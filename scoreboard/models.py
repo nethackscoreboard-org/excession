@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime, timedelta, timezone
 from tnnt import settings
+from tnnt import dumplog_utils
 
 # If adding any more models to this file, be sure to add a deletion for them in
 # wipe_db.py.
@@ -65,6 +66,9 @@ class LeaderboardBaseFields(models.Model):
     max_conducts_asc       = models.ForeignKey('Game', null=True, on_delete=models.SET_NULL, related_name='+')
     max_achieves_game      = models.ForeignKey('Game', null=True, on_delete=models.SET_NULL, related_name='+')
     min_score_asc          = models.ForeignKey('Game', null=True, on_delete=models.SET_NULL, related_name='+')
+    # post 2021 TODO: Can this possibly be made into a "max score game" rather
+    # than an ascension field? At the upper extremes of points, whether or not
+    # you ascended is rather irrelevant.
     max_score_asc          = models.ForeignKey('Game', null=True, on_delete=models.SET_NULL, related_name='+')
     first_asc              = models.ForeignKey('Game', null=True, on_delete=models.SET_NULL, related_name='+')
 
@@ -276,10 +280,11 @@ class Game(models.Model):
     # Return a URL to the dumplog of this game.
     # ASSUMPTION: No two Games of the same player will have the same starttime.
     def get_dumplog(self):
-        return self.source.dumplog_fmt \
-            .replace('%n1', self.player.name[0]) \
-            .replace('%n', self.player.name) \
-            .replace('%st', str(int(self.starttime.timestamp())))
+        # TODO: Inefficient in that this requires lookups to Player and Source
+        # every time it's called on a different Game. Look into phasing this out.
+        return dumplog_utils.format_dumplog(self.source.dumplog_fmt,
+                                            self.player.name,
+                                            self.starttime)
 
     # Return a string containing this game's conducts in human readable form
     # e.g. "poly wish veg"

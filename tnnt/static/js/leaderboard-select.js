@@ -46,6 +46,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
         prevNextBoard(true);
     });
     document.addEventListener('keydown', function(event) {
+        if ((event.code === "ArrowLeft" || event.code === "ArrowRight")
+            && document.activeElement === combobox) {
+            // if the combo box is in focus, assume the arrow keys will change
+            // it and fire a change event, so do nothing here, otherwise we skip
+            // over a board
+            return;
+        }
         if (event.code == "KeyH" || event.code == "ArrowLeft") {
             prevNextBoard(false);
         }

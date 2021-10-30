@@ -1,15 +1,17 @@
 from django.views.generic import TemplateView
 from django.views import View
 from django.shortcuts import render, get_object_or_404
-from django.db.models import Exists, OuterRef, F, Count
-from scoreboard.models import Player, Clan, Game, Achievement
+from django.db.models import Exists, OuterRef, F, Count, Value
+from scoreboard.models import Player, Clan, Game, Achievement, Trophy
 from tnnt.forms import CreateClanForm, InviteMemberForm
 from django.http import HttpResponse, HttpResponseRedirect
 from . import hardfought_utils # find_player
+from . import dumplog_utils # format_dumplog
 from . import settings
 from datetime import datetime, timezone
 import logging
 from django.db import connection # TODO: for debugging only
+from tnnt import uniqdeaths
 
 logger = logging.getLogger() # use root logger
 
@@ -29,117 +31,151 @@ class LeaderboardsView(TemplateView):
     template_name = 'leaderboards.html'
 
     def get_context_data(self, **kwargs):
-        # Due to TNNT 2021 deadlines, this may need to be optimized more, or
-        # possibly it will never put too much strain on the database and it's
-        # fine. Time will tell.
+        # The players and clans lists produced in this function generally look
+        # like this:
+        # {
+        #    'name': 'someplayer',
+        #    OPTIONAL: (indicates this is a player in a clan)
+        #    'clan': 'someclan',
+        #    'stat': 304, # num of wins, etc.
+        #    OPTIONAL: (indicates template should render as a link)
+        #    'dumplog': 'https://hardfought.org/blah/blah.html'
+        # },
 
-        # These kwargs for annotate are exactly the same between Player and Clan
+        # These kwargs for annotate are exactly the same between Player and Clan.
+        # *_stt is the starttime of a game, and *_dlg is the dumplog format.
+        # These are necessary so that we can generate the dumplog here in the
+        # view rather than telling the Game to go look up its Player and Source
+        # for extra queries.
         annotate_kwargs = {
-        #     'firstasc': F('first_asc__endtime'),
-        #     'minturns': F('lowest_turncount_asc__turns'),
-        #     'mintime': F('fastest_realtime_asc__wallclock'),
-        #     'maxcond': Count('max_conducts_asc__conducts'),
-        #     'mostachgame': Count('max_achieves_game__achievements'),
-        #     'minscore': F('min_score_asc__points'),
-        #     'maxscore': F('max_score_asc__points'),
-        }
-        # Similarly these are the exact same. (All LeaderboardBaseFields that
-        # are foreign keys to Game go here.) This saves a number of database
-        # accesses to get the Game objects and their data when we use them
-        # in the template, but it will NOT prevent each Game from making a
-        # further two queries to Source and back to Player when get_dumplog is
-        # called on them.
-        select_related_args = [
-            'first_asc',
-            'lowest_turncount_asc',
-            'fastest_realtime_asc',
-            'max_conducts_asc',
-            'max_achieves_game',
-            'min_score_asc',
-            'max_score_asc'
-        ]
-        # TODO: We may want to come back to [the approach of putting the data in
-        # lists]... problem with putting it in lists is that you lose the
-        # ability to go into related models like Game
-        norm_playerdata = Player.objects.filter(total_games__gt=0) \
-            .select_related(*select_related_args) \
-            .annotate(**annotate_kwargs).all()
-        norm_clandata = Clan.objects.filter(total_games__gt=0) \
-            .select_related(*select_related_args) \
-            .annotate(**annotate_kwargs).all()
-        asc_playerdata = [ P for P in norm_playerdata if P.wins > 0 ]
-        asc_clandata = [ C for C in norm_clandata if C.wins > 0 ]
+            'firstasc':        F('first_asc__endtime'),
+            'firstasc_stt':    F('first_asc__starttime'),
+            'firstasc_dlg':    F('fastest_realtime_asc__source__dumplog_fmt'),
 
-        kwargs['allboards'] = {
-            'mostasc': {
-                # Note: all this sorting will put players with the same amount
-                # of wins (or whatever metric) in arbitrary order.
-                'players': sorted(asc_playerdata, key=lambda P: P.wins, reverse=True),
-                'clans': sorted(asc_clandata, key=lambda C: C.wins, reverse=True)
-            },
-            'firstasc': {
-                'players': sorted(asc_playerdata, key=lambda P: P.first_asc.endtime),
-                'clans': sorted(asc_clandata, key=lambda C: C.first_asc.endtime)
-            },
-            'minturns': {
-                'players': sorted(asc_playerdata, key=lambda P: P.lowest_turncount_asc.turns),
-                'clans': sorted(asc_clandata, key=lambda C: C.lowest_turncount_asc.turns)
-            },
-            'mintime': {
-                'players': sorted(asc_playerdata, key=lambda P: P.fastest_realtime_asc.wallclock),
-                'clans': sorted(asc_clandata, key=lambda C: C.fastest_realtime_asc.wallclock)
-            },
-            'maxcond': {
-                # These two are ripe for some optimization as well. For one, by
-                # using a predefined function and not a lambda it could bulk
-                # count the conducts. But this may still be possible to do as
-                # part of the large query.
-                'players': sorted(asc_playerdata,
-                                  key=lambda P: P.max_conducts_asc.conducts.count(),
-                                  reverse=True),
-                'clans': sorted(asc_clandata,
-                                key=lambda C: C.max_conducts_asc.conducts.count(),
-                                reverse=True)
-            },
-            'mostachgame': {
-                'players': sorted(norm_playerdata,
-                                  key=lambda P: 0 if P.max_achieves_game is None
-                                                else P.max_achieves_game.achievements.count(),
-                                  reverse=True),
-                'clans': sorted(norm_clandata,
-                                key=lambda C: 0 if C.max_achieves_game is None
-                                              else C.max_achieves_game.achievements.count(),
-                                reverse=True)
-            },
-            'mostach': {
-                'players': sorted(norm_playerdata, key=lambda P: P.unique_achievements, reverse=True),
-                'clans': sorted(norm_clandata, key=lambda C: C.unique_achievements, reverse=True)
-            },
-            'minscore': {
-                'players': sorted(asc_playerdata, key=lambda P: P.min_score_asc.points),
-                'clans': sorted(asc_clandata, key=lambda C: C.min_score_asc.points)
-            },
-            'maxscore': {
-                'players': sorted(asc_playerdata, key=lambda P: P.max_score_asc.points, reverse=True),
-                'clans': sorted(asc_clandata, key=lambda C: C.max_score_asc, reverse=True)
-            },
-            'longstreak': {
-                'players': sorted(asc_playerdata, key=lambda P: P.longest_streak, reverse=True),
-                'clans': sorted(asc_clandata, key=lambda C: C.longest_streak, reverse=True)
-            },
-            'uniquedeaths': {
-                'players': sorted(norm_playerdata, key=lambda P: P.unique_deaths, reverse=True),
-                'clans': sorted(norm_clandata, key=lambda C: C.unique_deaths, reverse=True)
-            },
-            'uniqueasc': {
-                'players': sorted(asc_playerdata, key=lambda P: P.unique_ascs, reverse=True),
-                'clans': sorted(asc_clandata, key=lambda C: C.unique_ascs, reverse=True)
-            },
-            'mostgames': {
-                'players': sorted(norm_playerdata, key=lambda P: P.games_over_1000_turns, reverse=True),
-                'clans': sorted(norm_clandata, key=lambda C: C.games_over_1000_turns, reverse=True)
-            },
+            'minturns':        F('lowest_turncount_asc__turns'),
+            'minturns_stt':    F('lowest_turncount_asc__starttime'),
+            'minturns_dlg':    F('lowest_turncount_asc__source__dumplog_fmt'),
+
+            'mintime':         F('fastest_realtime_asc__wallclock'),
+            'mintime_stt':     F('fastest_realtime_asc__starttime'),
+            'mintime_dlg':     F('fastest_realtime_asc__source__dumplog_fmt'),
+
+            # counting with distinct=True is needed here because we aggregate
+            # both conducts and achievements - the resulting SQL join produces
+            # (#cond x #ach) records per Game under the hood. Counting without
+            # distinct will result in that product being the result for both.
+            'maxcond':         Count('max_conducts_asc__conducts', distinct=True),
+            'maxcond_stt':     F('max_conducts_asc__starttime'),
+            'maxcond_dlg':     F('max_conducts_asc__source__dumplog_fmt'),
+
+            'mostachgame':     Count('max_achieves_game__achievements', distinct=True),
+            'mostachgame_stt': F('max_achieves_game__starttime'),
+            'mostachgame_dlg': F('max_achieves_game__source__dumplog_fmt'),
+
+            'minscore':        F('min_score_asc__points'),
+            'minscore_stt':    F('min_score_asc__starttime'),
+            'minscore_dlg':    F('min_score_asc__source__dumplog_fmt'),
+
+            'maxscore':        F('max_score_asc__points'),
+            'maxscore_stt':    F('max_score_asc__starttime'),
+            'maxscore_dlg':    F('max_score_asc__source__dumplog_fmt'),
         }
+
+        # Now do the actual queries. Only 2 queries!
+        allplayers = list(Player.objects
+                                .filter(total_games__gt = 0)
+                                .annotate(clanname=F('clan__name'), **annotate_kwargs)
+                                .values())
+        winplayers = [ plr for plr in allplayers if plr['wins'] > 0 ]
+        allclans = list(Clan.objects
+                            .filter(total_games__gt = 0)
+                            .annotate(**annotate_kwargs)
+                            .values())
+        winclans = [ clan for clan in allclans if clan['wins'] > 0 ]
+        for p in winplayers:
+            if 'shadow' in p['name']:
+                print('sdf', p['maxcond'])
+
+        # This function takes one of the four lists above, and formats each
+        # dictionary appropriately for consumption by the template.
+        def gen_leader_list(base_list, stat, descending):
+            list_out = []
+            # Note: this sorting will put players with the same amount of wins
+            # (or whatever metric stat is) in arbitrary order.
+            # post 2021 TODO: a good enhancement would be to order it by the
+            # first player to get there
+            for elem in sorted(base_list, key=lambda E: E[stat], reverse=descending):
+                if not stat in elem or elem[stat] is None:
+                    # could indicate a field was not correctly populated during
+                    # aggregation, such as a Player who has wins > 0 but
+                    # first_asc is None
+                    logger.error('malformed query result for leaderboards')
+                    logger.error('stat = %s element = %s', stat, str(elem))
+                    return []
+                # elem is either a player or a clan, but this loop doesn't care
+                # which
+                converted = {
+                    'name': elem['name'],
+                    'stat': elem[stat],
+                }
+                if 'clanname' in elem and elem['clanname'] is not None:
+                    # this is a player, and we want to show the clan
+                    converted['clan'] = elem['clanname']
+                if (stat + '_stt') in elem:
+                    # this is a stat representing a single game, so it has an
+                    # associated dumplog
+                    converted['dumplog'] = \
+                        dumplog_utils.format_dumplog(elem[stat + '_dlg'],
+                                                     elem['name'],
+                                                     elem[stat + '_stt'])
+                list_out.append(converted)
+            return list_out
+
+        # The order of these leaderboards determines the order on the page and
+        # in the combo box.
+        leaderboards = [
+            # if stat is absent, then just use id as the stat
+            { 'id': 'mostasc', 'stat': 'wins', 'descending': True, 'wins_only': True,
+              'title': 'Most Ascensions', 'columntitle': 'wins' },
+            { 'id': 'firstasc', 'descending': False, 'wins_only': True,
+              'title': 'Earliest Ascension', 'columntitle': 'time' },
+            { 'id': 'minturns', 'descending': False, 'wins_only': True,
+              'title': 'Lowest Turncount', 'columntitle': 'turns' },
+            { 'id': 'mintime', 'descending': False, 'wins_only': True,
+              'title': 'Fastest Realtime', 'columntitle': 'wallclock' },
+            { 'id': 'maxcond', 'descending': True, 'wins_only': True,
+              'title': 'Most Conducts in One Ascension', 'columntitle': 'conducts' },
+            { 'id': 'mostachgame', 'descending': True, 'wins_only': True,
+              'title': 'Most Achievements in One Game', 'columntitle': 'achievements' },
+            { 'id': 'mostach', 'descending': True, 'stat': 'unique_achievements',
+              'wins_only': False,
+              'title': 'Most Achievements Overall', 'columntitle': 'achievements' },
+            { 'id': 'minscore', 'descending': False, 'wins_only': True,
+              'title': 'Lowest Scoring Ascension', 'columntitle': 'points' },
+            { 'id': 'maxscore', 'descending': True, 'wins_only': True,
+              'title': 'Highest Scoring Ascension', 'columntitle': 'points' },
+            { 'id': 'longstreak', 'stat': 'longest_streak', 'descending': True,
+              'wins_only': True,
+              'title': 'Longest Streak', 'columntitle': 'streak length' },
+            { 'id': 'uniquedeaths', 'stat': 'unique_deaths', 'descending': True,
+              'wins_only': False,
+              'title': 'Most Unique Deaths', 'columntitle': 'deaths' },
+            { 'id': 'uniqueasc', 'stat': 'unique_ascs', 'descending': True,
+              'wins_only': True,
+              'title': 'Most Unique Ascension Combos', 'columntitle': 'combos' },
+            { 'id': 'mostgames', 'stat': 'games_over_1000_turns', 'descending': True,
+              'wins_only': False,
+              'title': 'Most Games over 1000 Turns', 'columntitle': 'games' },
+        ]
+        # now add player/clan data to the leaderboards
+        for L in leaderboards:
+            L['players'] = gen_leader_list(winplayers if L['wins_only'] else allplayers,
+                                           L['stat'] if 'stat' in L else L['id'],
+                                           L['descending'])
+            L['clans'] = gen_leader_list(winclans if L['wins_only'] else allclans,
+                                         L['stat'] if 'stat' in L else L['id'],
+                                         L['descending'])
+        kwargs['leaderboards'] = leaderboards
         return kwargs
 
     # TODO: for debugging and db stats tracking only. Delete this later.
@@ -157,27 +193,133 @@ class PlayersView(TemplateView):
         kwargs['players'] = Player.objects.order_by('-wins', 'name')
         return kwargs
 
-class SinglePlayerView(TemplateView):
-    template_name = 'singleplayer.html'
+class ClansView(TemplateView):
+    template_name = 'clans.html'
 
     def get_context_data(self, **kwargs):
-        kwargs['player'] = get_object_or_404(Player, name=kwargs['playername'])
+        # Query for player-clan relationships.
+        plr2clan = list(Player.objects.filter(clan__isnull=False)
+                        .annotate(clan_name=F('clan__name'))
+                        .order_by('name')
+                        .values('name','clan_name','clan_admin'))
 
-        gameswith_ach = Game.objects \
-            .filter(player=kwargs['player'],
-                    achievements__pk=OuterRef('pk'))
+        # convert:
+        # [{'name': 'bob', 'clan_name': 'foo', 'clan_admin': True}, ...]
+        #   => { 'foo': [{ 'name': 'bob', 'admin': True}, ...] }
+        clan_members = {}
+        for plr in plr2clan:
+            pname, cname = plr['name'], plr['clan_name']
+            if not cname in clan_members:
+                # new clan, add it as new list
+                clan_members[cname] = []
+            clan_members[cname].append({
+                'name': pname,
+                'admin': plr['clan_admin']
+            })
+
+        # All clans list, convert to list to only query db once.
+        clanlist = list(Clan.objects.order_by('-wins', 'name').values())
+
+        # Now insert the lists of members.
+        for clan in clanlist:
+            if not clan['name'] in clan_members:
+                logging.error('Clan %s exists in db but has no members!', clan['name'])
+                continue
+            clan['members'] = clan_members[clan['name']]
+
+        # Pass on to template.
+        kwargs['clans'] = clanlist
+        return kwargs
+
+class SinglePlayerOrClanView(TemplateView):
+    template_name = 'singleplayerorclan.html'
+
+    def get_context_data(self, **kwargs):
+        if 'clanname' in kwargs:
+            kwargs['isClan'] = True
+            kwargs['header_key'] = 'clans'
+            clan = get_object_or_404(Clan, name=kwargs['clanname'])
+            kwargs['player_or_clan'] = clan
+            members = Player.objects.filter(clan=clan).order_by('-clan_admin', 'name') \
+                            .values('id', 'name','clan_admin')
+            kwargs['members'] = members
+
+            # flatten members' names into a list for Game filterings
+            member_ids = [ m['id'] for m in members ]
+
+            # for a clan, we want to filter games from any of its members
+            base_game_qs = Game.objects.filter(player__in=member_ids)
+
+        elif 'playername' in kwargs:
+            kwargs['isClan'] = False
+            kwargs['header_key'] = 'players'
+            player = get_object_or_404(Player, name=kwargs['playername'])
+            kwargs['player_or_clan'] = player
+            base_game_qs = Game.objects.filter(player=player.id)
+
+        else:
+            logger.error('single player/clan view without clan or player name')
+            raise ValueError
+
+        kwargs['ascensions'] = \
+            base_game_qs.filter(won=True).order_by('-endtime')
+        # 10 most recent games
+        kwargs['recentgames'] = \
+            base_game_qs.order_by('-endtime')[:10]
+
+        # post 2021 TODO: this currently only gets the deaths, no other details
+        kwargs['uniquedeaths'] = sorted(list(uniqdeaths.compile_unique_deaths(base_game_qs)))
+
+        # a little subquerying for achievements...
+        gameswith_ach = base_game_qs.filter(achievements__pk=OuterRef('pk'))
         achievements = Achievement.objects.annotate(obtained=Exists(gameswith_ach))
         kwargs['achievements'] = achievements
 
-        kwargs['ascensions'] = \
-            Game.objects.filter(player=kwargs['player'], won=True).order_by('-endtime')
-        # 10 most recent games
-        kwargs['recentgames'] = \
-            Game.objects.filter(player=kwargs['player']).order_by('-endtime')[:10]
+        return kwargs
+
+class TrophiesView(TemplateView):
+    template_name = 'trophies.html'
+
+    def get_context_data(self, **kwargs):
+        # only do 3 queries!
+        trophies_def = list(Trophy.objects.values('name','description'))
+        clan2troph = list(Clan.objects
+                              .annotate(field=Value('clans'),
+                                        numtroph=Count('trophies__id'))
+                              .filter(numtroph__gt=0)
+                              .values('name','trophies__name','field'))
+        plr2troph = list(Player.objects
+                               .annotate(field=Value('players'),
+                                         numtroph=Count('trophies__id'))
+                               .filter(numtroph__gt=0)
+                               .values('name','trophies__name','field'))
+        alltroph = clan2troph + plr2troph
+
+        # we need to show all trophies regardless of anyone having them, so
+        # first populate the basic structure we need to send to the template
+        trophies = {}
+        for t in trophies_def:
+            trophies[t['name']] = {
+                'description' : t['description'],
+                'players': [],
+                'clans': []
+            }
+
+        # lists are [{'name': <player/clan name>, 'trophies__name': 'Both Genders', 'trophies__description': '<desc>', 'field': 'players'}, ...]
+        # convert to { 'Both Genders': { 'players': [...], 'clans': [...], 'description': '...' }, ...}
+        for a in alltroph:
+            plr_or_clan_name = a['name']
+            tname            = a['trophies__name']
+            field            = a['field'] # either "players" or "clans"
+            trophies[tname][field].append(plr_or_clan_name)
+
+        kwargs['trophies'] = trophies
         return kwargs
 
 class ClanMgmtView(View):
     template_name = 'clanmgmt.html'
+    # TODO: Clan interactions should maybe force a re-aggregation?
+    # Or if not, clan management page should say that data will be stale for up to X minutes
 
     def get_player(self, request_user):
         # Attempt to get the player linked with this user ID. Contains some

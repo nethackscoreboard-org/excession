@@ -1,0 +1,259 @@
+{% load static %}
+<!doctype html>
+<html>
+<head>
+  <title>TNNT::{{ player_or_clan.name }}</title>
+  {% include "headlinks.html" %}
+  <script type="text/javascript" src="{% static 'js/ach-collapse.js' %}"></script>
+</head>
+
+<body>
+
+{% include "header.html" with page=header_key %}
+{# TODO: it would be nice for most of these sections to have anchor links, but no pressing need for that #}
+
+<!-- === GENERAL INFORMATION & TROPHIES =================================== -->
+<!-- TODO: convert most HTML comments into brace-# form -->
+
+<h1>{{ player_or_clan.name }}</h1>
+
+<div class="row">
+
+<table>
+  <thead>
+    <tr class="framed"><th colspan=2>general information</th></tr>
+  </thead>
+  {% if not isClan and player_or_clan.clan %}
+    <tr>
+      <td>clan</td>
+      <td class="num">{% include "clink.html" with name=player_or_clan.clan.name %}</td>
+    </tr>
+  {% endif %}
+  <tr>
+    <td>total games</td>
+    <td class="num">{{ player_or_clan.total_games }}</td>
+  </tr>
+  <tr>
+    <td>games ascended</td>
+    <td class="num">{{ player_or_clan.wins }}</td>
+  </tr>
+  <tr>
+    <td>games over 1000 turns</td>
+    <td class="num">{{ player_or_clan.games_over_1000_turns }}</td>
+  </tr>
+  <tr>
+    <td>games scummed</td>
+    <td class="num">{{ player_or_clan.games_scummed }}</td>
+  </tr>
+  <tr>
+    <td>ascension ratio</td>
+    <td class="num">{{ player_or_clan.ratio }}</td>
+  </tr>
+  <tr>
+    <td>distinct achievements</td>
+    <td class="num">{{ player_or_clan.unique_achievements }}</td>
+  </tr>
+  <tr>
+    <td>unique deaths</td>
+    <td class="num">{{ player_or_clan.unique_deaths }}</td>
+  </tr>
+</table>
+
+<!-- == TROPHIES ========================================================== -->
+
+<table>
+  <thead>
+    <tr class="framed"><th colspan="2">trophies</th></tr>
+  </thead>
+  <tbody>
+    {% for tr in player_or_clan.trophies.all %}
+      <tr>
+        <td>{{ tr.name }}</td>
+        <!-- TODO: show when a trophy was attained (stretch goal) -->
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% if isClan %} {# we expect "members" to be defined #}
+  <table>
+    <thead>
+      <tr class="framed"><th>members</th></tr>
+    </thead>
+    <tbody>
+      {% for plr in members %}
+        <tr>
+          <td>
+            {% include "plink.html" with name=plr.name %}
+            {% if plr.clan_admin %} (admin){% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endif %}
+
+</div> {# class="row" #}
+
+{# TODO: possibly show leaderboard ranks (stretch goal, not necessary for 2021) #}
+
+<!-- == ASCENSIONS & RECENT GAMES ========================================= -->
+
+{% if player_or_clan.total_games > 0 %}
+  {% if player_or_clan.wins > 0 %}
+    <h2>ASCENSIONS</h2>
+    <table>
+      <thead>
+        <!-- TODO: old backend had this as a template, likely move the whole
+             table? to a template -->
+        <!-- [% INCLUDE game.tt head=1 aswon=1 class="framed" %] -->
+        <tr class="won framed">
+          <!-- there used to be a counter td here, which has been removed -->
+          <th>name</th>
+          <th>character</th>
+          <th>turns</th>
+          <th>score</th>
+          <th>duration</th>
+          <th>endtime</th>
+          <th colspan=2>conducts</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for game in ascensions %}
+          {% include "gamerow.html" with playername=game.player.name ascview=True %}
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %} {# wins > 0 #}
+  <h2>RECENT GAMES</h2>
+  <table>
+    <thead>
+      <tr class="framed">
+        <th>name</th>
+        <th>character</th>
+        <th>turns</th>
+        <th>score</th>
+        <th>duration</th>
+        <th>endtime</th>
+        <th colspan=2>death reason</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for game in recentgames %}
+        {% include "gamerow.html" with ascview=False %}
+      {% endfor %}
+    </tbody>
+  </table>
+{% endif %} {# games greater than 0 #}
+
+<!-- == STREAKS =========================================================== -->
+
+{# TODO: Currently only shown on Player view, streak computation for Clans' players is not shown #}
+{% if not isClan %}
+  {% if player.longest_streak > 0 %}
+    <h2>STREAKS</h2>
+    <table>
+      <thead>
+        <tr class="framed">
+          <th>&nbsp;</th>
+          <th>len</th>
+          <th>start</th>
+          <th>end</th>
+          <th>continuable</th>
+          <th>streak games</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% with streaks=player.get_streaks %}
+          {% for streak in streaks %}
+            <tr>
+              <td class="num dim">{{ forloop.counter }}</td>
+              <td class="num">{{ streak.games | length }}</td>
+              <td class="num">{{ streak.games.0.starttime }}</td>
+              <td class="num">
+                <!-- annoying construction -->
+                {% with lastgame=streak.games|last %}{{ lastgame.endtime }}{% endwith %}
+              </td>
+              <td class="num streak-continuable">
+                {% if streak.continuable %} &check; {% else %} &cross; {% endif %}
+              </td>
+              <td>
+                {% for g in streak.games %}
+                  <span class="streak">
+                    <a href="{{ g.get_dumplog }}">{{ g.rrga }}</a>
+                  </span>
+                {% endfor %}
+              </td>
+            </tr>
+          {% endfor %}
+        {% endwith %}
+      </tbody>
+    </table>
+  {% endif %} {# longest_streak greater than 0 #}
+{% endif %} {# not isClan #}
+
+<!-- == ACHIEVEMENTS ====================================================== -->
+
+<h2>Achievements</h2>
+<div class="achieve-top">
+  <p id="ach-hide">[hide table]</p>
+  <table id="achievements-table">
+    <thead>
+      <tr class="framed">
+        <th></th>
+        <th>Achievement</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for ach in achievements %}
+        <tr>
+          {% if ach.obtained %}
+            <td class="achieved">&check;</td>
+          {% else %}
+            <td class="not-achieved">&cross;</td>
+          {% endif %}
+          <td>{{ ach.name }}</td>
+          <td>{{ ach.description }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <!-- TODO: Make this a template so that singleclan can use it too? Actually,
+    how about most of the whole page? -->
+  <div class="achieve-summary">
+    {% with plr_ach=player_or_clan.unique_achievements tot_ach=achievements.count %}
+      <div class="achieve-bar"
+          style="width:{% widthratio plr_ach tot_ach 100 %}%"></div>
+      <div class="achieve-msg">
+        {{ plr_ach }} out of {{ tot_ach }} achievements attained
+      </div>
+    {% endwith %}
+  </div>
+</div>
+
+<!-- == UNIQUE DEATHS ===================================================== -->
+
+{% if uniquedeaths|length > 0 %}
+  {# post 2021 TODO: show time of achievement and possibly dumplog; for clans, show player #}
+  <h2>Unique Deaths</h2>
+  <table>
+    <thead>
+      <tr class="framed">
+        <th></th>
+        <th>Death</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for death in uniquedeaths %}
+        <tr>
+          <td class="num dim">{{ forloop.counter }}</td>
+          <td>{{ death }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endif %}
+
+</body>
+</html>
