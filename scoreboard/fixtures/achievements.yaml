@@ -435,13 +435,13 @@
 - model: scoreboard.achievement
   fields:
     name: "Part-time Statue"
-    description: "Survive stoning"
+    description: "Cure stoning"
     xlogfield: "tnntachieve0"
     bit: 61
 - model: scoreboard.achievement
   fields:
     name: "The Blob"
-    description: "Survive sliming"
+    description: "Cure sliming"
     xlogfield: "tnntachieve0"
     bit: 62
 - model: scoreboard.achievement
