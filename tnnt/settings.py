@@ -151,6 +151,11 @@ STATICFILES_DIRS = [ # why is this needed?
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Session expiration.
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_COOKIE_AGE = 15 * 60 # in seconds, so 15 minutes
+
 # Where you get taken after logging in/out
 
 LOGIN_REDIRECT_URL = '/clanmgmt'
