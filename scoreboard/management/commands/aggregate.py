@@ -221,8 +221,7 @@ def aggregatePlayerData():
             plr.max_achieves_game = \
                 gamesby_plr.annotate(nachieve=Count('achievements__id', distinct=True)) \
                 .order_by('-nachieve')[0]
-            # TODO: Should this exclude some TNNT-added conducts?
-            # For 2020 at least it didn't, so not a priority for 2021
+            # post 2021 TODO: Should this exclude some TNNT-added conducts?
             if plr.wins > 0:
                 plr.max_conducts_asc = \
                     winsby_plr.annotate(ncond=Count('conducts__id', distinct=True)) \
@@ -240,8 +239,8 @@ def aggregateClanData():
         clan_plrs = Player.objects.filter(clan=clan)
 
         # Basic aggregations can be computed pretty easily from the Players.
-        # TODO: test: because of atomic, players have been save()d but not
-        # actually committed to the database yet. Is this getting the right
+        # post 2021 TODO: test: because of atomic, players have been save()d but
+        # not actually committed to the database yet. Is this getting the right
         # info?
         aggrs_dict = clan_plrs.aggregate(Sum('total_games'),
                                          Sum('wins'),
@@ -286,8 +285,8 @@ def aggregateClanData():
             # qualifying games for that stat.
             # The [0] reference should be fine - only way that would error is if
             # the clan had no members.
-            # TODO: Should this instead be formatted without the minning and
-            # maxing and instead just be e.g. for minscore
+            # post 2021 TODO: Should this instead be formatted without the
+            # minning and maxing and instead just be e.g. for minscore
             # clan.min_score_asc = clan_plrs \
             #     .order_by('min_score_asc__points') \
             #     [0].min_score_asc
@@ -331,8 +330,9 @@ def aggregateClanData():
 class Command(BaseCommand):
     help = 'Compute aggregate data from the set of all games'
 
-    # TODO: move most of this file's logic to tnnt/aggregate.py so that it can
-    # be called on clan-membership-change events
+    # post 2021 TODO: move most of this file's logic to tnnt/aggregate.py so that it can
+    # be called on clan-membership-change events, subject to design discussion
+    # on if that is a sound idea
     def handle(self, *args, **options):
         # This will end up doing a bunch of writes. Force them to happen all at
         # once with atomic().

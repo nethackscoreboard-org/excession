@@ -22,7 +22,7 @@
       for instructions.
     </p>
     <form method="post">
-        {% csrf_token %} <!-- guard against cross-site submission of this POST -->
+      {% csrf_token %} {# guard against cross-site submission of this POST #}
     {{ form.as_table }}
     <button type="submit">Log In</button>
     </form>

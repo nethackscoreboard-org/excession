@@ -10,7 +10,6 @@ from . import dumplog_utils # format_dumplog
 from . import settings
 from datetime import datetime, timezone
 import logging
-from django.db import connection # TODO: for debugging only
 from tnnt import uniqdeaths
 
 logger = logging.getLogger() # use root logger
@@ -28,9 +27,9 @@ def bulk_upd_games(gamelist):
         # formatting, that function is used in aggregation
         g['rrga'] = '-'.join([g['role'], g['race'], g['gender0'], g['align0']])
 
-        # TODO: this is not ideal because it's an extra query per each ascension
-        # in the list. but perhaps not worth the headache of making all these
-        # preproc'd Game lists into Game-x-Conduct lists.
+        # post 2021 TODO: this is not ideal because it's an extra query per each
+        # ascension in the list. but perhaps not worth the headache of making
+        # all these preproc'd Game lists into Game-x-Conduct lists.
         # This used to be Game.conducts_as_str, whose description was:
         # > Return a string containing this game's conducts in human readable form
         # > e.g. "poly wish veg"
@@ -358,8 +357,6 @@ class TrophiesView(TemplateView):
 
 class ClanMgmtView(View):
     template_name = 'clanmgmt.html'
-    # TODO: Clan interactions should maybe force a re-aggregation?
-    # Or if not, clan management page should say that data will be stale for up to X minutes
 
     def get_player(self, request_user):
         # Attempt to get the player linked with this user ID. Contains some
@@ -391,7 +388,6 @@ class ClanMgmtView(View):
         user = self.request.user
         # we assume the player is already known to exist since both get() and
         # post() check for it
-        # TODO (lowish priority): player should be passed in as kwargs already.
         player = self.get_player(user)
 
         kwargs['me'] = player
@@ -419,7 +415,7 @@ class ClanMgmtView(View):
         if not request.user.is_authenticated:
             return HttpResponseRedirect('/login')
 
-        # TODO: This case is duplicated from the POST below. Ideally they should
+        # post 2021 TODO: This case is duplicated from the POST below. Ideally they should
         # be unified.
         try:
             self.get_player(request.user)
@@ -680,6 +676,9 @@ class ClanMgmtView(View):
         # A bit questionable whether the invite should be left in place or
         # removed here, but we decided that if a player leaves or is kicked from
         # the clan, it's cleaner if they have to ask for the invite again
+        # post 2021 TODO: hothraxxa and a couple others reported inviting
+        # someone and then them still showing up as an invite even after they
+        # accepted
         player.invites.remove(newclan)
         logger.info('%s accepted invite to clan %s',
                     player.name, newclan.name)
@@ -717,8 +716,8 @@ class ClanMgmtView(View):
 
     # Helper function triggered when "Rescind" is clicked on an invited player
     def rescind_invite(self, request, player, ctx):
-        # TODO? all of these helpers should test that the key is in POST, and if
-        # not, log an error and return
+        # post 2021 TODO? all of these helpers should test that the key is in
+        # POST, and if not, log an error and return
         rescindee_id = request.POST['rescind_id']
         rescindee = self.clan_admin_other_member_checks(request, player, ctx,
                                                         rescindee_id, "rescind")

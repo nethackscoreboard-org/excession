@@ -1,4 +1,4 @@
-# TODO: Once Game no longer depends on this function, move it out of its own
+# post 2021 TODO: Once Game no longer depends on this function, move it out of its own
 # file (to hardfought_utils perhaps). It's only in here right now because of
 # circular import errors.
 

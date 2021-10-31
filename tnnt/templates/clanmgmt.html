@@ -56,7 +56,6 @@
     <p>Clan members:</p>
     <ul class="clanlist">
       {% for member in members %}
-        <!-- TODO here: 1) link to players -->
         <li {% if member.id == me.id %}class="current-player"{% endif %}>
           {{member.name}} {% if member.clan_admin %}(admin){% endif %}
           {% if member.id != me.id and me.clan_admin %}
@@ -103,7 +102,6 @@
   {% if invites.all %}
     <p>The following clans have invited you: </p>
     <ul>
-      <!-- TODO: this should probably link to the clan? -->
       {% for othclan in invites %}
         <li>
           <form method="post" class="disguised-button">
@@ -120,11 +118,16 @@
     <p>You do not have any invites.</p>
   {% endif %}
 
-  <!-- FUTURE TODO:
+  <p class="footnote">
+    Please note that any changes in clan membership may not be reflected in
+    the clan's stats on the website for several minutes.
+  </p>
+  {% comment %}
+    post 2021 TODO:
       - if admin of a clan, clan message should be editable
       - anyone with a clan should see its message
       - players should be able to request being in a clan
-  -->
+  {% endcomment %}
 {% endif %}
 </article>
 

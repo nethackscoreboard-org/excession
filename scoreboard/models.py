@@ -32,7 +32,7 @@ class Achievement(models.Model):
     # The "perma-achievement" structure. Loaded from config.
     name        = models.CharField(max_length=128)
     description = models.CharField(max_length=128)
-    # TODO (post 2021): possibly an int primary key or string id for this, so it
+    # post 2021 TODO: possibly an int primary key or string id for this, so it
     # can be shown with the achievement and matches the one shown in-game
 
     # the xlog field name this achievement is encoded with
@@ -116,8 +116,8 @@ class Player(LeaderboardBaseFields):
         # an ascension.
         # If a game is eligible to continue MULTIPLE streaks at once (possible
         # with server shenanigans), it will continue only the oldest of those
-        # streaks (i.e. the one that comes first in streaks), and kill the rest
-        # (TODO: write this explicitly in the rules.)
+        # streaks (i.e. the one that comes first in streaks), and kill the rest.
+        #
         # ASSUMPTION: No two Games of the same player will ever have the same
         # starttime. If they did, it would be possible to have two candidate
         # games for continuing the streak and not know which one to count.
@@ -183,17 +183,17 @@ class GameManager(models.Manager):
             kwargs[key] = xlog_dict[key]
 
         # filter explore/wizmode games
-        # TODO: do something about magic numbers in this method
+        # post 2021 TODO: do something about magic numbers in this method
         if xlog_dict['flags'] & 0x1 or xlog_dict['flags'] & 0x2:
             return None
 
         # assign 'won' boolean
-        # TODO: do something about magic numbers in this method
+        # post 2021 TODO: do something about magic numbers in this method
         if xlog_dict['achieve'] & 0x100:
             kwargs['won'] = True
 
         # ditto for mines/soko
-        # TODO: do something about magic numbers in this method
+        # post 2021 TODO: do something about magic numbers in this method
         if xlog_dict['achieve'] & 0x600:
             kwargs['mines_soko'] = True
 
@@ -203,8 +203,8 @@ class GameManager(models.Manager):
         kwargs['realtime'] = timedelta(seconds=xlog_dict['realtime'])
         kwargs['wallclock'] = kwargs['endtime'] - kwargs['starttime']
 
-        # TODO: filter games here based on starttime and endtime being outside
-        # of the configured starttime and endtime for the tournament
+        # do not save a Game here if it partially or completely falls outside
+        # the time window of the tournament
         if (kwargs['starttime'] < settings.TOURNAMENT_START
             or kwargs['endtime'] > settings.TOURNAMENT_END):
             return None
@@ -239,8 +239,8 @@ class Game(models.Model):
     align        = models.CharField(max_length=16, null=True)
 
     # these are handled as python ints in an intermediate step
-    # TODO: check: how big are python ints?
-    # TODO: rename points => score
+    # post 2021 TODO: check: how big are python ints?
+    # post 2021 TODO: rename points => score
     points       = models.BigIntegerField(null=True)
     turns        = models.BigIntegerField()
 
@@ -281,7 +281,7 @@ class Game(models.Model):
     # Return a URL to the dumplog of this game.
     # ASSUMPTION: No two Games of the same player will have the same starttime.
     def get_dumplog(self):
-        # TODO: Inefficient in that this requires lookups to Player and Source
+        # post 2021 TODO: Inefficient in that this requires lookups to Player and Source
         # every time it's called on a different Game. Look into phasing this out.
         return dumplog_utils.format_dumplog(self.source.dumplog_fmt,
                                             self.player.name,

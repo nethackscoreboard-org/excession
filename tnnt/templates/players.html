@@ -23,6 +23,7 @@
       <th>ratio</th>
       <th>achieve</th>
       <th>maxcond</th>
+      <th>streak</th>
     </tr>
   </thead>
   <tbody>
@@ -54,7 +55,11 @@
             {{ plr.max_conducts_asc.conducts.count }}
           {% endif %}
         </td>
-        <!-- TODO: streak? -->
+        <td class="num">
+          {% if plr.longest_streak > 1 %}
+            {{ plr.longest_streak }}
+          {% endif %}
+        </td>
       </tr>
     {% endfor %}
   </tbody>

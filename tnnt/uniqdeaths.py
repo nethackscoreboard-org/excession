@@ -21,7 +21,7 @@ def compile_unique_deaths(gameQS):
     # applied.
     # This is primarily for aggregation, and runs somewhat faster than it would
     # if we wanted to return the players who got a death and when. This is a
-    # TODO for 2022.
+    # post 2021 TODO.
 
     # First, get all unique, un-normalized deaths.
     raw_uniq_deaths = \
@@ -30,7 +30,7 @@ def compile_unique_deaths(gameQS):
     # to automatically remove any duplicates produced by normalization.
     return set(normalize(d) for d in raw_uniq_deaths if not reject(d))
 
-# 2022 TODO: showing unique deaths of a player or clan:
+# post 2021 TODO: showing unique deaths of a player or clan:
 # 1. list(Game.objects.values_list('death', 'player__name', 'endtime'))
 # 2. iterate through list, filtering any death for which reject is True, and
 #    normalizing all death strings.

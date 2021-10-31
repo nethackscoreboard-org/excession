@@ -10,10 +10,9 @@
 <body>
 
 {% include "header.html" with page=header_key %}
-{# TODO: it would be nice for most of these sections to have anchor links, but no pressing need for that #}
+{# post 2021 TODO: it would be nice for most of these sections to have anchor links, but no pressing need for that #}
 
-<!-- === GENERAL INFORMATION & TROPHIES =================================== -->
-<!-- TODO: convert most HTML comments into brace-# form -->
+{# === GENERAL INFORMATION & TROPHIES =================================== #}
 
 <h1>{{ player_or_clan.name }}</h1>
 
@@ -59,7 +58,7 @@
   </tr>
 </table>
 
-<!-- == TROPHIES ========================================================== -->
+{# == TROPHIES ========================================================== #}
 
 <table>
   <thead>
@@ -69,7 +68,7 @@
     {% for tr in player_or_clan.trophies.all %}
       <tr>
         <td>{{ tr.name }}</td>
-        <!-- TODO: show when a trophy was attained (stretch goal) -->
+        {# post 2021 TODO: show when a trophy was attained (stretch goal) #}
       </tr>
     {% endfor %}
   </tbody>
@@ -95,9 +94,9 @@
 
 </div> {# class="row" #}
 
-{# TODO: possibly show leaderboard ranks (stretch goal, not necessary for 2021) #}
+{# post 2021 TODO: possibly show leaderboard ranks (stretch goal) #}
 
-<!-- == ASCENSIONS & RECENT GAMES ========================================= -->
+{# == ASCENSIONS & RECENT GAMES ========================================= #}
 
 {% if player_or_clan.total_games > 0 %}
 
@@ -111,9 +110,9 @@
 
 {% endif %} {# games > 0 #}
 
-<!-- == STREAKS =========================================================== -->
+{# == STREAKS =========================================================== #}
 
-{# TODO: Currently only shown on Player view, streak computation for Clans' players is not shown #}
+{# post 2021 TODO: Currently only shown on Player view, streak computation for Clans' players is not shown #}
 {% if not isClan %}
   {% if player.longest_streak > 0 %}
     <h2>STREAKS</h2>
@@ -136,7 +135,7 @@
               <td class="num">{{ streak.games | length }}</td>
               <td class="num">{{ streak.games.0.starttime }}</td>
               <td class="num">
-                <!-- annoying construction -->
+                {# annoying construction #}
                 {% with lastgame=streak.games|last %}{{ lastgame.endtime }}{% endwith %}
               </td>
               <td class="num streak-continuable">
@@ -157,7 +156,7 @@
   {% endif %} {# longest_streak greater than 0 #}
 {% endif %} {# not isClan #}
 
-<!-- == ACHIEVEMENTS ====================================================== -->
+{# == ACHIEVEMENTS ====================================================== #}
 
 <h2>Achievements</h2>
 <div class="achieve-top">
@@ -184,8 +183,6 @@
       {% endfor %}
     </tbody>
   </table>
-  <!-- TODO: Make this a template so that singleclan can use it too? Actually,
-    how about most of the whole page? -->
   <div class="achieve-summary">
     {% with plr_ach=player_or_clan.unique_achievements tot_ach=achievements.count %}
       <div class="achieve-bar"
@@ -197,7 +194,7 @@
   </div>
 </div>
 
-<!-- == UNIQUE DEATHS ===================================================== -->
+{# == UNIQUE DEATHS ===================================================== #}
 
 {% if uniquedeaths|length > 0 %}
   {# post 2021 TODO: show time of achievement and possibly dumplog; for clans, show player #}

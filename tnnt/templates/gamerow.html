@@ -9,8 +9,11 @@
   </td>
   <td class="nowrap">
     {{ game.rrga }}
-    <!-- TODO: old scoreboard had something here for marking clan-unique
-      ascensions with "markuniq" -->
+    {% comment %}
+      post 2021 TODO (possibly): old scoreboard had something here for marking
+      clan-unique ascensions (which no other clan had got yet) with "markuniq".
+      currently this data is not computed on the backend.
+    {% endcomment %}
   </td>
   <td class="num">{{ game.turns }}</td>
   <td class="num">
