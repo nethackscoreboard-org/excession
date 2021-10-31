@@ -796,3 +796,6 @@ class ClanMgmtView(View):
     # FUTURE TODO: functionality for a clanless player to raise a flag saying
     # "looking for a clan!" and all such players are listed either publicly or
     # to clan admins (probably publicly)
+    # FUTURE TODO: decline an invite
+    # FUTURE TODO: clan logos
+    # TODO: clan name of 🐱 breaks due to incompatible unicode collation or something

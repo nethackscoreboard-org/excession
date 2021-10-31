@@ -265,6 +265,7 @@ def aggregateClanData():
         # Unique deaths for the clan requires constructing a QuerySet of all
         # games played by clan members.
         gamesby_clan = Game.objects.filter(player__clan=clan)
+        # note: there is no winsby_clan because it doesn't seem needed
         clan.unique_deaths = len(uniqdeaths.compile_unique_deaths(gamesby_clan))
 
         # Unique ascs are still a one-liner.

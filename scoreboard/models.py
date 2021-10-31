@@ -81,6 +81,7 @@ class LeaderboardBaseFields(models.Model):
 class Clan(LeaderboardBaseFields):
     name     = models.CharField(max_length=128, unique=True)
     # clan admin can configure message
+    # post 2021 TODO: this isn't actually used yet
     message  = models.CharField(max_length=512, default='')
     # perhaps trophies could go in LeaderboardBaseFields but it's not actually a
     # leaderboard field so keeping it conceptually separate makes sense for now
