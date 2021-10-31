@@ -286,11 +286,6 @@ class Game(models.Model):
                                             self.player.name,
                                             self.starttime)
 
-    # Return a string containing this game's conducts in human readable form
-    # e.g. "poly wish veg"
-    def conducts_as_str(self):
-        return ' '.join(c.shortname for c in self.conducts.all())
-
     # Return a string of the form "Rol-Rac-Gen-Aln" typical in nethack parlance.
     # Importantly, this uses gender0 and align0.
     def rrga(self):

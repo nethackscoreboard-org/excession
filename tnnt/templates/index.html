@@ -99,188 +99,52 @@
 </article>
 
 <h2>Overall Statistics</h2>
- [% IF games.all.size %]
+{% if numgames > 0 %}
   <table>
     <tbody>
       <tr>
         <td>Clans</td>
-        <td>[% clans.all.size %]
+        <td>{{ numclans }}</td>
       </tr>
       <tr>
         <td>Players</td>
-        <td>[% players.all.size %]
+        <td>{{ numplayers }}</td>
       </tr>
       <tr>
         <td>Games</td>
-        <td>[% games.all.size %]
+        <td>{{ numgames }}</td>
       </tr>
       <tr>
         <td>Scummed games</td>
-        <td>[% games.scums %]
+        <td>{{ numscums }}</td>
       </tr>
       <tr>
         <td>Ascensions</td>
-        <td>[% games.ascs.size %]
+        <td>{{ numascs }}</td>
       </tr>
       <tr>
         <td>Ascending players</td>
-        <td>
-          [%
-            SET cnt = 0;
-            FOREACH p IN players.all.keys;
-              IF players.all.item(p).exists('ascs');
-                SET cnt = cnt + 1;
-              END;
-            END;
-            cnt;
-          %]
-        </td>
+        <td>{{ numascenders }}</td>
       </tr>
     </tbody>
   </table>
-[% ELSE %]
+{% else %}
   <p>No games played yet</p>
-[% END %]
+{% endif %}
 
-[%# ###########################################################################
-###############################################################################
-############################################################################ %]
-
- <h2>List of Top 10 Players</h2>
-
- [% IF players.all.size %]
-  <table>
-    <thead>
-      <tr class="framed">
-        <th>#</th>
-        <th>player</th>
-        <th>clan</th>
-        <th>games</th>
-        <th>wins</th>
-        <th>score</th>
-        <th>ach</th>
-      </tr>
-    </thead>
-    <tbody>
-      [% SET i = 1; FOREACH plr IN players.ordered %]
-        [% SET p = players.all.item(plr) %]
-        <tr class="framed">
-           <td>[% i; SET i = i + 1 %]</td>
-           <td>[% plink(plr) %]</td>
-           <td>[% IF p.exists('clan'); clink(clans.all.item(p.clan)); END %]</td>
-           <td>[% p.games.size %]</td>
-           <td>[% p.ascs.size %]</td>
-           <td>[% p.score %]</td>
-           <td>[% p.achievements.size %]</td>
-        </tr>
-        [% LAST IF i == 10 + 1 %]
-      [% END %]
-    </tbody>
-  </table>
-[% ELSE %]
-  <p>No players have played so far</p>
-[% END %]
-
-[%# ###########################################################################
-###############################################################################
-############################################################################ %]
-
- <h2>List of Top 10 Clans</h2>
-
- [% IF clans.all.size %]
-  <table>
-    <thead>
-      <tr class="framed">
-        <th>#</th>
-        <th>clan</th>
-        <th>score</th>
-        <th>games</th>
-        <th>wins</th>
-        <th>ach</th>
-      </tr>
-    </thead>
-    <tbody>
-      [% SET i = 1; FOREACH clan_idx IN clans.ordered %]
-        [% SET c = clans.all.item(clan_idx) %]
-        <tr class="framed">
-          <td>[% i; SET i = i + 1 %]</td>
-          <td>[% clink(c) %]</td>
-          <td>[% c.score %]</td>
-          <td>[% c.games.size %]</td>
-          <td>[% c.ascs.size %]</td>
-          <td>[% c.achievements.size %]</td>
-        </tr>
-        [% LAST IF i == 10 + 1 %]
-      [% END %]
-    </tbody>
-  </table>
-[% ELSE %]
-  <p>There are no clans yet</p>
-[% END %]
-
-[%# ###########################################################################
-###############################################################################
-############################################################################ %]
-
- <h2>Last 10 Ascensions</h2>
-
- [% IF games.ascs.size %]
-  <table>
-    <thead>
-      [% INCLUDE game.tt head=1 aswon=1 class="framed" %]
-    </thead>
-    <tbody>
-      [%
-        SET i = games.ascs.size;
-        SET cnt = 10;
-        FOREACH game IN games.ascs.reverse;
-          INCLUDE game.tt aswon=1;
-          SET i = i - 1;
-          SET cnt = cnt - 1;
-          LAST IF cnt < 1 || i < 1;
-        END;
-      %]
-      <tr>
-        <td colspan=10 class="more"><a href="ascensions.html">. . .</a></td>
-      </tr>
-    </tbody>
-  </table>
-[% ELSE %]
+<h2>Last 10 Ascensions</h2>
+{% if last10wins|length > 0 %}
+  {% include "games_table.html" with games=last10wins ascview=True %}
+{% else %}
   <p>There are no ascensions yet</p>
-[% END %]
+{% endif %}
 
-[%# ###########################################################################
-###############################################################################
-############################################################################ %]
-
- <h2>Last 10 Games</h2>
-
- [% IF games.all.size %]
-  <table>
-    <thead>
-      [% INCLUDE game.tt head=1 aswon=1 class="framed" %]
-    </thead>
-    <tbody>
-      [%
-        SET i = games.all.size;
-        SET cnt = 10;
-        FOREACH game IN games.all.reverse;
-          IF !game.scum;
-            INCLUDE game.tt game=game.n;
-            SET cnt = cnt - 1;
-          END;
-          SET i = i - 1;
-          LAST IF cnt < 1 || i < 1;
-        END;
-      %]
-      <tr>
-        <td colspan=10 class="more"><a href="games.html">. . .</a></td>
-      </tr>
-    </tbody>
-  </table>
-[% ELSE %]
-  <p>There are no games played yet</p>
-[% END %]
+<h2>Last 10 Games</h2>
+{% if last10games|length > 0 %}
+  {% include "games_table.html" with games=last10games ascview=False %}
+{% else %}
+  <p>No games have been played yet</p>
+{% endif %}
 
 </body>
 

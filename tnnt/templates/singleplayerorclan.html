@@ -100,51 +100,16 @@
 <!-- == ASCENSIONS & RECENT GAMES ========================================= -->
 
 {% if player_or_clan.total_games > 0 %}
+
   {% if player_or_clan.wins > 0 %}
     <h2>ASCENSIONS</h2>
-    <table>
-      <thead>
-        <!-- TODO: old backend had this as a template, likely move the whole
-             table? to a template -->
-        <!-- [% INCLUDE game.tt head=1 aswon=1 class="framed" %] -->
-        <tr class="won framed">
-          <!-- there used to be a counter td here, which has been removed -->
-          <th>name</th>
-          <th>character</th>
-          <th>turns</th>
-          <th>score</th>
-          <th>duration</th>
-          <th>endtime</th>
-          <th colspan=2>conducts</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for game in ascensions %}
-          {% include "gamerow.html" with playername=game.player.name ascview=True %}
-        {% endfor %}
-      </tbody>
-    </table>
+    {% include "games_table.html" with games=ascensions ascview=True %}
   {% endif %} {# wins > 0 #}
+
   <h2>RECENT GAMES</h2>
-  <table>
-    <thead>
-      <tr class="framed">
-        <th>name</th>
-        <th>character</th>
-        <th>turns</th>
-        <th>score</th>
-        <th>duration</th>
-        <th>endtime</th>
-        <th colspan=2>death reason</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for game in recentgames %}
-        {% include "gamerow.html" with ascview=False %}
-      {% endfor %}
-    </tbody>
-  </table>
-{% endif %} {# games greater than 0 #}
+  {% include "games_table.html" with games=recentgames ascview=False %}
+
+{% endif %} {# games > 0 #}
 
 <!-- == STREAKS =========================================================== -->
 

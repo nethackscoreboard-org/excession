@@ -1,0 +1,25 @@
+{# Expects context to supply 'games' as a list of game dicts #}
+{# also "ascview" as a boolean (is it a table of ascensions or regular games? #}
+<table>
+  <thead>
+    <tr class="framed">
+      {# there used to be a counter td here, which has been removed #}
+      <th>name</th>
+      <th>character</th>
+      <th>turns</th>
+      <th>score</th>
+      <th>duration</th>
+      <th>endtime</th>
+      {% if ascview %}
+        <th colspan=2>conducts</th>
+      {% else %}
+        <th>death reason</th>
+      {% endif %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for game in games %}
+      {% include "gamerow.html" %}
+    {% endfor %}
+  </tbody>
+</table>

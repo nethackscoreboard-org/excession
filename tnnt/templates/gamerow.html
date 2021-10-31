@@ -1,10 +1,10 @@
-{# Expects "playername", "game", "ascview", "isClan" to be present in context #}
+{# Expects "game" (dict), "ascview" (bool), "isClan" (bool) to be present in context #}
 <tr class="{% if game.won %} won {% else %} lost {% endif %}">
   <td>
     {% if isClan %}
-      {% include "plink.html" with name=playername %}
+      {% include "plink.html" with name=game.playername %}
     {% else %}
-      {{ playername }}
+      {{ game.playername }}
     {% endif %}
   </td>
   <td class="nowrap">
@@ -14,13 +14,17 @@
   </td>
   <td class="num">{{ game.turns }}</td>
   <td class="num">
-    <a href="{{ game.get_dumplog }}"> {{ game.points }} </a>
+    <a href="{{ game.dumplog }}">{{ game.points }}</a>
   </td>
   <td class="num">{{ game.wallclock }}</td>
   <td class="num">{{ game.endtime }}</td>
   {% if ascview %}
-    <td class="num">{{ game.conducts.count }}</td>
-    <td>{{ game.conducts_as_str }}</td>
+    <td class="num">{{ game.conducts|length }}</td>
+    <td>
+      {% for con in game.conducts %}
+        {{ con }}
+      {% endfor %}
+    </td>
   {% else %}
     <td colspan=2>{{ game.death }}</td>
   {% endif %}

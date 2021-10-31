@@ -1,8 +1,8 @@
 from django.views.generic import TemplateView
 from django.views import View
 from django.shortcuts import render, get_object_or_404
-from django.db.models import Exists, OuterRef, F, Count, Value
-from scoreboard.models import Player, Clan, Game, Achievement, Trophy
+from django.db.models import Exists, OuterRef, F, Count, Value, Sum
+from scoreboard.models import *
 from tnnt.forms import CreateClanForm, InviteMemberForm
 from django.http import HttpResponse, HttpResponseRedirect
 from . import hardfought_utils # find_player
@@ -15,8 +15,51 @@ from tnnt import uniqdeaths
 
 logger = logging.getLogger() # use root logger
 
+# Convenience function, not a view.
+# Given a list of dicts containing Game fields (specifically 'playername',
+# 'dlg_fmt' and 'starttime'), also insert a 'dumplog' field into each of those
+# dicts containing the formatted dumplog URL.
+def bulk_upd_games(gamelist):
+    for g in gamelist:
+        g['dumplog'] = dumplog_utils.format_dumplog(g['dlg_fmt'], g['playername'],
+                                                    g['starttime'])
+
+        # post 2021 TODO: this is a duplicate of Game.rrga, but unlike dumplog
+        # formatting, that function is used in aggregation
+        g['rrga'] = '-'.join([g['role'], g['race'], g['gender0'], g['align0']])
+
+        # TODO: this is not ideal because it's an extra query per each ascension
+        # in the list. but perhaps not worth the headache of making all these
+        # preproc'd Game lists into Game-x-Conduct lists.
+        # This used to be Game.conducts_as_str, whose description was:
+        # > Return a string containing this game's conducts in human readable form
+        # > e.g. "poly wish veg"
+        g['conducts'] = [ c.shortname for c in Conduct.objects.filter(game__id=g['id']) ]
+
+    return gamelist
+
 class HomepageView(TemplateView):
     template_name = 'index.html'
+
+    def get_context_data(self, **kwargs):
+        # general statistics
+        kwargs['numclans'] = Clan.objects.count()
+        kwargs['numplayers'] = Player.objects.count()
+        kwargs['numgames'] = Game.objects.count()
+        aggr = Player.objects.aggregate(Sum('games_scummed'), Sum('wins'))
+        kwargs['numscums'] = aggr['games_scummed__sum']
+        kwargs['numascs'] = aggr['wins__sum']
+        kwargs['numascenders'] = Player.objects.filter(wins__gt=0).count()
+
+        # last 10 games/wins
+        base_qs = Game.objects.annotate(
+            playername=F('player__name'),
+            dlg_fmt=F('source__dumplog_fmt')).order_by('-endtime')
+        kwargs['last10games'] = bulk_upd_games(list(base_qs.values()[:10]))
+        kwargs['last10wins'] = \
+            bulk_upd_games(list(base_qs.filter(won=True).values()[:10]))
+
+        return kwargs
 
 class RulesView(TemplateView):
     template_name = 'rules.html'
@@ -253,11 +296,16 @@ class SinglePlayerOrClanView(TemplateView):
             logger.error('single player/clan view without clan or player name')
             raise ValueError
 
+        # add information to the Game queryset that lets us generate dumplogs,
+        # and default sorting
+        base_game_qs = base_game_qs.annotate(playername=F('player__name'),
+                                             dlg_fmt=F('source__dumplog_fmt')) \
+                                   .order_by('-endtime')
         kwargs['ascensions'] = \
-            base_game_qs.filter(won=True).order_by('-endtime')
+            bulk_upd_games(list(base_game_qs.filter(won=True).values()))
         # 10 most recent games
         kwargs['recentgames'] = \
-            base_game_qs.order_by('-endtime')[:10]
+            bulk_upd_games(list(base_game_qs[:10].values()))
 
         # post 2021 TODO: this currently only gets the deaths, no other details
         kwargs['uniquedeaths'] = sorted(list(uniqdeaths.compile_unique_deaths(base_game_qs)))
