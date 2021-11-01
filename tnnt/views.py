@@ -187,7 +187,7 @@ class LeaderboardsView(TemplateView):
               'title': 'Fastest Realtime', 'columntitle': 'wallclock' },
             { 'id': 'maxcond', 'descending': True, 'wins_only': True,
               'title': 'Most Conducts in One Ascension', 'columntitle': 'conducts' },
-            { 'id': 'mostachgame', 'descending': True, 'wins_only': True,
+            { 'id': 'mostachgame', 'descending': True, 'wins_only': False,
               'title': 'Most Achievements in One Game', 'columntitle': 'achievements' },
             { 'id': 'mostach', 'descending': True, 'stat': 'unique_achievements',
               'wins_only': False,
