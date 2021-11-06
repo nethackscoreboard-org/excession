@@ -355,6 +355,17 @@ class TrophiesView(TemplateView):
         kwargs['trophies'] = trophies
         return kwargs
 
+class AchievementsView(TemplateView):
+    template_name = 'achievements.html'
+
+    def get_context_data(self, **kwargs):
+        kwargs['achievements'] = Achievement.objects \
+            .annotate(nplayers=Count('game__player', distinct=True),
+                      nclans=Count('game__player__clan', distinct=True)) \
+            .order_by('-nplayers', '-nclans') \
+            .values()
+        return kwargs
+
 class ClanMgmtView(View):
     template_name = 'clanmgmt.html'
 

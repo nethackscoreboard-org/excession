@@ -1,0 +1,38 @@
+<!doctype html>
+
+<html>
+
+<head>
+  <title>TNNT::Achievements</title>
+  {% include "headlinks.html" %}
+</head>
+
+<body>
+
+{% include "header.html" %}
+
+<h2>Achievements by Number of Achievers</h2>
+<table>
+  <thead>
+    <tr class="framed">
+      <th>name</th>
+      <th>description</th>
+      <th>players</th>
+      <th>clans</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for ach in achievements %}
+      <tr>
+        <td>{{ ach.name }}</td>
+        <td>{{ ach.description }}</td>
+        <td>{{ ach.nplayers }}</td>
+        <td>{{ ach.nclans }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+</body>
+
+</html>

@@ -13,6 +13,7 @@ urlpatterns = [
     path('players', tnntviews.PlayersView.as_view(), name='players'),
     path('player/<str:playername>', tnntviews.SinglePlayerOrClanView.as_view(), name='singleplayer'),
     path('clan/<str:clanname>', tnntviews.SinglePlayerOrClanView.as_view(), name='singleclan'),
+    path('achievements', tnntviews.AchievementsView.as_view(), name='achievements'),
     path('rules', tnntviews.RulesView.as_view(), name='rules'),
     path('about', tnntviews.AboutView.as_view(), name='about'),
     path('archives', tnntviews.ArchivesView.as_view(), name='archives'),
