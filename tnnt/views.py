@@ -84,23 +84,29 @@ class LeaderboardsView(TemplateView):
         #    'dumplog': 'https://hardfought.org/blah/blah.html'
         # },
 
-        # These kwargs for annotate are exactly the same between Player and Clan.
-        # *_stt is the starttime of a game, and *_dlg is the dumplog format.
+        # *_stt is the starttime of a game, *_dlg is the dumplog format, and
+        # *_nam is the name of the player of the game.
         # These are necessary so that we can generate the dumplog here in the
         # view rather than telling the Game to go look up its Player and Source
-        # for extra queries.
+        # for extra queries. (The player's name would not be necessary for the
+        # player leaderboard, but is necessary for the clan leaderboard.)
+        # A possible optimization would be to inject the F(game__player__name)
+        # for the Clan query only, and for the Player query just use F(name).
         annotate_kwargs = {
             'firstasc':        F('first_asc__endtime'),
             'firstasc_stt':    F('first_asc__starttime'),
             'firstasc_dlg':    F('fastest_realtime_asc__source__dumplog_fmt'),
+            'firstasc_nam':    F('fastest_realtime_asc__player__name'),
 
             'minturns':        F('lowest_turncount_asc__turns'),
             'minturns_stt':    F('lowest_turncount_asc__starttime'),
             'minturns_dlg':    F('lowest_turncount_asc__source__dumplog_fmt'),
+            'minturns_nam':    F('lowest_turncount_asc__player__name'),
 
             'mintime':         F('fastest_realtime_asc__wallclock'),
             'mintime_stt':     F('fastest_realtime_asc__starttime'),
             'mintime_dlg':     F('fastest_realtime_asc__source__dumplog_fmt'),
+            'mintime_nam':     F('fastest_realtime_asc__player__name'),
 
             # counting with distinct=True is needed here because we aggregate
             # both conducts and achievements - the resulting SQL join produces
@@ -109,18 +115,22 @@ class LeaderboardsView(TemplateView):
             'maxcond':         Count('max_conducts_asc__conducts', distinct=True),
             'maxcond_stt':     F('max_conducts_asc__starttime'),
             'maxcond_dlg':     F('max_conducts_asc__source__dumplog_fmt'),
+            'maxcond_nam':     F('max_conducts_asc__player__name'),
 
             'mostachgame':     Count('max_achieves_game__achievements', distinct=True),
             'mostachgame_stt': F('max_achieves_game__starttime'),
             'mostachgame_dlg': F('max_achieves_game__source__dumplog_fmt'),
+            'mostachgame_nam': F('max_achieves_game__player__name'),
 
             'minscore':        F('min_score_asc__points'),
             'minscore_stt':    F('min_score_asc__starttime'),
             'minscore_dlg':    F('min_score_asc__source__dumplog_fmt'),
+            'minscore_nam':    F('min_score_asc__player__name'),
 
             'maxscore':        F('max_score_asc__points'),
             'maxscore_stt':    F('max_score_asc__starttime'),
             'maxscore_dlg':    F('max_score_asc__source__dumplog_fmt'),
+            'maxscore_nam':    F('max_score_asc__player__name'),
         }
 
         # Now do the actual queries. Only 2 queries!
@@ -134,9 +144,6 @@ class LeaderboardsView(TemplateView):
                             .annotate(**annotate_kwargs)
                             .values())
         winclans = [ clan for clan in allclans if clan['wins'] > 0 ]
-        for p in winplayers:
-            if 'shadow' in p['name']:
-                print('sdf', p['maxcond'])
 
         # This function takes one of the four lists above, and formats each
         # dictionary appropriately for consumption by the template.
@@ -168,7 +175,7 @@ class LeaderboardsView(TemplateView):
                     # associated dumplog
                     converted['dumplog'] = \
                         dumplog_utils.format_dumplog(elem[stat + '_dlg'],
-                                                     elem['name'],
+                                                     elem[stat + '_nam'],
                                                      elem[stat + '_stt'])
                 list_out.append(converted)
             return list_out
