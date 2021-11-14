@@ -96,26 +96,32 @@ def awardTrophies(player_or_clan, allgames_qs):
     # Great Race
     for fullrace, details in great_lesser_race.items():
         # Compute all distinct roles for which there exists a winning game
-        # that has this race. If it matches the trophy required set, award it.
-        if details['req_roles'] == set(g.role for g in allgames
-                                       if g.won and g.race == details['race']):
+        # that has this race. If the trophy required set is a subset of it,
+        # award it.
+        # This uses a subset operation because the player's human ascensions can
+        # be a larger set than what is required for Great Human. (I.e. it
+        # shouldn't be assumed that the requisite lists above contain every
+        # possible ascendable combination in NetHack, which also goes for Great
+        # Role.)
+        if details['req_roles'].issubset(set(g.role for g in allgames
+                                         if g.won and g.race == details['race'])):
             player_or_clan.trophies.add(TROPHIES['Great %s' % fullrace])
 
         # Then the same for mines_soko games.
-        if details['req_roles'] == set(g.role for g in allgames
-                                       if g.mines_soko and g.race == details['race']):
+        if details['req_roles'].issubset(set(g.role for g in allgames
+                                         if g.mines_soko and g.race == details['race'])):
             player_or_clan.trophies.add(TROPHIES['Lesser %s' % fullrace])
 
     # Great Role
     for fullrole, details in great_lesser_role.items():
         # Similar to above. Compute distinct race-align combos.
-        if details['req_race_algn'] == set('%s-%s' % (g.race, g.align0) for g in allgames
-                                           if g.won and g.role == details['role']):
+        if details['req_race_algn'].issubset(set('%s-%s' % (g.race, g.align0) for g in allgames
+                                             if g.won and g.role == details['role'])):
             player_or_clan.trophies.add(TROPHIES['Great %s' % fullrole])
 
         # And the same for mines_soko.
-        if details['req_race_algn'] == set('%s-%s' % (g.race, g.align0) for g in allgames
-                                           if g.mines_soko and g.role == details['role']):
+        if details['req_race_algn'].issubset(set('%s-%s' % (g.race, g.align0) for g in allgames
+                                             if g.mines_soko and g.role == details['role'])):
             player_or_clan.trophies.add(TROPHIES['Lesser %s' % fullrole])
 
     # All Foo
